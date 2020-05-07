@@ -66,6 +66,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>mkdir "C:\Users\MacSergey\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)"
-copy $(TargetPath)  "C:\Users\MacSergey\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\$(TargetFileName)"</PostBuildEvent>
+copy $(TargetPath)  "C:\Users\MacSergey\AppData\Local\Colossal Order\Cities_Skylines\Addons\Mods\$(ProjectName)\$(TargetFileName)"
+copy $(TargetPath)  "C:\Program Files (x86)\Steam\steamapps\workshop\content\255710\2069057130"</PostBuildEvent>
   </PropertyGroup>
 </Project>
