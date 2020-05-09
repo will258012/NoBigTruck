@@ -46,7 +46,7 @@ namespace NoBigTruck
 
             patched = true;
 
-            Harmony.DEBUG = true;
+            //Harmony.DEBUG = true;
             var harmony = new Harmony(HarmonyId);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
         }
@@ -64,14 +64,12 @@ namespace NoBigTruck
         }
     }
 
-
     [HarmonyPatch]
     public static class GetVehiclePatch
     {
         public static IEnumerable<MethodBase> TargetMethods()
         {
             yield return AccessTools.Method(typeof(IndustrialBuildingAI), nameof(IndustrialBuildingAI.StartTransfer));
-            yield return AccessTools.Method(typeof(IndustrialExtractorAI), nameof(IndustrialExtractorAI.StartTransfer));
             yield return AccessTools.Method(typeof(OutsideConnectionAI), "StartConnectionTransferImpl");
         }
         public static IEnumerable<CodeInstruction> Transpiler(MethodBase original, IEnumerable<CodeInstruction> instructions)
@@ -121,12 +119,11 @@ namespace NoBigTruck
             }
             catch (Exception error)
             {
-                //Debug.LogError($"{error.Message}\n{error.StackTrace}");
+                Debug.LogError($"{error.Message}\n{error.StackTrace}");
             }
 
             return manager.GetRandomVehicleInfo(ref r, service, subService, level);
         }
-
         public static bool CheckItemClass(ItemClass itemClass)
         {
             //Debug.Log($"CheckItemClass: \n{nameof(itemClass.m_service)}: {itemClass.m_service}; {nameof(itemClass.m_subService)}: {itemClass.m_subService}");
@@ -145,6 +142,33 @@ namespace NoBigTruck
                 default:
                     return false;
             }
+        }
+    }
+
+    [HarmonyPatch]
+    public static class WarehouseAIStartTransferPath
+    {
+        public static MethodBase TargetMethod() => AccessTools.Method(typeof(WarehouseAI), nameof(WarehouseAI.StartTransfer));
+
+        public static IEnumerable<CodeInstruction> Transpiler(MethodBase original, IEnumerable<CodeInstruction> instructions)
+        {
+            foreach (var instruction in instructions)
+            {
+                if (instruction.opcode == OpCodes.Call && instruction.operand?.ToString().Contains(nameof(WarehouseAI.GetTransferVehicleService)) == true)
+                {
+                    yield return new CodeInstruction(OpCodes.Ldarg_S, 1);
+                    yield return new CodeInstruction(OpCodes.Ldarg_S, 4);
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(WarehouseAIStartTransferPath), nameof(WarehouseAIStartTransferPath.GetTransferVehicleService)));
+                }
+                else
+                    yield return instruction;
+            }
+        }
+
+        public static VehicleInfo GetTransferVehicleService(TransferManager.TransferReason material, ItemClass.Level level, ref Randomizer randomizer, ushort buildingID, TransferManager.TransferOffer offer)
+        {
+            var vehicleInfo = WarehouseAI.GetTransferVehicleService(material, level, ref randomizer);
+            return vehicleInfo == null ? null : GetVehiclePatch.GetRandomVehicleInfo(Singleton<VehicleManager>.instance, ref randomizer, vehicleInfo.GetService(), vehicleInfo.GetSubService(), level, buildingID, material, offer);
         }
     }
 }
