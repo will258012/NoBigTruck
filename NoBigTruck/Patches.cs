@@ -15,23 +15,6 @@ using UnityEngine;
 
 namespace NoBigTruck
 {
-    public class ModInfo : IUserMod
-    {
-        public string Name => nameof(NoBigTruck);
-
-        public string Description => "Large trucks do not deliver goods to stores";
-
-        public void OnEnabled()
-        {
-            HarmonyHelper.DoOnHarmonyReady(() => Patcher.PatchAll());
-        }
-
-        public void OnDisabled()
-        {
-            if (HarmonyHelper.IsHarmonyInstalled) Patcher.UnpatchAll();
-        }
-
-    }
     public static class Patcher
     {
         private const string HarmonyId = nameof(NoBigTruck);
@@ -93,7 +76,7 @@ namespace NoBigTruck
             //Debug.Log($"StartTransfer: \nsource: {buildingID}; target: {offer.Building}; {nameof(material)}: {material};");
             try
             {
-                if (material == TransferManager.TransferReason.Goods && CheckItemClass(Singleton<BuildingManager>.instance.m_buildings.m_buffer[offer.Building].Info.m_class))
+                if (material == TransferManager.TransferReason.Goods && Options.Check(buildingID, offer.Building)   /*CheckItemClass(Singleton<BuildingManager>.instance.m_buildings.m_buffer[offer.Building].Info.m_class)*/)
                 {
                     var transferIndex = (int)AccessTools.Method(typeof(VehicleManager), "GetTransferIndex").Invoke(null, new object[] { service, subService, level });
                     var fastList = (AccessTools.Field(typeof(VehicleManager), "m_transferVehicles").GetValue(manager) as FastList<ushort>[])[transferIndex];
