@@ -14,7 +14,7 @@ namespace NoBigTruck
 {
     public static class Options
     {
-        public static string ConfigFile => $"{nameof(NoBigTruck)}.xml";        
+        public static string ConfigFile => Path.Combine(ColossalFramework.IO.DataLocation.localApplicationData, $"{nameof(NoBigTruck)}.xml");
         public static RuleSet Rules { get; set; }
 
         private static bool IsLoaded { get; set; } = false;
@@ -27,7 +27,14 @@ namespace NoBigTruck
             var sourceType = GetSourceBuildings(sourceBuildingInfo);
             var targetType = GetTargetBuildings(targetBuildingInfo);
 
-            return sourceType != 0 && targetType != 0 && Rules.Any(r => (r.Source & sourceType) != 0 && (r.Target & targetType) != 0);
+            var buildingLength = targetBuildingInfo.m_cellLength;
+            var buildingWidth = targetBuildingInfo.m_cellWidth;
+
+            var result = sourceType != 0 && targetType != 0 && Rules.Any(r => (r.Source & sourceType) != 0 && (r.Target & targetType) != 0 && (!r.UseSize || (buildingLength <= r.MaxLength && buildingWidth <= r.MaxWidth)));
+
+            Debug.Log($"[{nameof(NoBigTruck)}] {nameof(Check)}: {nameof(sourceType)}={sourceType}; {nameof(targetType)}={targetType}; {nameof(buildingLength)}={buildingLength}; {nameof(buildingWidth)}={buildingWidth}; {nameof(result)}={result};");
+
+            return result;
         }
         static BuildingInfo GetBuildingInfo(ushort buildingId) => Singleton<BuildingManager>.instance.m_buildings.m_buffer[buildingId].Info;
 
@@ -76,11 +83,29 @@ namespace NoBigTruck
             Rules = new RuleSet(ui);
 
             Load();
+
+            Rules.OnChange += () => Save();
         }
         static void Load()
         {
+            Debug.Log($"[{nameof(NoBigTruck)}] Start load config");
+
             try
             {
+                if (IsLoaded)
+                {
+                    Debug.Log($"[{nameof(NoBigTruck)}] Config has already been loaded");
+                    return;
+                }
+
+                if (!File.Exists(ConfigFile))
+                {
+                    Debug.Log($"[{nameof(NoBigTruck)}] Config file not exist, create default");
+                    Rules.NewRule(SourceBuildings.Industry | SourceBuildings.Outside | SourceBuildings.Warehouse, TargetBuildings.Low | TargetBuildings.High | TargetBuildings.Eco | TargetBuildings.Leisure | TargetBuildings.Tourist, false, Rule.DefaultMaxLength, Rule.DefaultMaxWidth);
+                    Save();
+                    return;
+                }
+
                 var xdoc = new XmlDocument();
 
                 using (FileStream stream = new FileStream(ConfigFile, FileMode.Open))
@@ -92,24 +117,26 @@ namespace NoBigTruck
                         var source = int.TryParse(element.GetAttribute(nameof(Rule.Source)), out int tempSource) ? (SourceBuildings)tempSource : Rule.DefaultSource;
                         var target = int.TryParse(element.GetAttribute(nameof(Rule.Target)), out int tempTarget) ? (TargetBuildings)tempTarget : Rule.DefaultTarget;
                         var useSize = bool.TryParse(element.GetAttribute(nameof(Rule.UseSize)), out bool tempUseSize) ? tempUseSize : Rule.DefaultUseSize;
-                        var minLength = int.TryParse(element.GetAttribute(nameof(Rule.MinLength)), out int tempMinLength) ? tempMinLength : Rule.DefaultMinLength;
-                        var minWidth = int.TryParse(element.GetAttribute(nameof(Rule.MinWidth)), out int tempMinWidth) ? tempMinWidth : Rule.DefaultMinWidth;
+                        var maxLength = int.TryParse(element.GetAttribute(nameof(Rule.MaxLength)), out int tempMaxLength) ? tempMaxLength : Rule.DefaultMaxLength;
+                        var maxWidth = int.TryParse(element.GetAttribute(nameof(Rule.MaxWidth)), out int tempMaxWidth) ? tempMaxWidth : Rule.DefaultMaxWidth;
 
-                        Rules.NewRule(source, target, useSize, minLength, minWidth);
+                        Rules.NewRule(source, target, useSize, maxLength, maxWidth);
                     }
                 }
 
                 IsLoaded = true;
 
-                Debug.Log($"{nameof(NoBigTruck)}: config loaded: {Rules.Count} rules");
+                Debug.Log($"[{nameof(NoBigTruck)}] Config loaded: {Rules.Count} rules");
             }
             catch (Exception error)
             {
-                Debug.LogError($"{nameof(NoBigTruck)}: Cant load config: {error.Message}\n{error.StackTrace}");
+                Debug.LogError($"[{nameof(NoBigTruck)}] Cant load config: {error.Message}\n{error.StackTrace}");
             }
         }
         static void Save()
         {
+            Debug.Log($"[{nameof(NoBigTruck)}] Start save config");
+
             try
             {
                 var xdoc = new XmlDocument();
@@ -126,8 +153,8 @@ namespace NoBigTruck
                     AddAttr(xrule, nameof(Rule.Source), ((int)rule.Source).ToString());
                     AddAttr(xrule, nameof(Rule.Target), ((int)rule.Target).ToString());
                     AddAttr(xrule, nameof(Rule.UseSize), rule.UseSize.ToString());
-                    AddAttr(xrule, nameof(Rule.MinLength), rule.MinLength.ToString());
-                    AddAttr(xrule, nameof(Rule.MinWidth), rule.MinWidth.ToString());
+                    AddAttr(xrule, nameof(Rule.MaxLength), rule.MaxLength.ToString());
+                    AddAttr(xrule, nameof(Rule.MaxWidth), rule.MaxWidth.ToString());
 
                     xroot.AppendChild(xrule);
                 }
@@ -139,7 +166,7 @@ namespace NoBigTruck
                     xdoc.Save(stream);
                 }
 
-                Debug.Log($"{nameof(NoBigTruck)}: config saved");
+                Debug.Log($"[{nameof(NoBigTruck)}] Config saved");
 
                 void AddAttr(XmlElement element, string name, string value)
                 {
@@ -151,7 +178,7 @@ namespace NoBigTruck
             }
             catch (Exception error)
             {
-                Debug.LogError($"{nameof(NoBigTruck)}: Cant save config: {error.Message}\n{error.StackTrace}");
+                Debug.LogError($"[{nameof(NoBigTruck)}] Cant save config: {error.Message}\n{error.StackTrace}");
             }
         }
     }
@@ -167,8 +194,8 @@ namespace NoBigTruck
             UI = ui;
         }
 
-        public void NewRule() => NewRule(Rule.DefaultSource, Rule.DefaultTarget, Rule.DefaultUseSize, Rule.DefaultMinLength, Rule.DefaultMinWidth);
-        public void NewRule(SourceBuildings source, TargetBuildings target, bool useSize, int minLength, int minWidth)
+        public void NewRule() => NewRule(Rule.DefaultSource, Rule.DefaultTarget, Rule.DefaultUseSize, Rule.DefaultMaxLength, Rule.DefaultMaxWidth);
+        public void NewRule(SourceBuildings source, TargetBuildings target, bool useSize, int maxLength, int maxWidth)
         {
             var ruleUI = UI.AddUIComponent<UIRule>();
             ruleUI.Init();
@@ -178,8 +205,8 @@ namespace NoBigTruck
                 Source = source,
                 Target = target,
                 UseSize = useSize,
-                MinLength = minLength,
-                MinWidth = minWidth,
+                MaxLength = maxLength,
+                MaxWidth = maxWidth,
             };
             rule.OnChanged += RuleOnChanged;
 
@@ -197,39 +224,38 @@ namespace NoBigTruck
 
         private void RuleOnChanged(Rule rule) => OnChange?.Invoke();
     }
-
     public class Rule
     {
         public static SourceBuildings DefaultSource => default;
         public static TargetBuildings DefaultTarget => default;
         public static bool DefaultUseSize => false;
-        public static int DefaultMinLength => 4;
-        public static int DefaultMinWidth => 4;
+        public static int DefaultMaxLength => 4;
+        public static int DefaultMaxWidth => 4;
 
         public SourceBuildings Source
         {
-            get => UI.SourceEnum.Value;
-            set => UI.SourceEnum.Value = value;
+            get => UI.Source.Value;
+            set => UI.Source.Value = value;
         }
         public TargetBuildings Target
         {
-            get => UI.TargetEnum.Value;
-            set => UI.TargetEnum.Value = value;
+            get => UI.Target.Value;
+            set => UI.Target.Value = value;
         }
         public bool UseSize
         {
-            get => UI.UseSizeCheckbox.IsChecked;
-            set => UI.UseSizeCheckbox.IsChecked = value;
+            get => UI.UseSize.IsChecked;
+            set => UI.UseSize.IsChecked = value;
         }
-        public int MinLength
+        public int MaxLength
         {
-            get => (int)UI.LengthSlider.value;
-            set => UI.LengthSlider.value = value;
+            get => (int)UI.MaxLength.Value;
+            set => UI.MaxLength.Value = value;
         }
-        public int MinWidth
+        public int MaxWidth
         {
-            get => (int)UI.WidthSlider.value;
-            set => UI.WidthSlider.value = value;
+            get => (int)UI.MaxWidth.Value;
+            set => UI.MaxWidth.Value = value;
         }
 
         public UIRule UI { get; }
@@ -239,12 +265,13 @@ namespace NoBigTruck
         public Rule(UIRule ui)
         {
             UI = ui;
+            UI.OnDelete += () => Options.Rules.DeleteRule(this);
 
-            UI.SourceEnum.OnChanged += (_, __) => OnChanged?.Invoke(this);
-            UI.TargetEnum.OnChanged += (_, __) => OnChanged?.Invoke(this);
-            UI.UseSizeCheckbox.OnChanged += (_, __) => OnChanged?.Invoke(this);
-            UI.LengthSlider.eventValueChanged += (_, __) => OnChanged?.Invoke(this);
-            UI.WidthSlider.eventValueChanged += (_, __) => OnChanged?.Invoke(this);
+            UI.Source.OnChanged += (_, __) => OnChanged?.Invoke(this);
+            UI.Target.OnChanged += (_, __) => OnChanged?.Invoke(this);
+            UI.UseSize.OnChanged += (_, __) => OnChanged?.Invoke(this);
+            UI.MaxLength.OnChanged += (_, __) => OnChanged?.Invoke(this);
+            UI.MaxWidth.OnChanged += (_, __) => OnChanged?.Invoke(this);
         }
     }
 
@@ -262,11 +289,13 @@ namespace NoBigTruck
     }
     public class UIRule : UIVerticalPanel
     {
-        public UISourceGroup SourceEnum { get; private set; }
-        public UITargetGroup TargetEnum { get; private set; }
-        public UICustomCheckBox UseSizeCheckbox { get; private set; }
-        public UISlider LengthSlider { get; private set; }
-        public UISlider WidthSlider { get; private set; }
+        public UISourceGroup Source { get; private set; }
+        public UITargetGroup Target { get; private set; }
+        public UICustomCheckBox UseSize { get; private set; }
+        public UICustomSlider MaxLength { get; private set; }
+        public UICustomSlider MaxWidth { get; private set; }
+
+        public event Action OnDelete;
 
         public void Init()
         {
@@ -277,19 +306,19 @@ namespace NoBigTruck
             size = new Vector2(parent.width, 0);
 
             var sourceGroup = AddGroup("Source");
-            SourceEnum = sourceGroup.AddUIComponent<UISourceGroup>();
+            Source = sourceGroup.AddUIComponent<UISourceGroup>();
 
             var targetGroup = AddGroup("Target");
-            TargetEnum = targetGroup.AddUIComponent<UITargetGroup>();
+            Target = targetGroup.AddUIComponent<UITargetGroup>();
 
-            UseSizeCheckbox = targetGroup.AddUIComponent<UICustomCheckBox>();
-            UseSizeCheckbox.Text = "Use building size";
-            UseSizeCheckbox.OnChanged += UseSizeChanged;
+            UseSize = targetGroup.AddUIComponent<UICustomCheckBox>();
+            UseSize.Text = "Use building size";
+            UseSize.OnChanged += UseSizeChanged;
 
             var sizeGroup = targetGroup.AddUIComponent<UIHorizontalPanel>();
             sizeGroup.autoLayoutPadding = new RectOffset(0, 5, 0, 0);
-            LengthSlider = AddSlider(sizeGroup, "Length");
-            WidthSlider = AddSlider(sizeGroup, "Width");
+            MaxLength = AddSlider(sizeGroup, "length");
+            MaxWidth = AddSlider(sizeGroup, "width");
             UseSizeChanged(null, false);
 
             var buttonPanel = AddUIComponent<UIVerticalPanel>();
@@ -304,13 +333,13 @@ namespace NoBigTruck
         }
         public void Delete(UIComponent component, UIMouseEventParameter eventParam)
         {
-            (parent as UIRulePanel).RemoveRule(this);
+            OnDelete?.Invoke();
             Destroy(gameObject);
         }
         public void UseSizeChanged(UIComponent component, bool use)
         {
-            LengthSlider.isVisible = use;
-            WidthSlider.isVisible = use;
+            MaxLength.isVisible = use;
+            MaxWidth.isVisible = use;
         }
 
         public UIPanel AddGroup(string text)
@@ -331,19 +360,15 @@ namespace NoBigTruck
 
             return content;
         }
-        public UISlider AddSlider(UIPanel parent, string title)
+        public UICustomSlider AddSlider(UIPanel parent, string title)
         {
-            var panel = parent.AttachUIComponent(UITemplateManager.GetAsGameObject("OptionsSliderTemplate")) as UIPanel;
-            var slider = panel.Find<UISlider>("Slider");
-            var label = panel.Find<UILabel>("Label");
+            var slider = parent.AddUIComponent<UICustomSlider>();
 
-            slider.eventValueChanged += (_, value) => label.text = $"{title} less then {value}";
+            slider.Min = 1;
+            slider.Max = 20;
+            slider.Step = 1;
 
-            slider.minValue = 1;
-            slider.maxValue = 20;
-            slider.stepSize = 1;
-
-            label.textScale = 1f;
+            slider.OnChanged += (_, value) => slider.Text = $"Max {title}: {value}";
 
             return slider;
         }
@@ -486,6 +511,50 @@ namespace NoBigTruck
         }
 
         public event PropertyChangedEventHandler<bool> OnChanged;
+    }
+    public class UICustomSlider : UIHorizontalPanel
+    {
+        private UISlider Slider { get; }
+        private UILabel Label { get; set; }
+
+        public float Value
+        {
+            get => Slider.value;
+            set => Slider.value = value;
+        }
+        public float Min
+        {
+            get => Slider.minValue;
+            set => Slider.minValue = value;
+        }
+        public float Max
+        {
+            get => Slider.maxValue;
+            set => Slider.maxValue = value;
+        }
+        public float Step
+        {
+            get => Slider.stepSize;
+            set => Slider.stepSize = value;
+        }
+        public string Text
+        {
+            get => Label.text;
+            set => Label.text = value;
+        }
+
+        public event PropertyChangedEventHandler<float> OnChanged;
+
+        public UICustomSlider()
+        {
+            var panel = AttachUIComponent(UITemplateManager.GetAsGameObject("OptionsSliderTemplate")) as UIPanel;
+
+            Slider = panel.Find<UISlider>("Slider");
+            Label = panel.Find<UILabel>("Label");
+            Label.textScale = 1f;
+
+            Slider.eventValueChanged += (component, value) => OnChanged?.Invoke(this, value);
+        }
     }
 
     [Flags]

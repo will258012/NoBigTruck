@@ -21,7 +21,6 @@ namespace NoBigTruck
     {
         public string Name => nameof(NoBigTruck);
         public string Description => "Large trucks do not deliver goods to stores";
-        //private UIOptionsPanel OptionsPanel { get; set; }
 
         public void OnEnabled()
         {
@@ -40,8 +39,6 @@ namespace NoBigTruck
                 panel.autoLayoutPadding = new RectOffset(0, 0, 0, 20);
 
                 Options.Init(panel);
-                //var rulePanel = panel.AddUIComponent<UIRulePanel>();
-                //rulePanel.Init();
 
                 var addButton = panel.AttachUIComponent(UITemplateManager.GetAsGameObject("OptionsButtonTemplate")) as UIButton;
                 addButton.text = "Add new rule";

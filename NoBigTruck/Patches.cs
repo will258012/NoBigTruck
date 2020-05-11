@@ -25,7 +25,7 @@ namespace NoBigTruck
         {
             if (patched) return;
 
-            Debug.Log($"{HarmonyId}: Patching...");
+            Debug.Log($"[{nameof(NoBigTruck)}] Start harmony patching...");
 
             patched = true;
 
@@ -43,7 +43,7 @@ namespace NoBigTruck
 
             patched = false;
 
-            Debug.Log($"{HarmonyId}: Reverted...");
+            Debug.Log($"[{nameof(NoBigTruck)}] Start harmony reverted...");
         }
     }
 
@@ -57,6 +57,8 @@ namespace NoBigTruck
         }
         public static IEnumerable<CodeInstruction> Transpiler(MethodBase original, IEnumerable<CodeInstruction> instructions)
         {
+            Debug.Log($"[{nameof(NoBigTruck)}] Transpiler start: {original.Name}");
+
             foreach (var instruction in instructions)
             {
                 if (instruction.opcode == OpCodes.Callvirt && instruction.operand?.ToString().Contains(nameof(VehicleManager.GetRandomVehicleInfo)) == true)
@@ -69,14 +71,16 @@ namespace NoBigTruck
                 else
                     yield return instruction;
             }
+
+            Debug.Log($"[{nameof(NoBigTruck)}] Transpiler end: {original.Name}");
         }
 
         public static VehicleInfo GetRandomVehicleInfo(VehicleManager manager, ref Randomizer r, ItemClass.Service service, ItemClass.SubService subService, ItemClass.Level level, ushort buildingID, TransferManager.TransferReason material, TransferManager.TransferOffer offer)
         {
-            //Debug.Log($"StartTransfer: \nsource: {buildingID}; target: {offer.Building}; {nameof(material)}: {material};");
+            Debug.Log($"[{nameof(NoBigTruck)}] {nameof(GetRandomVehicleInfo)}: \nsource: {buildingID}; target: {offer.Building}; {nameof(material)}: {material};");
             try
             {
-                if (material == TransferManager.TransferReason.Goods && Options.Check(buildingID, offer.Building)   /*CheckItemClass(Singleton<BuildingManager>.instance.m_buildings.m_buffer[offer.Building].Info.m_class)*/)
+                if (material == TransferManager.TransferReason.Goods && Options.Check(buildingID, offer.Building))
                 {
                     var transferIndex = (int)AccessTools.Method(typeof(VehicleManager), "GetTransferIndex").Invoke(null, new object[] { service, subService, level });
                     var fastList = (AccessTools.Field(typeof(VehicleManager), "m_transferVehicles").GetValue(manager) as FastList<ushort>[])[transferIndex];
@@ -93,38 +97,19 @@ namespace NoBigTruck
                     {
                         var selectIndex = r.Int32((uint)notLarge.Count);
                         var selectVehicle = notLarge[selectIndex];
-                        //Debug.Log($"VehicleSelected: {selectVehicle}");
+                        Debug.Log($"[{nameof(NoBigTruck)}] VehicleSelected: {selectVehicle}");
                         return selectVehicle;
                     }
-                    //else
-                    //    Debug.Log($"No one not large vehicle");
+                    else
+                        Debug.Log($"[{nameof(NoBigTruck)}] No one not large vehicle");
                 }
             }
             catch (Exception error)
             {
-                Debug.LogError($"{error.Message}\n{error.StackTrace}");
+                Debug.LogError($"[{nameof(NoBigTruck)}] {error.Message}");
             }
 
             return manager.GetRandomVehicleInfo(ref r, service, subService, level);
-        }
-        public static bool CheckItemClass(ItemClass itemClass)
-        {
-            //Debug.Log($"CheckItemClass: \n{nameof(itemClass.m_service)}: {itemClass.m_service}; {nameof(itemClass.m_subService)}: {itemClass.m_subService}");
-
-            if (itemClass.m_service != ItemClass.Service.Commercial)
-                return false;
-
-            switch (itemClass.m_subService)
-            {
-                case ItemClass.SubService.CommercialLow:
-                case ItemClass.SubService.CommercialHigh:
-                case ItemClass.SubService.CommercialEco:
-                case ItemClass.SubService.CommercialLeisure:
-                case ItemClass.SubService.CommercialTourist:
-                    return true;
-                default:
-                    return false;
-            }
         }
     }
 
@@ -135,6 +120,8 @@ namespace NoBigTruck
 
         public static IEnumerable<CodeInstruction> Transpiler(MethodBase original, IEnumerable<CodeInstruction> instructions)
         {
+            Debug.Log($"[{nameof(NoBigTruck)}] Transpiler start: {original.Name}");
+
             foreach (var instruction in instructions)
             {
                 if (instruction.opcode == OpCodes.Call && instruction.operand?.ToString().Contains(nameof(WarehouseAI.GetTransferVehicleService)) == true)
@@ -146,6 +133,8 @@ namespace NoBigTruck
                 else
                     yield return instruction;
             }
+
+            Debug.Log($"[{nameof(NoBigTruck)}] Transpiler end: {original.Name}");
         }
 
         public static VehicleInfo GetTransferVehicleService(TransferManager.TransferReason material, ItemClass.Level level, ref Randomizer randomizer, ushort buildingID, TransferManager.TransferOffer offer)
