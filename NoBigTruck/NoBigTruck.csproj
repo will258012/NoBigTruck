@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger.cs" />
     <Compile Include="Patches.cs" />
     <Compile Include="Mod.cs" />
     <Compile Include="Options.cs" />

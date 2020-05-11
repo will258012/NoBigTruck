@@ -1,6 +1,7 @@
 ﻿using ColossalFramework;
 using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
+using ColossalFramework.IO;
 using ICities;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,9 @@ namespace NoBigTruck
 {
     public static class Options
     {
-        public static string ConfigFile => Path.Combine(ColossalFramework.IO.DataLocation.localApplicationData, $"{nameof(NoBigTruck)}.xml");
-        public static RuleSet Rules { get; set; }
+        public static string ConfigFile => Path.Combine(DataLocation.localApplicationData, $"{nameof(NoBigTruck)}.xml");
+        static List<Rule> Rules { get; set; }
+        static UIOptionsPanel UIPanel { get; set; }
 
         private static bool IsLoaded { get; set; } = false;
 
@@ -32,7 +34,7 @@ namespace NoBigTruck
 
             var result = sourceType != 0 && targetType != 0 && Rules.Any(r => (r.Source & sourceType) != 0 && (r.Target & targetType) != 0 && (!r.UseSize || (buildingLength <= r.MaxLength && buildingWidth <= r.MaxWidth)));
 
-            Debug.Log($"[{nameof(NoBigTruck)}] {nameof(Check)}: {nameof(sourceType)}={sourceType}; {nameof(targetType)}={targetType}; {nameof(buildingLength)}={buildingLength}; {nameof(buildingWidth)}={buildingWidth}; {nameof(result)}={result};");
+            Logger.LogDebug(() => $"{nameof(Check)}: {nameof(sourceType)}={sourceType}; {nameof(targetType)}={targetType}; {nameof(buildingLength)}={buildingLength}; {nameof(buildingWidth)}={buildingWidth}; {nameof(result)}={result};");
 
             return result;
         }
@@ -75,76 +77,85 @@ namespace NoBigTruck
         }
 
 
-        public static void Init(UIComponent uiParent)
+        public static void Init()
         {
-            var ui = uiParent.AddUIComponent<UIRulePanel>();
-            ui.Init();
-
-            Rules = new RuleSet(ui);
+            Logger.LogDebug(() => nameof(Init));
 
             Load();
-
-            Rules.OnChange += () => Save();
         }
         static void Load()
         {
-            Debug.Log($"[{nameof(NoBigTruck)}] Start load config");
+            Logger.LogInfo(() => $"Begin load config");
 
             try
             {
                 if (IsLoaded)
                 {
-                    Debug.Log($"[{nameof(NoBigTruck)}] Config has already been loaded");
+                    Logger.LogInfo(() => $"Config has already been loaded");
                     return;
                 }
+
+                Rules = new List<Rule>();
 
                 if (!File.Exists(ConfigFile))
                 {
-                    Debug.Log($"[{nameof(NoBigTruck)}] Config file not exist, create default");
-                    Rules.NewRule(SourceBuildings.Industry | SourceBuildings.Outside | SourceBuildings.Warehouse, TargetBuildings.Low | TargetBuildings.High | TargetBuildings.Eco | TargetBuildings.Leisure | TargetBuildings.Tourist, false, Rule.DefaultMaxLength, Rule.DefaultMaxWidth);
+                    Logger.LogInfo(() => $"Config file not exist, create default");
+                    AddRule(new Rule());
                     Save();
-                    return;
                 }
-
-                var xdoc = new XmlDocument();
-
-                using (FileStream stream = new FileStream(ConfigFile, FileMode.Open))
+                else
                 {
-                    xdoc.Load(stream);
-
-                    foreach (var element in xdoc.DocumentElement.ChildNodes.OfType<XmlElement>().Where(i => i.Name == nameof(Rule)))
+                    using (FileStream stream = new FileStream(ConfigFile, FileMode.Open))
                     {
-                        var source = int.TryParse(element.GetAttribute(nameof(Rule.Source)), out int tempSource) ? (SourceBuildings)tempSource : Rule.DefaultSource;
-                        var target = int.TryParse(element.GetAttribute(nameof(Rule.Target)), out int tempTarget) ? (TargetBuildings)tempTarget : Rule.DefaultTarget;
-                        var useSize = bool.TryParse(element.GetAttribute(nameof(Rule.UseSize)), out bool tempUseSize) ? tempUseSize : Rule.DefaultUseSize;
-                        var maxLength = int.TryParse(element.GetAttribute(nameof(Rule.MaxLength)), out int tempMaxLength) ? tempMaxLength : Rule.DefaultMaxLength;
-                        var maxWidth = int.TryParse(element.GetAttribute(nameof(Rule.MaxWidth)), out int tempMaxWidth) ? tempMaxWidth : Rule.DefaultMaxWidth;
+                        var xdoc = new XmlDocument();
+                        xdoc.Load(stream);
 
-                        Rules.NewRule(source, target, useSize, maxLength, maxWidth);
+                        Logger.EnableDebug = bool.TryParse(xdoc.DocumentElement.GetAttribute(nameof(Logger.EnableDebug)), out bool tempEnableDebug) ? tempEnableDebug : false;
+
+                        foreach (var element in xdoc.DocumentElement.ChildNodes.OfType<XmlElement>().Where(i => i.Name == nameof(Rule)))
+                        {
+                            var rule = new Rule()
+                            {
+                                Source = int.TryParse(element.GetAttribute(nameof(Rule.Source)), out int tempSource) ? (SourceBuildings)tempSource : Rule.DefaultSource,
+                                Target = int.TryParse(element.GetAttribute(nameof(Rule.Target)), out int tempTarget) ? (TargetBuildings)tempTarget : Rule.DefaultTarget,
+                                UseSize = bool.TryParse(element.GetAttribute(nameof(Rule.UseSize)), out bool tempUseSize) ? tempUseSize : Rule.DefaultUseSize,
+                                MaxLength = int.TryParse(element.GetAttribute(nameof(Rule.MaxLength)), out int tempMaxLength) ? tempMaxLength : Rule.DefaultMaxLength,
+                                MaxWidth = int.TryParse(element.GetAttribute(nameof(Rule.MaxWidth)), out int tempMaxWidth) ? tempMaxWidth : Rule.DefaultMaxWidth,
+                            };
+
+                            AddRule(rule);
+                        }
                     }
                 }
 
                 IsLoaded = true;
 
-                Debug.Log($"[{nameof(NoBigTruck)}] Config loaded: {Rules.Count} rules");
+                Logger.LogInfo(() => $"Config loaded: {Rules.Count} rules");
             }
             catch (Exception error)
             {
-                Debug.LogError($"[{nameof(NoBigTruck)}] Cant load config: {error.Message}\n{error.StackTrace}");
+                Logger.LogError(() => $"Cant load config", error);
             }
         }
         static void Save()
         {
-            Debug.Log($"[{nameof(NoBigTruck)}] Start save config");
+            Logger.LogInfo(() => $"Begin save config");
 
             try
             {
+                if (!IsLoaded)
+                {
+                    Logger.LogInfo(() => $"Config has not been loaded yet");
+                    return;
+                }
+
                 var xdoc = new XmlDocument();
 
                 var xmlDeclaration = xdoc.CreateXmlDeclaration("1.0", "UTF-8", null);
                 xdoc.AppendChild(xmlDeclaration);
 
                 var xroot = xdoc.CreateElement("Config");
+                AddAttr(xroot, nameof(Logger.EnableDebug), Logger.EnableDebug.ToString());
 
                 foreach (var rule in Rules)
                 {
@@ -166,7 +177,7 @@ namespace NoBigTruck
                     xdoc.Save(stream);
                 }
 
-                Debug.Log($"[{nameof(NoBigTruck)}] Config saved");
+                Logger.LogInfo(() => $"Config saved");
 
                 void AddAttr(XmlElement element, string name, string value)
                 {
@@ -178,169 +189,233 @@ namespace NoBigTruck
             }
             catch (Exception error)
             {
-                Debug.LogError($"[{nameof(NoBigTruck)}] Cant save config: {error.Message}\n{error.StackTrace}");
+                Logger.LogError(() => $"Cant save config", error);
             }
         }
-    }
 
-    public class RuleSet : List<Rule>
-    {
-        public static UIRulePanel UI { get; private set; }
-
-        public event Action OnChange;
-
-        public RuleSet(UIRulePanel ui)
+        public static void GetUI(UIScrollablePanel parentPanel)
         {
-            UI = ui;
+            Logger.LogDebug(() => nameof(GetUI));
+
+            UIPanel = parentPanel.AddUIComponent<UIOptionsPanel>();
+            UIPanel.Init();
+
+            foreach (var rule in Rules)
+                UIPanel.AddUIRule(rule);
         }
 
-        public void NewRule() => NewRule(Rule.DefaultSource, Rule.DefaultTarget, Rule.DefaultUseSize, Rule.DefaultMaxLength, Rule.DefaultMaxWidth);
-        public void NewRule(SourceBuildings source, TargetBuildings target, bool useSize, int maxLength, int maxWidth)
+        public static void AddRule(Rule rule)
         {
-            var ruleUI = UI.AddUIComponent<UIRule>();
-            ruleUI.Init();
+            Logger.LogDebug(() => $"{nameof(AddRule)}: {rule}");
 
-            var rule = new Rule(ruleUI)
-            {
-                Source = source,
-                Target = target,
-                UseSize = useSize,
-                MaxLength = maxLength,
-                MaxWidth = maxWidth,
-            };
+            Rules.Add(rule);
             rule.OnChanged += RuleOnChanged;
 
-            Add(rule);
-
-            OnChange?.Invoke();
+            if(IsLoaded)
+                Save();
         }
-        public void DeleteRule(Rule rule)
+        public static void DeleteRule(Rule rule)
         {
-            Remove(rule);
-            UI.RemoveUIComponent(rule.UI);
+            Logger.LogDebug(() => $"{nameof(DeleteRule)}: {rule}");
 
-            OnChange?.Invoke();
+            Rules.Remove(rule);
+            rule.OnChanged -= RuleOnChanged;
+
+            if (IsLoaded)
+                Save();
         }
 
-        private void RuleOnChanged(Rule rule) => OnChange?.Invoke();
+        private static void RuleOnChanged(Rule rule) => Save();
     }
     public class Rule
     {
-        public static SourceBuildings DefaultSource => default;
-        public static TargetBuildings DefaultTarget => default;
+        public static SourceBuildings DefaultSource { get; } = SourceBuildings.Industry | SourceBuildings.Outside | SourceBuildings.Warehouse;
+        public static TargetBuildings DefaultTarget { get; } = TargetBuildings.Low | TargetBuildings.High | TargetBuildings.Eco | TargetBuildings.Leisure | TargetBuildings.Tourist;
         public static bool DefaultUseSize => false;
         public static int DefaultMaxLength => 4;
         public static int DefaultMaxWidth => 4;
 
+
+        private SourceBuildings _source = DefaultSource;
+        private TargetBuildings _target = DefaultTarget;
+        private bool _useSize = DefaultUseSize;
+        private int _maxLength = DefaultMaxLength;
+        private int _maxWidth = DefaultMaxWidth;
+
         public SourceBuildings Source
         {
-            get => UI.Source.Value;
-            set => UI.Source.Value = value;
+            get => _source;
+            set => Set(ref _source, value);
         }
         public TargetBuildings Target
         {
-            get => UI.Target.Value;
-            set => UI.Target.Value = value;
+            get => _target;
+            set => Set(ref _target, value);
         }
         public bool UseSize
         {
-            get => UI.UseSize.IsChecked;
-            set => UI.UseSize.IsChecked = value;
+            get => _useSize;
+            set => Set(ref _useSize, value);
         }
         public int MaxLength
         {
-            get => (int)UI.MaxLength.Value;
-            set => UI.MaxLength.Value = value;
+            get => _maxLength;
+            set => Set(ref _maxLength, value);
         }
         public int MaxWidth
         {
-            get => (int)UI.MaxWidth.Value;
-            set => UI.MaxWidth.Value = value;
+            get => _maxWidth;
+            set => Set(ref _maxWidth, value);
         }
-
-        public UIRule UI { get; }
 
         public event Action<Rule> OnChanged;
 
-        public Rule(UIRule ui)
+        private void Set<T>(ref T value, T newValue)
         {
-            UI = ui;
-            UI.OnDelete += () => Options.Rules.DeleteRule(this);
-
-            UI.Source.OnChanged += (_, __) => OnChanged?.Invoke(this);
-            UI.Target.OnChanged += (_, __) => OnChanged?.Invoke(this);
-            UI.UseSize.OnChanged += (_, __) => OnChanged?.Invoke(this);
-            UI.MaxLength.OnChanged += (_, __) => OnChanged?.Invoke(this);
-            UI.MaxWidth.OnChanged += (_, __) => OnChanged?.Invoke(this);
+            if (!newValue.Equals(value))
+            {
+                value = newValue;
+                OnChanged?.Invoke(this);
+            }
         }
+
+        public override string ToString() => $"{nameof(Source)}={Source}; {nameof(Target)}={Target}; {nameof(UseSize)}={UseSize}; {nameof(MaxLength)}={MaxLength}; {nameof(MaxWidth)}={MaxWidth};";
     }
 
-    public class UIRulePanel : UIVerticalPanel
+    public class UIOptionsPanel : UIVerticalPanel
     {
-        public UIRulePanel()
-        {
-            autoLayoutPadding = new RectOffset(0, 0, 0, 10);
-        }
+        public UIVerticalPanel RulePanel { get; private set; }
+        public UIButton AddButton { get; private set; }
+
         public void Init()
         {
             var parent = this.parent as UIScrollablePanel;
             size = new Vector2(parent.width - 2 * parent.scrollPadding.horizontal, parent.height);
+            autoLayoutPadding = new RectOffset(0, 0, 0, 10);
+
+            RulePanel = AddUIComponent<UIVerticalPanel>();
+            RulePanel.autoLayoutPadding = new RectOffset(0, 0, 0, 10);
+            RulePanel.size = size;
+
+            AddButton = AttachUIComponent(UITemplateManager.GetAsGameObject("OptionsButtonTemplate")) as UIButton;
+            AddButton.text = "Add new rule";
+            AddButton.eventClick += AddButtonClick;
+        }
+
+        private void AddButtonClick(UIComponent component, UIMouseEventParameter eventParam)
+        {
+            Logger.LogDebug(() => nameof(AddButtonClick));
+
+            var rule = new Rule();
+            Options.AddRule(rule);
+
+            AddUIRule(rule);
+        }
+
+        public void AddUIRule(Rule rule)
+        {
+            Logger.LogDebug(() => nameof(AddUIRule));
+
+            var uiRule = RulePanel.AddUIComponent<UIRule>();
+            uiRule.Init(rule);
+
+            uiRule.OnDelete += DeleteUIRule;
+        }
+
+        private void DeleteUIRule(UIRule uiRule)
+        {
+            Logger.LogDebug(() => nameof(DeleteUIRule));
+
+            Options.DeleteRule(uiRule.Rule);
+
+            RulePanel.RemoveUIComponent(uiRule);
+            Destroy(uiRule.gameObject);
         }
     }
     public class UIRule : UIVerticalPanel
     {
+        public Rule Rule { get; private set; }
+
         public UISourceGroup Source { get; private set; }
         public UITargetGroup Target { get; private set; }
         public UICustomCheckBox UseSize { get; private set; }
         public UICustomSlider MaxLength { get; private set; }
         public UICustomSlider MaxWidth { get; private set; }
 
-        public event Action OnDelete;
+        public event Action<UIRule> OnDelete;
 
-        public void Init()
+        public void Init(Rule rule)
         {
+            Rule = rule;
+
             backgroundSprite = "GenericPanel";
 
             autoLayoutPadding = new RectOffset(0, 0, 0, 15);
             padding = new RectOffset(5, 5, 5, 5);
             size = new Vector2(parent.width, 0);
 
+
             var sourceGroup = AddGroup("Source");
             Source = sourceGroup.AddUIComponent<UISourceGroup>();
+            Source.Value = Rule.Source;
+            Source.OnChanged += SourceOnChanged;
+
 
             var targetGroup = AddGroup("Target");
             Target = targetGroup.AddUIComponent<UITargetGroup>();
+            Target.Value = Rule.Target;
+            Target.OnChanged += TargetOnChanged;
+
 
             UseSize = targetGroup.AddUIComponent<UICustomCheckBox>();
             UseSize.Text = "Use building size";
+            UseSize.IsChecked = Rule.UseSize;
             UseSize.OnChanged += UseSizeChanged;
+
 
             var sizeGroup = targetGroup.AddUIComponent<UIHorizontalPanel>();
             sizeGroup.autoLayoutPadding = new RectOffset(0, 5, 0, 0);
+
             MaxLength = AddSlider(sizeGroup, "length");
+            MaxLength.Value = Rule.MaxLength;
+            MaxLength.OnChanged += MaxLengthOnChanged;
+
             MaxWidth = AddSlider(sizeGroup, "width");
-            UseSizeChanged(null, false);
+            MaxWidth.Value = Rule.MaxWidth;
+            MaxWidth.OnChanged += MaxWidthOnChanged;
+
+            SetVisible(Rule.UseSize);
+
 
             var buttonPanel = AddUIComponent<UIVerticalPanel>();
 
             var deleteButton = buttonPanel.AttachUIComponent(UITemplateManager.GetAsGameObject("OptionsButtonTemplate")) as UIButton;
             deleteButton.text = "Delete rule";
+            deleteButton.textScale = 1f;
             deleteButton.eventClick += Delete;
 
             var endSpace = buttonPanel.AddUIComponent<UIPanel>();
             endSpace.height = padding.bottom;
             endSpace.isInteractive = false;
         }
-        public void Delete(UIComponent component, UIMouseEventParameter eventParam)
+
+        private void SourceOnChanged(UIComponent component, SourceBuildings value) => Rule.Source = value;
+        private void TargetOnChanged(UIComponent component, TargetBuildings value) => Rule.Target = value;
+        public void UseSizeChanged(UIComponent component, bool value)
         {
-            OnDelete?.Invoke();
-            Destroy(gameObject);
+            Rule.UseSize = value;
+            SetVisible(value);
         }
-        public void UseSizeChanged(UIComponent component, bool use)
+        public void SetVisible(bool visible)
         {
-            MaxLength.isVisible = use;
-            MaxWidth.isVisible = use;
+            MaxLength.isVisible = visible;
+            MaxWidth.isVisible = visible;
         }
+        private void MaxLengthOnChanged(UIComponent component, float value) => Rule.MaxLength = (int)value;
+        private void MaxWidthOnChanged(UIComponent component, float value) => Rule.MaxWidth = (int)value;
+
+
+        public void Delete(UIComponent component, UIMouseEventParameter eventParam) => OnDelete?.Invoke(this);
 
         public UIPanel AddGroup(string text)
         {
@@ -373,6 +448,7 @@ namespace NoBigTruck
             return slider;
         }
     }
+
     public class UISourceGroup : UIEnumGroup<SourceBuildings>
     {
         protected override SourceBuildings GetValue() => Options.Aggregate(default(SourceBuildings), (res, option) => res | (option.Value.IsChecked ? option.Key : default(SourceBuildings)));
@@ -416,8 +492,6 @@ namespace NoBigTruck
 
         public UIEnumGroup()
         {
-            Debug.Log($"{nameof(UIEnumGroup<T>)}: Add enum group UI");
-
             autoLayoutPadding = new RectOffset(0, 10, 0, 0);
             //backgroundSprite = "GenericPanel";
 
@@ -477,6 +551,7 @@ namespace NoBigTruck
             autoLayoutDirection = LayoutDirection.Horizontal;
         }
     }
+
     public class UICustomCheckBox : UIHorizontalPanel
     {
         private UICheckBox CheckBox { get; }

@@ -23,61 +23,39 @@ namespace NoBigTruck
 
         public static void PatchAll()
         {
-            if (patched) return;
+            if (patched) 
+                return;
 
-            Debug.Log($"[{nameof(NoBigTruck)}] Start harmony patching...");
+            Logger.LogInfo(() => $"Begin harmony patching");
 
             patched = true;
 
-            //Harmony.DEBUG = true;
+            Harmony.DEBUG = true;
             var harmony = new Harmony(HarmonyId);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
+
+            Logger.LogInfo(() => $"Harmony patched");
         }
 
         public static void UnpatchAll()
         {
-            if (!patched) return;
+            if (!patched) 
+                return;
+
+            Logger.LogInfo(() => $"Begin harmony revert");
 
             var harmony = new Harmony(HarmonyId);
             harmony.UnpatchAll(HarmonyId);
 
             patched = false;
 
-            Debug.Log($"[{nameof(NoBigTruck)}] Start harmony reverted...");
-        }
-    }
-
-    [HarmonyPatch]
-    public static class GetVehiclePatch
-    {
-        public static IEnumerable<MethodBase> TargetMethods()
-        {
-            yield return AccessTools.Method(typeof(IndustrialBuildingAI), nameof(IndustrialBuildingAI.StartTransfer));
-            yield return AccessTools.Method(typeof(OutsideConnectionAI), "StartConnectionTransferImpl");
-        }
-        public static IEnumerable<CodeInstruction> Transpiler(MethodBase original, IEnumerable<CodeInstruction> instructions)
-        {
-            Debug.Log($"[{nameof(NoBigTruck)}] Transpiler start: {original.Name}");
-
-            foreach (var instruction in instructions)
-            {
-                if (instruction.opcode == OpCodes.Callvirt && instruction.operand?.ToString().Contains(nameof(VehicleManager.GetRandomVehicleInfo)) == true)
-                {
-                    yield return new CodeInstruction(OpCodes.Ldarg_S, original.IsStatic ? 0 : 1);
-                    yield return new CodeInstruction(OpCodes.Ldarg_S, original.IsStatic ? 2 : 3);
-                    yield return new CodeInstruction(OpCodes.Ldarg_S, original.IsStatic ? 3 : 4);
-                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(GetVehiclePatch), nameof(GetRandomVehicleInfo)));
-                }
-                else
-                    yield return instruction;
-            }
-
-            Debug.Log($"[{nameof(NoBigTruck)}] Transpiler end: {original.Name}");
+            Logger.LogInfo(() => $"Begin harmony reverted");
         }
 
         public static VehicleInfo GetRandomVehicleInfo(VehicleManager manager, ref Randomizer r, ItemClass.Service service, ItemClass.SubService subService, ItemClass.Level level, ushort buildingID, TransferManager.TransferReason material, TransferManager.TransferOffer offer)
         {
-            Debug.Log($"[{nameof(NoBigTruck)}] {nameof(GetRandomVehicleInfo)}: \nsource: {buildingID}; target: {offer.Building}; {nameof(material)}: {material};");
+            Logger.LogDebug(() => $"{nameof(GetRandomVehicleInfo)}: \nsource: {buildingID}; target: {offer.Building}; {nameof(material)}: {material};");
+
             try
             {
                 if (material == TransferManager.TransferReason.Goods && Options.Check(buildingID, offer.Building))
@@ -97,19 +75,56 @@ namespace NoBigTruck
                     {
                         var selectIndex = r.Int32((uint)notLarge.Count);
                         var selectVehicle = notLarge[selectIndex];
-                        Debug.Log($"[{nameof(NoBigTruck)}] VehicleSelected: {selectVehicle}");
+                        Logger.LogDebug(() => $"VehicleSelected: {selectVehicle}");
+
                         return selectVehicle;
                     }
                     else
-                        Debug.Log($"[{nameof(NoBigTruck)}] No one not large vehicle");
+                        Logger.LogDebug(() => $"No one not large vehicle");
                 }
             }
             catch (Exception error)
             {
-                Debug.LogError($"[{nameof(NoBigTruck)}] {error.Message}");
+                Logger.LogError(error: error);
             }
 
             return manager.GetRandomVehicleInfo(ref r, service, subService, level);
+        }
+
+        public static VehicleInfo GetTransferVehicleService(TransferManager.TransferReason material, ItemClass.Level level, ref Randomizer randomizer, ushort buildingID, TransferManager.TransferOffer offer)
+        {
+            var vehicleInfo = WarehouseAI.GetTransferVehicleService(material, level, ref randomizer);
+            return vehicleInfo == null ? null : GetRandomVehicleInfo(Singleton<VehicleManager>.instance, ref randomizer, vehicleInfo.GetService(), vehicleInfo.GetSubService(), level, buildingID, material, offer);
+        }
+    }
+
+    [HarmonyPatch]
+    public static class GetVehiclePatch
+    {
+        public static IEnumerable<MethodBase> TargetMethods()
+        {
+            yield return AccessTools.Method(typeof(IndustrialBuildingAI), nameof(IndustrialBuildingAI.StartTransfer));
+            yield return AccessTools.Method(typeof(OutsideConnectionAI), "StartConnectionTransferImpl");
+        }
+
+        public static IEnumerable<CodeInstruction> Transpiler(MethodBase original, IEnumerable<CodeInstruction> instructions)
+        {
+            Logger.LogInfo(() => $"Begin transpiler: {original.DeclaringType}.{original.Name}");
+
+            foreach (var instruction in instructions)
+            {
+                if (instruction.opcode == OpCodes.Callvirt && instruction.operand?.ToString().Contains(nameof(VehicleManager.GetRandomVehicleInfo)) == true)
+                {
+                    yield return new CodeInstruction(OpCodes.Ldarg_S, original.IsStatic ? 0 : 1);
+                    yield return new CodeInstruction(OpCodes.Ldarg_S, original.IsStatic ? 2 : 3);
+                    yield return new CodeInstruction(OpCodes.Ldarg_S, original.IsStatic ? 3 : 4);
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Patcher), nameof(Patcher.GetRandomVehicleInfo)));
+                }
+                else
+                    yield return instruction;
+            }
+
+            Logger.LogInfo(() => $"End transpiler: {original.DeclaringType}.{original.Name}");
         }
     }
 
@@ -120,7 +135,7 @@ namespace NoBigTruck
 
         public static IEnumerable<CodeInstruction> Transpiler(MethodBase original, IEnumerable<CodeInstruction> instructions)
         {
-            Debug.Log($"[{nameof(NoBigTruck)}] Transpiler start: {original.Name}");
+            Logger.LogInfo(() => $"Begin transpiler: {original.DeclaringType}.{original.Name}");
 
             foreach (var instruction in instructions)
             {
@@ -128,19 +143,13 @@ namespace NoBigTruck
                 {
                     yield return new CodeInstruction(OpCodes.Ldarg_S, 1);
                     yield return new CodeInstruction(OpCodes.Ldarg_S, 4);
-                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(WarehouseAIStartTransferPath), nameof(WarehouseAIStartTransferPath.GetTransferVehicleService)));
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Patcher), nameof(Patcher.GetTransferVehicleService)));
                 }
                 else
                     yield return instruction;
             }
 
-            Debug.Log($"[{nameof(NoBigTruck)}] Transpiler end: {original.Name}");
-        }
-
-        public static VehicleInfo GetTransferVehicleService(TransferManager.TransferReason material, ItemClass.Level level, ref Randomizer randomizer, ushort buildingID, TransferManager.TransferOffer offer)
-        {
-            var vehicleInfo = WarehouseAI.GetTransferVehicleService(material, level, ref randomizer);
-            return vehicleInfo == null ? null : GetVehiclePatch.GetRandomVehicleInfo(Singleton<VehicleManager>.instance, ref randomizer, vehicleInfo.GetService(), vehicleInfo.GetSubService(), level, buildingID, material, offer);
+            Logger.LogInfo(() => $"End transpiler: {original.DeclaringType}.{original.Name}");
         }
     }
 }

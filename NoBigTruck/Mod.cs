@@ -20,34 +20,35 @@ namespace NoBigTruck
     public class ModInfo : IUserMod
     {
         public string Name => nameof(NoBigTruck);
-        public string Description => "Large trucks do not deliver goods to stores";
+        public string Description => "Large trucks dont deliver goods to stores";
 
         public void OnEnabled()
         {
+            Logger.LogInfo(() => nameof(OnEnabled));
+
             HarmonyHelper.DoOnHarmonyReady(() => Patcher.PatchAll());
+
+            Options.Init();
         }
 
         public void OnDisabled()
         {
+            Logger.LogInfo(() => nameof(OnDisabled));
+
             if (HarmonyHelper.IsHarmonyInstalled) Patcher.UnpatchAll();
         }
 
         public void OnSettingsUI(UIHelperBase helper)
         {
+            Logger.LogInfo(() => nameof(OnSettingsUI));
+
             if (helper is UIHelper uiHelper && uiHelper.self is UIScrollablePanel panel)
             {
                 panel.autoLayoutPadding = new RectOffset(0, 0, 0, 20);
-
-                Options.Init(panel);
-
-                var addButton = panel.AttachUIComponent(UITemplateManager.GetAsGameObject("OptionsButtonTemplate")) as UIButton;
-                addButton.text = "Add new rule";
-                addButton.eventClick += (_,__) => Options.Rules.NewRule();
+                Options.GetUI(panel);
             }
             else
-                Debug.LogWarning("Can't create options panel");
+                Logger.LogError(() => "Can't create options panel");
         }
-
-        string PanelInfo(UIScrollablePanel panel) => $"{panel.autoLayoutPadding};{panel.scrollPadding}";
     }
 }
