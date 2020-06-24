@@ -19,8 +19,9 @@ namespace NoBigTruck
 {
     public class ModInfo : IUserMod
     {
-        public string Name => nameof(NoBigTruck);
+        public string Name => $"{nameof(NoBigTruck)} {Version} [BETA]";
         public string Description => "Large trucks dont deliver goods to stores";
+        public string Version => Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true).OfType<AssemblyFileVersionAttribute>().FirstOrDefault() is AssemblyFileVersionAttribute versionAttribute ? versionAttribute.Version : string.Empty;
 
         public void OnEnabled()
         {

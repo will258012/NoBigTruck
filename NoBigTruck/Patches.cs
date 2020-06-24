@@ -30,7 +30,7 @@ namespace NoBigTruck
 
             patched = true;
 
-            Harmony.DEBUG = true;
+            Harmony.DEBUG = false;
             var harmony = new Harmony(HarmonyId);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
 
