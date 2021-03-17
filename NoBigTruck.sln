@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoBigTruck", "NoBigTruck\NoBigTruck.csproj", "{23581242-6240-4851-9A0C-BF93E2A4F4B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModsCommon", "ModsCommon\ModsCommon\ModsCommon.csproj", "{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E46A42-E7E1-4C9F-99FA-01CA7283AC3B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

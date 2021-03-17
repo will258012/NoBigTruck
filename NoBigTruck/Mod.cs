@@ -5,6 +5,8 @@ using ColossalFramework.PlatformServices;
 using ColossalFramework.UI;
 using HarmonyLib;
 using ICities;
+using ModsCommon;
+using ModsCommon.UI;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -17,39 +19,30 @@ using UnityEngine;
 
 namespace NoBigTruck
 {
-    public class ModInfo : IUserMod
+    public class Mod : BasePatcherMod<Mod, Patcher>
     {
-        public string Name => $"{nameof(NoBigTruck)} {Version} [BETA]";
-        public string Description => "Large trucks dont deliver goods to stores";
-        public string Version => Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyFileVersionAttribute), true).OfType<AssemblyFileVersionAttribute>().FirstOrDefault() is AssemblyFileVersionAttribute versionAttribute ? versionAttribute.Version : string.Empty;
+        protected override string ModName => "No Big Truck";
+        protected override string ModDescription => "Large trucks dont deliver goods to stores";
+        protected override string ModId => nameof(NoBigTruck);
+        protected override Version ModVersion => Assembly.GetExecutingAssembly().GetName().Version;
+        protected override bool ModIsBeta => false;
 
-        public void OnEnabled()
+        protected override List<Version> ModVersions { get; } = new List<Version>
         {
-            Logger.LogInfo(() => nameof(OnEnabled));
+            new Version("1.0"),
+        };
 
-            HarmonyHelper.DoOnHarmonyReady(() => Patcher.PatchAll());
+        public override string WorkshopUrl => "https://steamcommunity.com/sharedfiles/filedetails/?id=2069057130";
+        protected override string ModLocale => throw new NotImplementedException();
 
-            Options.Init();
-        }
+        protected override Patcher CreatePatcher() => new Patcher(this);
 
-        public void OnDisabled()
+        protected override void GetSettings(UIHelperBase helper) => Settings.OnSettingsUI(helper);
+
+        public override void OnLoadedError()
         {
-            Logger.LogInfo(() => nameof(OnDisabled));
-
-            if (HarmonyHelper.IsHarmonyInstalled) Patcher.UnpatchAll();
-        }
-
-        public void OnSettingsUI(UIHelperBase helper)
-        {
-            Logger.LogInfo(() => nameof(OnSettingsUI));
-
-            if (helper is UIHelper uiHelper && uiHelper.self is UIScrollablePanel panel)
-            {
-                panel.autoLayoutPadding = new RectOffset(0, 0, 0, 20);
-                Options.GetUI(panel);
-            }
-            else
-                Logger.LogError(() => "Can't create options panel");
+            var messageBox = MessageBoxBase.ShowModal<OneButtonMessageBox>();
+            messageBox.MessageText = "Mod loaded with error";
         }
     }
 }
