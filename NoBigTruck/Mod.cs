@@ -42,7 +42,9 @@ namespace NoBigTruck
         public override void OnLoadedError()
         {
             var messageBox = MessageBoxBase.ShowModal<OneButtonMessageBox>();
+            messageBox.CaptionText = ModName;
             messageBox.MessageText = "Mod loaded with error";
+            messageBox.ButtonText = "Ok";
         }
     }
 }
