@@ -206,7 +206,7 @@ namespace NoBigTruck
         protected BoolListPropertyPanel AddUseSizeProperty(UIComponent parent)
         {
             var useSizeProperty = parent.AddUIComponent<BoolListPropertyPanel>();
-            useSizeProperty.Text = "Check buildings size";
+            useSizeProperty.Text = "Check target buildings size";
             useSizeProperty.Init("No", "Yes");
             useSizeProperty.SelectedObject = UseSize;
             useSizeProperty.OnSelectObjectChanged += (bool value) => UseSize.Value = value;
