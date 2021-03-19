@@ -22,7 +22,7 @@ namespace NoBigTruck
     public class Mod : BasePatcherMod<Mod, Patcher>
     {
         protected override string ModName => "No Big Truck";
-        protected override string ModDescription => "Large trucks dont deliver goods to stores";
+        protected override string ModDescription => "Big trucks dont deliver goods to stores";
         protected override string ModId => nameof(NoBigTruck);
         protected override Version ModVersion => Assembly.GetExecutingAssembly().GetName().Version;
         protected override bool ModIsBeta => false;

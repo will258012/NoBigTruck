@@ -93,7 +93,11 @@ namespace NoBigTruck
             var postfix = AccessTools.Method(typeof(Manager), nameof(Manager.AVOCheckChanged));
 
             try { return AddPostfix(postfix, Type.GetType("AdvancedVehicleOptionsUID.GUI.UIOptionPanel"), "OnCheckChanged"); }
-            catch { return true; }
+            catch (Exception error) 
+            {
+                Mod.Logger.Warning("AVO not found", error);
+                return true; 
+            }
         }
     }
 }
