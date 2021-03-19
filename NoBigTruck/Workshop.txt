@@ -1,0 +1,63 @@
+[h1]Overview[/h1]
+If you want more realism in which vehicles will deliver goods to your store, then this mod will help you with this. It makes sure that only small vans are spawn for delivery to your small shops, except situation when a large vehicle rides through small streets and makes impossible turns.
+
+[h1]How it work[/h1]
+Mod looks at what type of building source and target, if they are in the following lists then only small vehicles will be spawn.
+
+[b]Source[/b]
+[list]
+    [*]Industry
+    [*]Warehouse
+    [*]Outside connection
+[/list]
+
+[b]Target[/b]
+[list]
+    [*]Low Commercial
+    [*]High Commercial
+    [*]Eco Commercial
+    [*]Leisure Commercial
+    [*]Tourist Commercial
+[/list]
+
+The mod does not change saves and can enable or disable any time.
+
+[h1]Settings[/h1]
+You choose which trucks will be considered large and they will be excluded from the choice of vehicle for delivery. The choice is made using the mod [url=https://steamcommunity.com/workshop/filedetails/?id=1548831935]Advanced Vehicle Options[/url]
+
+In the settings, you can set one or more rules by which the mod will work, choosing for what types of sources and target mod will choose a vehicle. You can also set the maximum size (cells) of the building
+
+
+[url=https://github.com/MacSergey/NoBigTruck]Source code[/url]
+
+[h1]Обзор[/h1]
+Если вы хотите добиться большего реализма в том какие транспортные средства будут доставлять товары в ваши магазины, то этот мод вам в этом поможет. Он делает так, что бы для доставки в ваши маленькие магазины выбирались только маленькие фургоны, исключая ситуацию когда огромная фура ездит по маленьким улочкам и делает совершенно невозможные развороты.
+
+[h1]Как это работает[/h1]
+Мод смотрит каким типом здания является источник и цель и если они находятся в следующих списках, то будут выбираться только небольшие транспортные средства.
+
+[b]Источник[/b]
+[list]
+    [*]Ваше предприятие
+    [*]Ваш склад
+    [*]Внешние связи
+[/list]
+
+[b]Цель[/b]
+[list]
+    [*]Коммерческое здание низкого уровня (Low Commercial)
+    [*]Коммерческое здание высокого уровня (High Commercial)
+    [*]Экологическое коммерческое здание (Eco Commercial)
+    [*]Досуговое коммерческое здание (Leisure Commercial)
+    [*]Туристическое коммерческое здание (Tourist Commercial)
+[/list]
+
+Мод никак не изменяет файл сохранения и может быть включен или отключен в любое время.
+
+[h1]Настройка[/h1]
+Вы выбираете какие грузовики будут считаться большими и они будут исключены из выбора транспортного средства на доставку. Делается это с помощью интерфейса мода [url=https://steamcommunity.com/workshop/filedetails/?id=1548831935]Advanced Vehicle Options[/url]
+
+В настройках вы можете задать одно или несколько правил по которым будет работать мод, выбрав для каких типов источников и целей мод будет выбирать транспортное средство. Так же можно выбрать максимальный размер (клеток) здания 
+
+
+[url=https://github.com/MacSergey/NoBigTruck]Исходный код[/url]
