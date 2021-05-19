@@ -136,10 +136,12 @@
     <value>Get AVO</value>
   </data>
   <data name="Mod_NeedEnableAVO" xml:space="preserve">
-    <value>{0} needs Advanced Vehicle Options mod to work, but it is disabled. Enable it.</value>
+    <value>{0} needs Advanced Vehicle Options mod to work, but it is disabled.
+You need to enable it.</value>
   </data>
   <data name="Mod_NeedSubscribeAVO" xml:space="preserve">
-    <value>{0} needs Advanced Vehicle Options mod to work. Subscribe to it.</value>
+    <value>{0} needs Advanced Vehicle Options mod to work.
+You need to subscribe to it.</value>
   </data>
   <data name="RulesTab" xml:space="preserve">
     <value>Rules</value>

@@ -136,10 +136,12 @@
     <value>Получить AVO</value>
   </data>
   <data name="Mod_NeedEnableAVO" xml:space="preserve">
-    <value>{0} требует для своей работы мод Advanced Vehicle Options, но он выключен. Включите его.</value>
+    <value>{0} требует для своей работы мод Advanced Vehicle Options, но он выключен.
+Необходимо включить его.</value>
   </data>
   <data name="Mod_NeedSubscribeAVO" xml:space="preserve">
-    <value>{0} требует для своей работы мод Advanced Vehicle Options. Подпишитесь на него.</value>
+    <value>{0} требует для своей работы мод Advanced Vehicle Options.
+Необходимо подписаться на него.</value>
   </data>
   <data name="RulesTab" xml:space="preserve">
     <value>Правила</value>

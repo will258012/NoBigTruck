@@ -48,7 +48,7 @@ namespace NoBigTruck
         }
         protected override bool LoadError
         {
-            get => base.LoadError || AVONotExist || AVOStateWatcher?.IsEnabled == false;
+            get => base.LoadError || AVONotExist || AVOStateWatcher.IsEnabled == false;
             set => base.LoadError = value;
         }
         private bool AVONotExist { get; set; }
@@ -66,6 +66,8 @@ namespace NoBigTruck
 
         protected override void Enable()
         {
+            base.Enable();
+
             if (AVO is PluginInfo plugin)
                 AVOStateWatcher = new PlaginStateWatcher(plugin);
 
@@ -76,8 +78,6 @@ namespace NoBigTruck
             }
             else
                 AVONotExist = true;
-
-            base.Enable();
         }
         protected override void Disable()
         {
@@ -93,7 +93,7 @@ namespace NoBigTruck
                 OnAVODisable();
         }
 
-        public override void OnLoadedError()
+        protected override void OnLoadedError()
         {
             if (base.LoadError)
             {
@@ -219,5 +219,7 @@ namespace NoBigTruck
         }
 
         #endregion
+
+        class ErrorLoadedMessageBox : ErrorLoadedMessageBox<Mod> { }
     }
 }

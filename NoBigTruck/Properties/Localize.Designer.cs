@@ -115,7 +115,8 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на {0} needs Advanced Vehicle Options mod to work, but it is disabled. Enable it..
+        ///   Ищет локализованную строку, похожую на {0} needs Advanced Vehicle Options mod to work, but it is disabled.
+        ///You need to enable it..
         /// </summary>
         internal static string Mod_NeedEnableAVO {
             get {
@@ -124,7 +125,8 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на {0} needs Advanced Vehicle Options mod to work. Subscribe to it..
+        ///   Ищет локализованную строку, похожую на {0} needs Advanced Vehicle Options mod to work.
+        ///You need to subscribe to it..
         /// </summary>
         internal static string Mod_NeedSubscribeAVO {
             get {
