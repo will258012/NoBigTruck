@@ -2,6 +2,7 @@
 using ColossalFramework.Math;
 using ColossalFramework.UI;
 using HarmonyLib;
+using ModsCommon;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,7 @@ namespace NoBigTruck
         public static void RefreshTransferVehicles()
         {
 #if DEBUG
-            Mod.Logger.Debug(nameof(RefreshTransferVehicles));
+            SingletonMod<Mod>.Logger.Debug(nameof(RefreshTransferVehicles));
 #endif
             NoBigTrucks.Clear();
         }
@@ -44,7 +45,7 @@ namespace NoBigTruck
                         vehicles.Add(vehicleInfo);
                 }
 #if DEBUG
-                Mod.Logger.Debug($"Transfer index {transferIndex}: {vehicles.Count} Vehicles");
+                SingletonMod<Mod>.Logger.Debug($"Transfer index {transferIndex}: {vehicles.Count} Vehicles");
 #endif
             }
 
@@ -54,7 +55,7 @@ namespace NoBigTruck
         public static VehicleInfo GetRandomVehicleInfo(VehicleManager manager, ref Randomizer r, ItemClass.Service service, ItemClass.SubService subService, ItemClass.Level level, ushort buildingID, TransferManager.TransferReason material, TransferManager.TransferOffer offer)
         {
 #if DEBUG
-            Mod.Logger.Debug($"{nameof(GetRandomVehicleInfo)}: \nsource: {buildingID}; target: {offer.Building}; {nameof(material)}: {material};");
+            SingletonMod<Mod>.Logger.Debug($"{nameof(GetRandomVehicleInfo)}: \nsource: {buildingID}; target: {offer.Building}; {nameof(material)}: {material};");
 #endif
             if (material == TransferManager.TransferReason.Goods && CheckRules(buildingID, offer.Building))
             {
@@ -66,13 +67,13 @@ namespace NoBigTruck
                     var selectIndex = r.Int32((uint)noBigTrucks.Count);
                     var selectVehicle = noBigTrucks[selectIndex];
 #if DEBUG
-                    Mod.Logger.Debug($"VehicleSelected: {selectVehicle}");
+                    SingletonMod<Mod>.Logger.Debug($"VehicleSelected: {selectVehicle}");
 #endif
                     return selectVehicle;
                 }
 #if DEBUG
                 else
-                    Mod.Logger.Debug($"No one not large vehicle");
+                    SingletonMod<Mod>.Logger.Debug($"No one not large vehicle");
 #endif
             }
 
@@ -99,7 +100,7 @@ namespace NoBigTruck
 
             var result = sourceType != 0 && targetType != 0 && Settings.Rules.Any(CheckRule);
 #if DEBUG
-            Mod.Logger.Debug($"{nameof(CheckRules)}: {nameof(sourceType)}={sourceType}; {nameof(targetType)}={targetType}; {nameof(buildingLength)}={buildingLength}; {nameof(buildingWidth)}={buildingWidth}; {nameof(result)}={result};");
+            SingletonMod<Mod>.Logger.Debug($"{nameof(CheckRules)}: {nameof(sourceType)}={sourceType}; {nameof(targetType)}={targetType}; {nameof(buildingLength)}={buildingLength}; {nameof(buildingWidth)}={buildingWidth}; {nameof(result)}={result};");
 #endif
             return result;
 

@@ -2,10 +2,12 @@
 using ColossalFramework.IO;
 using ColossalFramework.UI;
 using ICities;
+using ModsCommon;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,47 +16,52 @@ using UnityEngine;
 
 namespace NoBigTruck
 {
-    public static class Settings
+    public class Settings : BaseSettings<Mod>
     {
         public static string ConfigFile => Path.Combine(DataLocation.localApplicationData, $"{nameof(NoBigTruck)}.xml");
-        private static bool IsLoaded { get; set; } = false;
+        private bool IsLoaded { get; set; } = false;
         public static List<Rule> Rules { get; } = new List<Rule>();
-        static AddRuleButton AddButton { get; set; }
+        private AddRuleButton AddButton { get; set; }
 
-        public static void OnSettingsUI(UIHelperBase helper)
+        private UIAdvancedHelper RulesTab { get; set; }
+
+        protected override void OnSettingsUI()
         {
-            var mainPanel = (helper as UIHelper).self as UIScrollablePanel;
-            mainPanel.autoLayoutPadding = new RectOffset(100, 100, 0, 25);
-            mainPanel.eventSizeChanged += MainPanelSizeChanged;
+            base.OnSettingsUI();
+
+            AddNotifications(GeneralTab);
+
+            RulesTab = CreateTab(Localize.RulesTab);
+            RulesTab.Content.autoLayoutPadding = new RectOffset(100, 100, 0, 25);
 
             Load();
 
-            AddAddRuleButton(mainPanel);
-            AddRulePanels(mainPanel);
+            AddAddRuleButton();
+            AddRulePanels();
         }
 
-        private static void AddAddRuleButton(UIScrollablePanel mainPanel)
+        private void AddAddRuleButton()
         {
-            AddButton = mainPanel.AddUIComponent<AddRuleButton>();
-            AddButton.Text = "Add new rule";
+            AddButton = RulesTab.Content.AddUIComponent<AddRuleButton>();
+            AddButton.Text = Localize.AddNewRule;
             AddButton.Init();
             AddButton.OnButtonClick += AddRule;
 
             void AddRule()
             {
                 var rule = new Rule();
-                Settings.AddRule(rule);
-                AddRulePanel(rule, mainPanel);
+                this.AddRule(rule);
+                AddRulePanel(rule);
             }
         }
-        private static void AddRulePanels(UIScrollablePanel mainPanel)
+        private void AddRulePanels()
         {
             foreach (var rule in Rules)
-                AddRulePanel(rule, mainPanel);
+                AddRulePanel(rule);
         }
-        private static void AddRulePanel(Rule rule, UIScrollablePanel mainPanel)
+        private void AddRulePanel(Rule rule)
         {
-            var rulePanel = mainPanel.AddUIComponent<PropertyGroupPanel>();
+            var rulePanel = RulesTab.Content.AddUIComponent<PropertyGroupPanel>();
             rulePanel.Init();
             AddButton.zOrder = rulePanel.zOrder + 1;
 
@@ -68,26 +75,25 @@ namespace NoBigTruck
 
             void OnDeleteRule()
             {
-                mainPanel.RemoveUIComponent(rulePanel);
+                RulesTab.Content.RemoveUIComponent(rulePanel);
                 UnityEngine.Object.Destroy(rulePanel);
                 DeleteRule(rule);
             }
         }
-
-        private static void MainPanelSizeChanged(UIComponent component, Vector2 value)
+        private void MainPanelSizeChanged(UIComponent component, Vector2 value)
         {
             var mainPanel = component as UIScrollablePanel;
             foreach (var item in mainPanel.components)
                 item.width = mainPanel.width - mainPanel.autoLayoutPadding.horizontal - mainPanel.scrollPadding.horizontal;
         }
 
-        static void Load()
+        private void Load()
         {
             Rules.Clear();
 
             if (!File.Exists(ConfigFile))
             {
-                Mod.Logger.Debug($"Config file not exist, create default");
+                SingletonMod<Mod>.Logger.Debug($"Config file not exist, create default");
                 AddRule(new Rule());
                 Save();
             }
@@ -105,10 +111,10 @@ namespace NoBigTruck
 
             IsLoaded = true;
 
-            Mod.Logger.Debug($"Config loaded: {Rules.Count} rules");
+            SingletonMod<Mod>.Logger.Debug($"Config loaded: {Rules.Count} rules");
         }
 
-        static void Save()
+        private void Save()
         {
             var config = new XElement("Config");
 
@@ -117,7 +123,7 @@ namespace NoBigTruck
 
             new XDocument(config).Save(ConfigFile);
         }
-        static void AddRule(Rule rule)
+        private void AddRule(Rule rule)
         {
             rule.OnRuleChanged = RuleOnChanged;
             Rules.Add(rule);
@@ -125,12 +131,12 @@ namespace NoBigTruck
             if (IsLoaded)
                 Save();
         }
-        static void DeleteRule(Rule rule)
+        private void DeleteRule(Rule rule)
         {
             Rules.Remove(rule);
             Save();
         }
-        private static void RuleOnChanged() => Save();
+        private void RuleOnChanged() => Save();
     }
 
     public class Rule
@@ -140,8 +146,8 @@ namespace NoBigTruck
         public PropertyEnumValue<SourceBuildingTypes> SourceBuildings { get; }
         public PropertyEnumValue<TargetBuildingTypes> TargetBuildings { get; }
         public PropertyBoolValue UseSize { get; }
-        public PropertyValue<int> MaxLength { get; }
-        public PropertyValue<int> MaxWidth { get; }
+        public PropertyStructValue<int> MaxLength { get; }
+        public PropertyStructValue<int> MaxWidth { get; }
 
         public Rule(Action onRuleChanged = null)
         {
@@ -150,8 +156,8 @@ namespace NoBigTruck
             SourceBuildings = new PropertyEnumValue<SourceBuildingTypes>("Source", RuleChanged, SourceBuildingTypes.All);
             TargetBuildings = new PropertyEnumValue<TargetBuildingTypes>("Target", RuleChanged, TargetBuildingTypes.All);
             UseSize = new PropertyBoolValue("UseSize", RuleChanged, false);
-            MaxLength = new PropertyValue<int>("MaxLength", RuleChanged, 4);
-            MaxWidth = new PropertyValue<int>("MaxWidth", RuleChanged, 4);
+            MaxLength = new PropertyStructValue<int>("MaxLength", RuleChanged, 4);
+            MaxWidth = new PropertyStructValue<int>("MaxWidth", RuleChanged, 4);
         }
 
         private void RuleChanged() => OnRuleChanged?.Invoke();
@@ -164,8 +170,8 @@ namespace NoBigTruck
             components.Add(AddTargetBuildingProperty(parent));
 
             var useSize = AddUseSizeProperty(parent);
-            var maxLength = AddSizeProperty(parent, MaxLength, "Max buildings length");
-            var maxWidth = AddSizeProperty(parent, MaxLength, "Max buildings width");
+            var maxLength = AddSizeProperty(parent, MaxLength, Localize.MaxLength);
+            var maxWidth = AddSizeProperty(parent, MaxLength, Localize.MaxWidth);
 
             components.Add(useSize);
             components.Add(maxLength);
@@ -186,7 +192,7 @@ namespace NoBigTruck
         private SourceBuildingPropertyPanel AddSourceBuildingProperty(UIComponent parent)
         {
             var sourceBuildingProperty = parent.AddUIComponent<SourceBuildingPropertyPanel>();
-            sourceBuildingProperty.Text = "Source buildings type";
+            sourceBuildingProperty.Text = Localize.Source;
             sourceBuildingProperty.Init();
             sourceBuildingProperty.SelectedObject = SourceBuildings;
             sourceBuildingProperty.OnSelectObjectChanged += (value) => SourceBuildings.Value = value;
@@ -196,7 +202,7 @@ namespace NoBigTruck
         private TargetBuildingPropertyPanel AddTargetBuildingProperty(UIComponent parent)
         {
             var targetBuildingProperty = parent.AddUIComponent<TargetBuildingPropertyPanel>();
-            targetBuildingProperty.Text = "Target buildings type";
+            targetBuildingProperty.Text = Localize.Target;
             targetBuildingProperty.Init();
             targetBuildingProperty.SelectedObject = TargetBuildings;
             targetBuildingProperty.OnSelectObjectChanged += (value) => TargetBuildings.Value = value;
@@ -206,8 +212,8 @@ namespace NoBigTruck
         protected BoolListPropertyPanel AddUseSizeProperty(UIComponent parent)
         {
             var useSizeProperty = parent.AddUIComponent<BoolListPropertyPanel>();
-            useSizeProperty.Text = "Check target buildings size";
-            useSizeProperty.Init("No", "Yes");
+            useSizeProperty.Text = Localize.CheckTargetSize;
+            useSizeProperty.Init(CommonLocalize.MessageBox_No, CommonLocalize.MessageBox_Yes);
             useSizeProperty.SelectedObject = UseSize;
             useSizeProperty.OnSelectObjectChanged += (bool value) => UseSize.Value = value;
             return useSizeProperty;
@@ -252,8 +258,13 @@ namespace NoBigTruck
     [Flags]
     public enum SourceBuildingTypes
     {
+        [Description(nameof(Localize.SourceIndustry))]
         Industry = 1,
+
+        [Description(nameof(Localize.SourceOutside))]
         Outside = 2,
+
+        [Description(nameof(Localize.SourceWarehouse))]
         Warehouse = 4,
 
         [NotVisible]
@@ -263,10 +274,19 @@ namespace NoBigTruck
     [Flags]
     public enum TargetBuildingTypes
     {
+        [Description(nameof(Localize.TargetLow))]
         Low = 1,
+
+        [Description(nameof(Localize.TargetHigh))]
         High = 2,
+
+        [Description(nameof(Localize.TargetEco))]
         Eco = 4,
+
+        [Description(nameof(Localize.TargetLeisure))]
         Leisure = 8,
+
+        [Description(nameof(Localize.TargetTourist))]
         Tourist = 16,
 
         [NotVisible]
@@ -275,14 +295,14 @@ namespace NoBigTruck
 
     public class SourceBuildingPropertyPanel : EnumMultyPropertyPanel<SourceBuildingTypes, SourceBuildingPropertyPanel.SourceBuildingSegmented>
     {
-        protected override string GetDescription(SourceBuildingTypes value) => value.ToString();
+        protected override string GetDescription(SourceBuildingTypes value) => value.Description<SourceBuildingTypes, Mod>();
         protected override bool IsEqual(SourceBuildingTypes first, SourceBuildingTypes second) => first == second;
 
         public class SourceBuildingSegmented : UIMultySegmented<SourceBuildingTypes> { }
     }
     public class TargetBuildingPropertyPanel : EnumMultyPropertyPanel<TargetBuildingTypes, TargetBuildingPropertyPanel.TargetBuildingSegmented>
     {
-        protected override string GetDescription(TargetBuildingTypes value) => value.ToString();
+        protected override string GetDescription(TargetBuildingTypes value) => value.Description<TargetBuildingTypes, Mod>();
         protected override bool IsEqual(TargetBuildingTypes first, TargetBuildingTypes second) => first == second;
 
         public class TargetBuildingSegmented : UIMultySegmented<TargetBuildingTypes> { }
@@ -295,5 +315,5 @@ namespace NoBigTruck
         }
         protected override void SetSize() => Button.size = size;
     }
-    public class RuleHeaderPanel : HeaderPanel { }
+    public class RuleHeaderPanel : BaseDeletableHeaderPanel<BaseHeaderContent> { }
 }
