@@ -27,8 +27,8 @@ namespace NoBigTruck
         public override string NameRaw => "No Big Truck";
         public override string Description => "Big trucks dont deliver goods to stores";
 
-        public override string WorkshopUrl => "https://steamcommunity.com/sharedfiles/filedetails/?id=2069057130";
-        public override string BetaWorkshopUrl => string.Empty;
+        protected override string StableWorkshopUrl => "https://steamcommunity.com/sharedfiles/filedetails/?id=2069057130";
+        protected override string BetaWorkshopUrl => string.Empty;
 
         public override List<Version> Versions { get; } = new List<Version>
         {
@@ -92,29 +92,26 @@ namespace NoBigTruck
             if (!state)
                 OnAVODisable();
         }
-
-        protected override void OnLoadedError()
+        protected override void OnLoadError(out bool shown)
         {
-            if (base.LoadError)
-            {
-                var messageBox = MessageBoxBase.ShowModal<ErrorLoadedMessageBox>();
-                messageBox.OnSupportClick = OpenWorkshop;
-            }
-            else if (AVONotExist)
-                OnAVONotExist();
-            else if (!AVOStateWatcher.IsEnabled)
-                OnAVODisable();
+            base.OnLoadError(out shown);
 
-            static bool OpenWorkshop()
+            if (shown)
+                return;
+            else if (AVONotExist)
             {
-                SingletonMod<Mod>.Instance.OpenWorkshop();
-                return true;
+                OnAVONotExist();
+                shown = true;
+            }
+            else if (!AVOStateWatcher.IsEnabled)
+            {
+                OnAVODisable();
+                shown = true;
             }
         }
-
         public void OnAVONotExist()
         {
-            var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
+            var messageBox = MessageBox.Show<TwoButtonMessageBox>();
             messageBox.CaptionText = NameRaw;
             messageBox.MessageText = string.Format(Localize.Mod_NeedSubscribeAVO, NameRaw);
             messageBox.Button1Text = CommonLocalize.MessageBox_OK;
@@ -131,7 +128,7 @@ namespace NoBigTruck
         }
         public void OnAVODisable()
         {
-            var messageBox = MessageBoxBase.ShowModal<TwoButtonMessageBox>();
+            var messageBox = MessageBox.Show<TwoButtonMessageBox>();
             messageBox.CaptionText = NameRaw;
             messageBox.MessageText = string.Format(Localize.Mod_NeedEnableAVO, NameRaw);
             messageBox.Button1Text = CommonLocalize.MessageBox_OK;
@@ -219,7 +216,5 @@ namespace NoBigTruck
         }
 
         #endregion
-
-        class ErrorLoadedMessageBox : ErrorLoadedMessageBox<Mod> { }
     }
 }
