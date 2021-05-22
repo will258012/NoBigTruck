@@ -52,22 +52,15 @@ namespace NoBigTruck
             {
                 var infos = base.DependencyInfos;
 
-                var searcher = PluginUtilities.GetSearcher("Advanced Vehicle Options", 1548831935ul);
-                var info = new NeedDependencyInfo(DependencyState.Enable, searcher, "Advanced Vehicle Options", 1548831935ul);
+                var info = new NeedDependencyInfo(DependencyState.Enable, AVOSearcher, AVOName, AVOId);
                 infos.Add(info);
-//#if DEBUG
-//                var imtSearcher = PluginUtilities.GetSearcher("Intersection");
-//                var imtInfo = new ConflictDependencyInfo(DependencyState.Disable, imtSearcher);
-//                infos.Add(imtInfo);
 
-//                var harmonySearcher = PluginUtilities.GetSearcher("Harmony 2", 2040656402ul, 2399204842ul);
-//                var harmonyInfo = new ConflictDependencyInfo(DependencyState.Unsubscribe, harmonySearcher);
-//                infos.Add(harmonyInfo);
-//#endif
                 return infos;
             }
         }
-        private static PluginSearcher AVOSearcher { get; } = PluginUtilities.GetSearcher("Advanced Vehicle Options", 1548831935ul);
+        private static string AVOName => "Advanced Vehicle Options";
+        private static ulong AVOId => 1548831935ul;
+        private static PluginSearcher AVOSearcher { get; } = PluginUtilities.GetSearcher(AVOName, AVOId);
         public static PluginInfo AVO => PluginUtilities.GetPlugin(AVOSearcher);
 
 
