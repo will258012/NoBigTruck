@@ -102,6 +102,7 @@
   <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.ru.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\MessageBoxShared\MessageBoxShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\DependencyShared\DependencyShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <WorkshopId>2069057130</WorkshopId>

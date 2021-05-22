@@ -27,8 +27,8 @@ namespace NoBigTruck
         public override string NameRaw => "No Big Truck";
         public override string Description => "Big trucks dont deliver goods to stores";
 
-        protected override string StableWorkshopUrl => "https://steamcommunity.com/sharedfiles/filedetails/?id=2069057130";
-        protected override string BetaWorkshopUrl => string.Empty;
+        protected override ulong StableWorkshopId => 2069057130ul;
+        protected override ulong BetaWorkshopId => 0ul;
 
         public override List<Version> Versions { get; } = new List<Version>
         {
@@ -46,102 +46,36 @@ namespace NoBigTruck
             get => Localize.Culture;
             protected set => Localize.Culture = value;
         }
-        protected override bool LoadError
+        protected override List<BaseDependencyInfo> DependencyInfos
         {
-            get => base.LoadError || AVONotExist || AVOStateWatcher.IsEnabled == false;
-            set => base.LoadError = value;
-        }
-        private bool AVONotExist { get; set; }
-        public static PlaginStateWatcher AVOStateWatcher { get; set; }
+            get
+            {
+                var infos = base.DependencyInfos;
 
-        private static IPluginSearcher AVOSearcher { get; } = PluginUtilities.GetSearcher("Advanced Vehicle Options", 1548831935ul);
+                var searcher = PluginUtilities.GetSearcher("Advanced Vehicle Options", 1548831935ul);
+                var info = new NeedDependencyInfo(DependencyState.Enable, searcher, "Advanced Vehicle Options", 1548831935ul);
+                infos.Add(info);
+//#if DEBUG
+//                var imtSearcher = PluginUtilities.GetSearcher("Intersection");
+//                var imtInfo = new ConflictDependencyInfo(DependencyState.Disable, imtSearcher);
+//                infos.Add(imtInfo);
+
+//                var harmonySearcher = PluginUtilities.GetSearcher("Harmony 2", 2040656402ul, 2399204842ul);
+//                var harmonyInfo = new ConflictDependencyInfo(DependencyState.Unsubscribe, harmonySearcher);
+//                infos.Add(harmonyInfo);
+//#endif
+                return infos;
+            }
+        }
+        private static PluginSearcher AVOSearcher { get; } = PluginUtilities.GetSearcher("Advanced Vehicle Options", 1548831935ul);
         public static PluginInfo AVO => PluginUtilities.GetPlugin(AVOSearcher);
+
 
         public override string GetLocalizeString(string str, CultureInfo culture = null) => Localize.ResourceManager.GetString(str, culture ?? Culture);
         protected override void GetSettings(UIHelperBase helper)
         {
             var settings = new Settings();
             settings.OnSettingsUI(helper);
-        }
-
-        protected override void Enable()
-        {
-            base.Enable();
-
-            if (AVO is PluginInfo plugin)
-                AVOStateWatcher = new PlaginStateWatcher(plugin);
-
-            if (AVOStateWatcher != null)
-            {
-                AVONotExist = false;
-                AVOStateWatcher.StateChanged += AVOStateChanged;
-            }
-            else
-                AVONotExist = true;
-        }
-        protected override void Disable()
-        {
-            base.Disable();
-
-            if (AVOStateWatcher != null)
-                AVOStateWatcher.StateChanged -= AVOStateChanged;
-        }
-
-        private void AVOStateChanged(PluginInfo plugin, bool state)
-        {
-            if (!state)
-                OnAVODisable();
-        }
-        protected override void OnLoadError(out bool shown)
-        {
-            base.OnLoadError(out shown);
-
-            if (shown)
-                return;
-            else if (AVONotExist)
-            {
-                OnAVONotExist();
-                shown = true;
-            }
-            else if (!AVOStateWatcher.IsEnabled)
-            {
-                OnAVODisable();
-                shown = true;
-            }
-        }
-        public void OnAVONotExist()
-        {
-            var messageBox = MessageBox.Show<TwoButtonMessageBox>();
-            messageBox.CaptionText = NameRaw;
-            messageBox.MessageText = string.Format(Localize.Mod_NeedSubscribeAVO, NameRaw);
-            messageBox.Button1Text = CommonLocalize.MessageBox_OK;
-            messageBox.Button2Text = Localize.Mod_GetAVO;
-            messageBox.OnButton2Click = Enable;
-
-            messageBox.SetButtonsRatio(2, 5);
-
-            static bool Enable()
-            {
-                Utilites.OpenUrl("https://steamcommunity.com/sharedfiles/filedetails/?id=1548831935");
-                return true;
-            }
-        }
-        public void OnAVODisable()
-        {
-            var messageBox = MessageBox.Show<TwoButtonMessageBox>();
-            messageBox.CaptionText = NameRaw;
-            messageBox.MessageText = string.Format(Localize.Mod_NeedEnableAVO, NameRaw);
-            messageBox.Button1Text = CommonLocalize.MessageBox_OK;
-            messageBox.Button2Text = Localize.Mod_EnableAVO;
-            messageBox.OnButton2Click = Enable;
-
-            messageBox.SetButtonsRatio(2, 5);
-
-            static bool Enable()
-            {
-                AVOStateWatcher.Plugin.SetState(true);
-                return true;
-            }
         }
 
         #region PATCHER
