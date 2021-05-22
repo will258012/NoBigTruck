@@ -97,6 +97,15 @@ namespace NoBigTruck {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Big trucks dont deliver goods to stores.
+        /// </summary>
+        internal static string Mod_Description {
+            get {
+                return ResourceManager.GetString("Mod_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Enable AVO.
         /// </summary>
         internal static string Mod_EnableAVO {

@@ -129,6 +129,9 @@
   <data name="MaxWidth" xml:space="preserve">
     <value>Max buildings width</value>
   </data>
+  <data name="Mod_Description" xml:space="preserve">
+    <value>Big trucks dont deliver goods to stores</value>
+  </data>
   <data name="Mod_EnableAVO" xml:space="preserve">
     <value>Enable AVO</value>
   </data>

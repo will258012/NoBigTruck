@@ -129,6 +129,9 @@
   <data name="MaxWidth" xml:space="preserve">
     <value>Мин длина здания</value>
   </data>
+  <data name="Mod_Description" xml:space="preserve">
+    <value>Большие грузовики не будут доставлять товары в магазины</value>
+  </data>
   <data name="Mod_EnableAVO" xml:space="preserve">
     <value>Включить AVO</value>
   </data>

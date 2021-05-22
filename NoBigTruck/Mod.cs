@@ -25,7 +25,7 @@ namespace NoBigTruck
     public class Mod : BasePatcherMod<Mod>
     {
         public override string NameRaw => "No Big Truck";
-        public override string Description => "Big trucks dont deliver goods to stores";
+        public override string Description => !IsBeta ? Localize.Mod_Description : CommonLocalize.Mod_DescriptionBeta;
 
         protected override ulong StableWorkshopId => 2069057130ul;
         protected override ulong BetaWorkshopId => 0ul;
