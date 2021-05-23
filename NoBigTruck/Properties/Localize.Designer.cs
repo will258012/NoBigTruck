@@ -106,44 +106,6 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Enable AVO.
-        /// </summary>
-        internal static string Mod_EnableAVO {
-            get {
-                return ResourceManager.GetString("Mod_EnableAVO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Get AVO.
-        /// </summary>
-        internal static string Mod_GetAVO {
-            get {
-                return ResourceManager.GetString("Mod_GetAVO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на {0} needs Advanced Vehicle Options mod to work, but it is disabled.
-        ///You need to enable it..
-        /// </summary>
-        internal static string Mod_NeedEnableAVO {
-            get {
-                return ResourceManager.GetString("Mod_NeedEnableAVO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на {0} needs Advanced Vehicle Options mod to work.
-        ///You need to subscribe to it..
-        /// </summary>
-        internal static string Mod_NeedSubscribeAVO {
-            get {
-                return ResourceManager.GetString("Mod_NeedSubscribeAVO", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Rules.
         /// </summary>
         internal static string RulesTab {
