@@ -1,0 +1,46 @@
+[code][h1]Overview[/h1]
+[list][h2]Big trucks dont deliver goods to stores[/h2][/list]
+[/code]
+
+If you want more realism in which vehicles will deliver goods to your store, then this mod will help you with this. It makes sure that only small vans are spawn for delivery to your small shops, except situation when a large vehicle rides through small streets and makes impossible turns.
+
+[HR][/HR]
+[h1]How it work[/h1]
+Mod looks at what type of building source and target, if they are in the following lists then only small vehicles will be spawn.
+
+[b]Source[/b]
+[list]
+    [*]Industry
+    [*]Warehouse
+    [*]Outside connection
+[/list]
+
+[b]Target[/b]
+[list]
+    [*]Low Commercial
+    [*]High Commercial
+    [*]Eco Commercial
+    [*]Leisure Commercial
+    [*]Tourist Commercial
+[/list]
+
+The mod does not change saves and can enable or disable any time.
+
+[HR][/HR]
+[h1]Settings[/h1]
+You choose which trucks will be considered large and they will be excluded from the choice of vehicle for delivery. The choice is made using the mod [url=https://steamcommunity.com/workshop/filedetails/?id=1548831935]Advanced Vehicle Options[/url]
+
+In the settings, you can set one or more rules by which the mod will work, choosing for what types of sources and target mod will choose a vehicle. You can also set the maximum size (cells) of the building
+
+[HR][/HR]
+[h1]Join to discord for discussion and support[/h1]
+[url=https://discord.gg/NnwhuBKMqj][img]https://i.imgur.com/bnDNN2x.png[/img][/url]
+
+[HR][/HR] 
+[h1]If you like No Big Truck, you can support me[/h1]
+
+[url=https://www.paypal.me/macsergey][img]https://i.imgur.com/vtwKnVr.png[/img][/url][url=https://www.patreon.com/MacSergey][img]https://i.imgur.com/aMLNy32.png[/img][/url]
+
+[HR][/HR]
+[h1]Source code[/h1]
+[url=https://github.com/MacSergey/NoBigTruck][img]https://i.imgur.com/DczUXYq.png[/img][/url]
