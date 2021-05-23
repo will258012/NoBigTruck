@@ -29,10 +29,11 @@ namespace NoBigTruck
         {
             base.OnSettingsUI();
 
+            AddLanguage(GeneralTab);
             AddNotifications(GeneralTab);
 
             RulesTab = CreateTab(Localize.RulesTab);
-            RulesTab.Content.autoLayoutPadding = new RectOffset(100, 100, 0, 25);
+            RulesTab.Content.autoLayoutPadding = new RectOffset(50, 50, 0, 25);
 
             Load();
 
