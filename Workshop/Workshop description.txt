@@ -44,3 +44,8 @@ In the settings, you can set one or more rules by which the mod will work, choos
 [HR][/HR]
 [h1]Source code[/h1]
 [url=https://github.com/MacSergey/NoBigTruck][img]https://i.imgur.com/DczUXYq.png[/img][/url]
+
+[HR][/HR]
+[h1]Translations[/h1]
+If you want to help improve existing translations or you want to translate into your own language (ask to add it to the translation project).
+[url=https://crowdin.com/project/macsergey-other-mods][img]https://i.imgur.com/uG2NKvG.png[/img][/url]
