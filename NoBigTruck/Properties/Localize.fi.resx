@@ -118,51 +118,51 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNewRule" xml:space="preserve">
-    <value>Add new rule</value>
+    <value>Lisää uusi sääntö</value>
   </data>
   <data name="CheckTargetSize" xml:space="preserve">
-    <value>Check target buildings size</value>
+    <value>Tarkista kohderakennuksen koko</value>
   </data>
   <data name="MaxLength" xml:space="preserve">
-    <value>Max buildings length</value>
+    <value>Rakennuksen enimmäispituus</value>
   </data>
   <data name="MaxWidth" xml:space="preserve">
-    <value>Max buildings width</value>
+    <value>Rakennuksen enimmäisleveys</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>Big trucks dont deliver goods to stores</value>
+    <value>Suuret kuorma-autot eivät toimita tavaroita kauppoihin</value>
   </data>
   <data name="RulesTab" xml:space="preserve">
-    <value>Rules</value>
+    <value>Säännöt</value>
   </data>
   <data name="Source" xml:space="preserve">
-    <value>Source buildings type</value>
+    <value>Lähteen tyyppi</value>
   </data>
   <data name="SourceIndustry" xml:space="preserve">
-    <value>Industry</value>
+    <value>Teollisuus</value>
   </data>
   <data name="SourceOutside" xml:space="preserve">
-    <value>Outside</value>
+    <value>Tuonti</value>
   </data>
   <data name="SourceWarehouse" xml:space="preserve">
-    <value>Warehouse</value>
+    <value>Varastorakennus</value>
   </data>
   <data name="Target" xml:space="preserve">
-    <value>Target buildings type</value>
+    <value>Kohdeliikkeen tyyppi</value>
   </data>
   <data name="TargetEco" xml:space="preserve">
-    <value>Eco</value>
+    <value>Ympäristöystävällinen</value>
   </data>
   <data name="TargetHigh" xml:space="preserve">
-    <value>High</value>
+    <value>Korkea</value>
   </data>
   <data name="TargetLeisure" xml:space="preserve">
-    <value>Leisure</value>
+    <value>Ajanviete</value>
   </data>
   <data name="TargetLow" xml:space="preserve">
-    <value>Low</value>
+    <value>Matala</value>
   </data>
   <data name="TargetTourist" xml:space="preserve">
-    <value>Tourist</value>
+    <value>Turismi</value>
   </data>
 </root>
