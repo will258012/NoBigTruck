@@ -63,6 +63,11 @@ namespace NoBigTruck
         private static PluginSearcher AVOSearcher { get; } = PluginUtilities.GetSearcher(AVOName, AVOId);
         public static PluginInfo AVO => PluginUtilities.GetPlugin(AVOSearcher);
 
+        protected override void Enable()
+        {
+            base.Enable();
+            ShowWhatsNew();
+        }
 
         public override string GetLocalizeString(string str, CultureInfo culture = null) => Localize.ResourceManager.GetString(str, culture ?? Culture);
         protected override void GetSettings(UIHelperBase helper)
