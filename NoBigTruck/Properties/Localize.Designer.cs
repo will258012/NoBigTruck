@@ -106,6 +106,16 @@ namespace NoBigTruck {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added missing dependencies checker.
+        ///- Added Finnish, German, Japanese, Russian translations..
+        /// </summary>
+        internal static string Mod_WhatsNewMessage1_1 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Rules.
         /// </summary>
         internal static string RulesTab {

@@ -83,18 +83,24 @@ Global
 		ModsCommon\LocalizeShared\LocalizeShared.fi.projitems*{fe34c965-7f4a-4d52-b732-2b8a85762929}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
+		Beta Debug|Any CPU = Beta Debug|Any CPU
+		Beta Release|Any CPU = Beta Release|Any CPU
+		Stable Debug|Any CPU = Stable Debug|Any CPU
+		Stable Release|Any CPU = Stable Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{965F863B-1394-41ED-85EC-B35DC09003EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{965F863B-1394-41ED-85EC-B35DC09003EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{965F863B-1394-41ED-85EC-B35DC09003EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{965F863B-1394-41ED-85EC-B35DC09003EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Beta Debug|Any CPU.ActiveCfg = Beta Debug|Any CPU
+		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Beta Release|Any CPU.ActiveCfg = Beta Release|Any CPU
+		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Stable Debug|Any CPU.ActiveCfg = Stable Debug|Any CPU
+		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Stable Release|Any CPU.ActiveCfg = Stable Release|Any CPU
+		{965F863B-1394-41ED-85EC-B35DC09003EB}.Beta Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{965F863B-1394-41ED-85EC-B35DC09003EB}.Beta Debug|Any CPU.Build.0 = Debug|Any CPU
+		{965F863B-1394-41ED-85EC-B35DC09003EB}.Beta Release|Any CPU.ActiveCfg = Release|Any CPU
+		{965F863B-1394-41ED-85EC-B35DC09003EB}.Beta Release|Any CPU.Build.0 = Release|Any CPU
+		{965F863B-1394-41ED-85EC-B35DC09003EB}.Stable Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{965F863B-1394-41ED-85EC-B35DC09003EB}.Stable Debug|Any CPU.Build.0 = Debug|Any CPU
+		{965F863B-1394-41ED-85EC-B35DC09003EB}.Stable Release|Any CPU.ActiveCfg = Release|Any CPU
+		{965F863B-1394-41ED-85EC-B35DC09003EB}.Stable Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -122,6 +128,7 @@ Global
 		{0848D62D-8D78-4AD1-82DC-32188EC23610} = {47FEE61C-F69E-4906-98DD-3979C433964E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
+		BuildVersion_StartDate = 2000/1/1
 		SolutionGuid = {9AE01CF9-7549-4236-B657-F88D6CEA4F88}
 	EndGlobalSection
 EndGlobal
