@@ -132,6 +132,10 @@
   <data name="Mod_Description" xml:space="preserve">
     <value>Große LKW liefern keine Waren an Geschäfte</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
+    <value>- Added missing dependencies checker.
+- Added Finnish, German, Japanese, Russian translations.</value>
+  </data>
   <data name="RulesTab" xml:space="preserve">
     <value>Regeln</value>
   </data>
