@@ -106,9 +106,13 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Beta Debug|Any CPU.ActiveCfg = Beta Debug|Any CPU
+		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Beta Debug|Any CPU.Build.0 = Beta Debug|Any CPU
 		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Beta Release|Any CPU.ActiveCfg = Beta Release|Any CPU
+		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Beta Release|Any CPU.Build.0 = Beta Release|Any CPU
 		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Stable Debug|Any CPU.ActiveCfg = Stable Debug|Any CPU
+		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Stable Debug|Any CPU.Build.0 = Stable Debug|Any CPU
 		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Stable Release|Any CPU.ActiveCfg = Stable Release|Any CPU
+		{23581242-6240-4851-9A0C-BF93E2A4F4B0}.Stable Release|Any CPU.Build.0 = Stable Release|Any CPU
 		{965F863B-1394-41ED-85EC-B35DC09003EB}.Beta Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{965F863B-1394-41ED-85EC-B35DC09003EB}.Beta Debug|Any CPU.Build.0 = Debug|Any CPU
 		{965F863B-1394-41ED-85EC-B35DC09003EB}.Beta Release|Any CPU.ActiveCfg = Release|Any CPU
