@@ -32,6 +32,7 @@ namespace NoBigTruck
 
         public override List<Version> Versions { get; } = new List<Version>
         {
+            new Version("1.1"),
             new Version("1.0"),
         };
 
