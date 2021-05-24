@@ -31,8 +31,6 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalizeShared", "ModsCommo
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalizeShared.ru", "ModsCommon\LocalizeShared\LocalizeShared.ru.shproj", "{4093656F-54A7-4EB8-B021-4C18B5E16407}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MessageBoxShared", "ModsCommon\MessageBoxShared\MessageBoxShared.shproj", "{D5B649EC-0FEC-48F3-8316-6E266169CDCC}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DependencyShared", "ModsCommon\DependencyShared\DependencyShared.shproj", "{2873738F-AA2C-4C8A-BE06-BC59ACCA56F0}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LocalizeShared.fi", "ModsCommon\LocalizeShared\LocalizeShared.fi.shproj", "{FE34C965-7F4A-4D52-B732-2B8A85762929}"
@@ -50,6 +48,12 @@ EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "AutoLayoutPanelShared", "ModsCommon\AutoLayoutPanelShared\AutoLayoutPanelShared.shproj", "{FC5E6F74-8408-4FD8-A46A-A7F549E30454}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CustomUIShared", "ModsCommon\CustomUIShared\CustomUIShared.shproj", "{4A794B1D-48BE-4352-92D0-9D897393587C}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SimpleMessageBoxShared", "ModsCommon\SimpleMessageBoxShared\SimpleMessageBoxShared.shproj", "{A3055CAA-4807-4C49-973C-7B92610C25C8}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WhatsNewMessageBoxShared", "ModsCommon\WhatsNewMessageBoxShared\WhatsNewMessageBoxShared.shproj", "{8431FA6D-34A1-4700-8D4F-09C9E65346E3}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MessageBoxShared", "ModsCommon\MessageBoxShared\MessageBoxShared.shproj", "{D5B649EC-0FEC-48F3-8316-6E266169CDCC}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -69,14 +73,18 @@ Global
 		ModsCommon\PluginsShared\PluginsShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
 		ModsCommon\PropertyPanelShared\PropertyPanelShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
 		ModsCommon\PropertyValueShared\PropertyValueShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
+		ModsCommon\SimpleMessageBoxShared\SimpleMessageBoxShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
 		ModsCommon\SingletonShared\SingletonShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
 		ModsCommon\UIShared\ModsUIShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
+		ModsCommon\WhatsNewMessageBoxShared\WhatsNewMessageBoxShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
 		ModsCommon\XmlExtension\XmlExtension.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
 		ModsCommon\ModShared\ModsCommonShared.projitems*{24615a21-afa6-42c0-8b7a-4fb3329b056f}*SharedItemsImports = 13
 		ModsCommon\DependencyShared\DependencyShared.projitems*{2873738f-aa2c-4c8a-be06-bc59acca56f0}*SharedItemsImports = 13
 		ModsCommon\SingletonShared\SingletonShared.projitems*{32aee23b-af72-45b6-8011-5ec3b139d2df}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.ru.projitems*{4093656f-54a7-4eb8-b021-4c18b5e16407}*SharedItemsImports = 13
 		ModsCommon\CustomUIShared\CustomUIShared.projitems*{4a794b1d-48be-4352-92d0-9d897393587c}*SharedItemsImports = 13
+		ModsCommon\WhatsNewMessageBoxShared\WhatsNewMessageBoxShared.projitems*{8431fa6d-34a1-4700-8d4f-09c9e65346e3}*SharedItemsImports = 13
+		ModsCommon\SimpleMessageBoxShared\SimpleMessageBoxShared.projitems*{a3055caa-4807-4c49-973c-7b92610c25c8}*SharedItemsImports = 13
 		ModsCommon\PropertyPanelShared\PropertyPanelShared.projitems*{abe0f508-441b-4871-a17f-3f345f5dc42b}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.ja.projitems*{b0c05991-7f01-40c4-8efb-9d765cc72534}*SharedItemsImports = 13
 		ModsCommon\PluginsShared\PluginsShared.projitems*{b92e01e9-0dfc-455f-8164-f68a2a602fbc}*SharedItemsImports = 13
@@ -126,7 +134,6 @@ Global
 		{965F863B-1394-41ED-85EC-B35DC09003EB} = {1DD9E545-FBCD-42C6-8E37-A56E341CC115}
 		{F135CD5D-4CAB-4347-BF44-1C6D0794A19D} = {1DD9E545-FBCD-42C6-8E37-A56E341CC115}
 		{4093656F-54A7-4EB8-B021-4C18B5E16407} = {1DD9E545-FBCD-42C6-8E37-A56E341CC115}
-		{D5B649EC-0FEC-48F3-8316-6E266169CDCC} = {21802331-AD07-4C9B-8B06-BFD07EB30764}
 		{2873738F-AA2C-4C8A-BE06-BC59ACCA56F0} = {0848D62D-8D78-4AD1-82DC-32188EC23610}
 		{FE34C965-7F4A-4D52-B732-2B8A85762929} = {1DD9E545-FBCD-42C6-8E37-A56E341CC115}
 		{B0C05991-7F01-40C4-8EFB-9D765CC72534} = {1DD9E545-FBCD-42C6-8E37-A56E341CC115}
@@ -136,9 +143,12 @@ Global
 		{0848D62D-8D78-4AD1-82DC-32188EC23610} = {47FEE61C-F69E-4906-98DD-3979C433964E}
 		{FC5E6F74-8408-4FD8-A46A-A7F549E30454} = {21802331-AD07-4C9B-8B06-BFD07EB30764}
 		{4A794B1D-48BE-4352-92D0-9D897393587C} = {21802331-AD07-4C9B-8B06-BFD07EB30764}
+		{A3055CAA-4807-4C49-973C-7B92610C25C8} = {21802331-AD07-4C9B-8B06-BFD07EB30764}
+		{8431FA6D-34A1-4700-8D4F-09C9E65346E3} = {21802331-AD07-4C9B-8B06-BFD07EB30764}
+		{D5B649EC-0FEC-48F3-8316-6E266169CDCC} = {21802331-AD07-4C9B-8B06-BFD07EB30764}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9AE01CF9-7549-4236-B657-F88D6CEA4F88}
 		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {9AE01CF9-7549-4236-B657-F88D6CEA4F88}
 	EndGlobalSection
 EndGlobal
