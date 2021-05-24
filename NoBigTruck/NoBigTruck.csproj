@@ -109,6 +109,8 @@
   <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.fi.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.ja.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\LocalizeShared.de.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\SingletonShared\SingletonShared.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LoggerShared\LoggerShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <WorkshopId>2069057130</WorkshopId>
