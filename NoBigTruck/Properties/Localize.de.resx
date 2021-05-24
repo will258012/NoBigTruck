@@ -151,7 +151,7 @@
     <value>Typ des Ziel-Gebäudes</value>
   </data>
   <data name="TargetEco" xml:space="preserve">
-    <value>Öko</value>
+    <value>Ökologisch</value>
   </data>
   <data name="TargetHigh" xml:space="preserve">
     <value>Hoch</value>
