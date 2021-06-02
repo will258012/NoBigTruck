@@ -118,55 +118,55 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNewRule" xml:space="preserve">
-    <value>Add new rule</value>
+    <value>Dodaj nową regułę</value>
   </data>
   <data name="CheckTargetSize" xml:space="preserve">
-    <value>Check target buildings size</value>
+    <value>Sprawdź docelowy rozmiar budynków</value>
   </data>
   <data name="MaxLength" xml:space="preserve">
-    <value>Max buildings length</value>
+    <value>Maksymalna długość budynków</value>
   </data>
   <data name="MaxWidth" xml:space="preserve">
-    <value>Max buildings width</value>
+    <value>Maksymalna szerokość budynków</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>Big trucks dont deliver goods to stores</value>
+    <value>Duże ciężarówki nie dostarczają towarów do sklepów</value>
   </data>
   <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
     <value>- Added missing dependencies checker.
 - Added Finnish, German, Japanese, Russian translations.</value>
   </data>
   <data name="RulesTab" xml:space="preserve">
-    <value>Rules</value>
+    <value>Reguły</value>
   </data>
   <data name="Source" xml:space="preserve">
-    <value>Source buildings type</value>
+    <value>Źródłowy typ budynków</value>
   </data>
   <data name="SourceIndustry" xml:space="preserve">
-    <value>Industry</value>
+    <value>Przemysł</value>
   </data>
   <data name="SourceOutside" xml:space="preserve">
-    <value>Outside</value>
+    <value>Na zewnątrz</value>
   </data>
   <data name="SourceWarehouse" xml:space="preserve">
-    <value>Warehouse</value>
+    <value>Magazyn</value>
   </data>
   <data name="Target" xml:space="preserve">
-    <value>Target buildings type</value>
+    <value>Docelowy typ budynków</value>
   </data>
   <data name="TargetEco" xml:space="preserve">
-    <value>Eco</value>
+    <value>Eko</value>
   </data>
   <data name="TargetHigh" xml:space="preserve">
-    <value>High</value>
+    <value>Wysoki</value>
   </data>
   <data name="TargetLeisure" xml:space="preserve">
-    <value>Leisure</value>
+    <value>Wypoczynek</value>
   </data>
   <data name="TargetLow" xml:space="preserve">
-    <value>Low</value>
+    <value>Niski</value>
   </data>
   <data name="TargetTourist" xml:space="preserve">
-    <value>Tourist</value>
+    <value>Turystyka</value>
   </data>
 </root>
