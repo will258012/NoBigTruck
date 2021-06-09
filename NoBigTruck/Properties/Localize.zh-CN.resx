@@ -130,7 +130,7 @@
     <value>最大建筑宽度</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>大型卡车不向商店运送货物</value>
+    <value>禁止大型卡车向商店运送货物</value>
   </data>
   <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
     <value>- Added missing dependencies checker.
@@ -140,13 +140,13 @@
     <value>规则</value>
   </data>
   <data name="Source" xml:space="preserve">
-    <value>源建筑物类型</value>
+    <value>货源建筑物类型</value>
   </data>
   <data name="SourceIndustry" xml:space="preserve">
     <value>工业</value>
   </data>
   <data name="SourceOutside" xml:space="preserve">
-    <value>境外</value>
+    <value>外部</value>
   </data>
   <data name="SourceWarehouse" xml:space="preserve">
     <value>仓库</value>
