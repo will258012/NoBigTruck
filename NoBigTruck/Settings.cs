@@ -31,7 +31,10 @@ namespace NoBigTruck
 
             AddLanguage(GeneralTab);
             AddNotifications(GeneralTab);
-
+#if BETA
+            var reportGroup = GeneralTab.AddGroup("Report");
+            AddHarmonyReport(reportGroup);
+#endif
             RulesTab = CreateTab(Localize.RulesTab);
             RulesTab.Content.autoLayoutPadding = new RectOffset(50, 50, 0, 25);
 
@@ -80,12 +83,6 @@ namespace NoBigTruck
                 UnityEngine.Object.Destroy(rulePanel);
                 DeleteRule(rule);
             }
-        }
-        private void MainPanelSizeChanged(UIComponent component, Vector2 value)
-        {
-            var mainPanel = component as UIScrollablePanel;
-            foreach (var item in mainPanel.components)
-                item.width = mainPanel.width - mainPanel.autoLayoutPadding.horizontal - mainPanel.scrollPadding.horizontal;
         }
 
         private void Load()
@@ -259,6 +256,9 @@ namespace NoBigTruck
     [Flags]
     public enum SourceBuildingTypes
     {
+        [NotVisible]
+        None = 0,
+
         [Description(nameof(Localize.SourceIndustry))]
         Industry = 1,
 
@@ -275,6 +275,9 @@ namespace NoBigTruck
     [Flags]
     public enum TargetBuildingTypes
     {
+        [NotVisible]
+        None = 0,
+
         [Description(nameof(Localize.TargetLow))]
         Low = 1,
 
@@ -289,6 +292,18 @@ namespace NoBigTruck
 
         [Description(nameof(Localize.TargetTourist))]
         Tourist = 16,
+
+        [NotVisible]
+        Industry = 32,
+
+        [NotVisible]
+        Outside = 64,
+
+        [NotVisible]
+        Warehouse = 128,
+
+        [NotVisible]
+        Disaster = 256,
 
         [NotVisible]
         All = Low | High | Eco | Leisure | Tourist,

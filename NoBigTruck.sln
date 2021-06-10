@@ -55,13 +55,22 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WhatsNewMessageBoxShared", 
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MessageBoxShared", "ModsCommon\MessageBoxShared\MessageBoxShared.shproj", "{D5B649EC-0FEC-48F3-8316-6E266169CDCC}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HarmonyReportShared", "ModsCommon\HarmonyReportShared\HarmonyReportShared.shproj", "{B5958052-B477-4182-AB63-B96C90FD0619}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LoadExtensionShared", "ModsCommon\LoadExtensionShared\LoadExtensionShared.shproj", "{B0DEA36D-46FD-4D66-9285-57E85AB0BCDF}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ColorsShared", "ModsCommon\ColorsShared\ColorsShared.shproj", "{B3E09C99-1583-40D2-AE3B-AE1453766DC3}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ModsCommon\HeaderShared\HeaderShared.projitems*{0bf47c3f-c968-4759-8d99-d088b0d58fba}*SharedItemsImports = 13
 		ModsCommon\AutoLayoutPanelShared\AutoLayoutPanelShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
+		ModsCommon\ColorsShared\ColorsShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
 		ModsCommon\CustomUIShared\CustomUIShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
 		ModsCommon\DependencyShared\DependencyShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
+		ModsCommon\HarmonyReportShared\HarmonyReportShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
 		ModsCommon\HeaderShared\HeaderShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
+		ModsCommon\LoadExtensionShared\LoadExtensionShared.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
 		ModsCommon\LocalizeShared\LocalizeShared.de.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
 		ModsCommon\LocalizeShared\LocalizeShared.fi.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
 		ModsCommon\LocalizeShared\LocalizeShared.ja.projitems*{23581242-6240-4851-9a0c-bf93e2a4f4b0}*SharedItemsImports = 4
@@ -87,6 +96,9 @@ Global
 		ModsCommon\SimpleMessageBoxShared\SimpleMessageBoxShared.projitems*{a3055caa-4807-4c49-973c-7b92610c25c8}*SharedItemsImports = 13
 		ModsCommon\PropertyPanelShared\PropertyPanelShared.projitems*{abe0f508-441b-4871-a17f-3f345f5dc42b}*SharedItemsImports = 13
 		ModsCommon\LocalizeShared\LocalizeShared.ja.projitems*{b0c05991-7f01-40c4-8efb-9d765cc72534}*SharedItemsImports = 13
+		ModsCommon\LoadExtensionShared\LoadExtensionShared.projitems*{b0dea36d-46fd-4d66-9285-57e85ab0bcdf}*SharedItemsImports = 13
+		ModsCommon\ColorsShared\ColorsShared.projitems*{b3e09c99-1583-40d2-ae3b-ae1453766dc3}*SharedItemsImports = 13
+		ModsCommon\HarmonyReportShared\HarmonyReportShared.projitems*{b5958052-b477-4182-ab63-b96c90fd0619}*SharedItemsImports = 13
 		ModsCommon\PluginsShared\PluginsShared.projitems*{b92e01e9-0dfc-455f-8164-f68a2a602fbc}*SharedItemsImports = 13
 		ModsCommon\UIShared\ModsUIShared.projitems*{be979510-7832-4714-95a3-305065d9ded6}*SharedItemsImports = 13
 		ModsCommon\MessageBoxShared\MessageBoxShared.projitems*{d5b649ec-0fec-48f3-8316-6e266169cdcc}*SharedItemsImports = 13
@@ -150,9 +162,12 @@ Global
 		{A3055CAA-4807-4C49-973C-7B92610C25C8} = {21802331-AD07-4C9B-8B06-BFD07EB30764}
 		{8431FA6D-34A1-4700-8D4F-09C9E65346E3} = {21802331-AD07-4C9B-8B06-BFD07EB30764}
 		{D5B649EC-0FEC-48F3-8316-6E266169CDCC} = {21802331-AD07-4C9B-8B06-BFD07EB30764}
+		{B5958052-B477-4182-AB63-B96C90FD0619} = {0848D62D-8D78-4AD1-82DC-32188EC23610}
+		{B0DEA36D-46FD-4D66-9285-57E85AB0BCDF} = {0848D62D-8D78-4AD1-82DC-32188EC23610}
+		{B3E09C99-1583-40D2-AE3B-AE1453766DC3} = {0848D62D-8D78-4AD1-82DC-32188EC23610}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		BuildVersion_StartDate = 2000/1/1
 		SolutionGuid = {9AE01CF9-7549-4236-B657-F88D6CEA4F88}
+		BuildVersion_StartDate = 2000/1/1
 	EndGlobalSection
 EndGlobal

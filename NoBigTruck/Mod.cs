@@ -15,6 +15,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Resources;
 using System.Runtime.InteropServices;
 using System.Text;
 using UnityEngine;
@@ -42,11 +43,8 @@ namespace NoBigTruck
         public override bool IsBeta => false;
 #endif
         protected override string IdRaw => nameof(NoBigTruck);
-        public override CultureInfo Culture
-        {
-            get => Localize.Culture;
-            protected set => Localize.Culture = value;
-        }
+
+        protected override ResourceManager LocalizeManager => Localize.ResourceManager;
         protected override List<BaseDependencyInfo> DependencyInfos
         {
             get
@@ -64,18 +62,13 @@ namespace NoBigTruck
         private static PluginSearcher AVOSearcher { get; } = PluginUtilities.GetSearcher(AVOName, AVOId);
         public static PluginInfo AVO => PluginUtilities.GetPlugin(AVOSearcher);
 
-        protected override void Enable()
-        {
-            base.Enable();
-            ShowWhatsNew();
-        }
-
         public override string GetLocalizeString(string str, CultureInfo culture = null) => Localize.ResourceManager.GetString(str, culture ?? Culture);
         protected override void GetSettings(UIHelperBase helper)
         {
             var settings = new Settings();
             settings.OnSettingsUI(helper);
         }
+        protected override void SetCulture(CultureInfo culture) => Localize.Culture = culture;
 
         #region PATCHER
 
@@ -83,10 +76,12 @@ namespace NoBigTruck
         {
             var success = true;
 
-            success &= IndustrialBuildingAIStartTransferPatch();
-            success &= OutsideConnectionAIStartConnectionTransferImplPatch();
-            success &= WarehouseAIStartTransferPatch();
-            success &= VehicleManagerRefreshTransferVehiclesPatch();
+            success &= IndustrialBuildingAI_StartTransfer_Patch();
+            success &= IndustrialExtractorAI_StartTransfer_Patch();
+            success &= OutsideConnectionAI_StartConnectionTransferImpl_Patch();
+            success &= WarehouseAI_StartTransfer_Patch();
+            success &= CargoTruckAI_ChangeVehicleType_Patch();
+            success &= VehicleManager_RefreshTransferVehicles_Patch();
 
             if (AVO is null)
                 Logger.Debug("Advanced Vehicle Options not exist, skip patches");
@@ -96,50 +91,27 @@ namespace NoBigTruck
             return success;
         }
 
-        private bool IndustrialBuildingAIStartTransferPatch()
+        private bool IndustrialBuildingAI_StartTransfer_Patch()
         {
-            return AddTranspiler(typeof(Mod), nameof(Mod.BuildingDecorationLoadPathsTranspiler), typeof(BuildingDecoration), nameof(BuildingDecoration.LoadPaths));
+            return AddTranspiler(typeof(Patcher), nameof(Patcher.StartTransfer_Transpiler), typeof(IndustrialBuildingAI), nameof(IndustrialBuildingAI.StartTransfer));
         }
-        private bool OutsideConnectionAIStartConnectionTransferImplPatch()
+        private bool IndustrialExtractorAI_StartTransfer_Patch()
         {
-            return AddTranspiler(typeof(Mod), nameof(Mod.BuildingDecorationLoadPathsTranspiler), typeof(OutsideConnectionAI), "StartConnectionTransferImpl");
+            return AddTranspiler(typeof(Patcher), nameof(Patcher.StartTransfer_Transpiler), typeof(IndustrialExtractorAI), nameof(IndustrialExtractorAI.StartTransfer));
         }
-        private static IEnumerable<CodeInstruction> BuildingDecorationLoadPathsTranspiler(MethodBase original, ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        private bool OutsideConnectionAI_StartConnectionTransferImpl_Patch()
         {
-            foreach (var instruction in instructions)
-            {
-                if (instruction.opcode == OpCodes.Callvirt && instruction.operand?.ToString().Contains(nameof(VehicleManager.GetRandomVehicleInfo)) == true)
-                {
-                    yield return new CodeInstruction(OpCodes.Ldarg_S, original.IsStatic ? 0 : 1);
-                    yield return new CodeInstruction(OpCodes.Ldarg_S, original.IsStatic ? 2 : 3);
-                    yield return new CodeInstruction(OpCodes.Ldarg_S, original.IsStatic ? 3 : 4);
-                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Manager), nameof(Manager.GetRandomVehicleInfo)));
-                }
-                else
-                    yield return instruction;
-            }
+            return AddTranspiler(typeof(Patcher), nameof(Patcher.StartTransfer_Transpiler), typeof(OutsideConnectionAI), "StartConnectionTransferImpl");
         }
-
-        private bool WarehouseAIStartTransferPatch()
+        private bool WarehouseAI_StartTransfer_Patch()
         {
-            return AddTranspiler(typeof(Mod), nameof(Mod.WarehouseAIStartTransferTranspiler), typeof(WarehouseAI), nameof(WarehouseAI.StartTransfer));
+            return AddTranspiler(typeof(Patcher), nameof(Patcher.WarehouseAI_StartTransfer_Transpiler), typeof(WarehouseAI), nameof(WarehouseAI.StartTransfer));
         }
-        private static IEnumerable<CodeInstruction> WarehouseAIStartTransferTranspiler(MethodBase original, ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        private bool CargoTruckAI_ChangeVehicleType_Patch()
         {
-            foreach (var instruction in instructions)
-            {
-                if (instruction.opcode == OpCodes.Call && instruction.operand?.ToString().Contains(nameof(WarehouseAI.GetTransferVehicleService)) == true)
-                {
-                    yield return new CodeInstruction(OpCodes.Ldarg_S, 1);
-                    yield return new CodeInstruction(OpCodes.Ldarg_S, 4);
-                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Manager), nameof(Manager.GetTransferVehicleService)));
-                }
-                else
-                    yield return instruction;
-            }
+            return AddTranspiler(typeof(Patcher), nameof(Patcher.CargoTruckAI_ChangeVehicleType_Transpiler), typeof(CargoTruckAI), nameof(CargoTruckAI.ChangeVehicleType), new Type[] { typeof(VehicleInfo), typeof(ushort), typeof(Vehicle).MakeByRefType(), typeof(PathUnit.Position), typeof(uint)});
         }
-
-        private bool VehicleManagerRefreshTransferVehiclesPatch()
+        private bool VehicleManager_RefreshTransferVehicles_Patch()
         {
             return AddPostfix(typeof(Manager), nameof(Manager.RefreshTransferVehicles), typeof(VehicleManager), nameof(VehicleManager.RefreshTransferVehicles));
         }
@@ -149,5 +121,58 @@ namespace NoBigTruck
         }
 
         #endregion
+    }
+    public class LoadingExtension : BaseLoadingExtension<Mod> { }
+    public static class Patcher
+    {
+        private static MethodInfo ReplaceMethod { get; } = AccessTools.Method(typeof(VehicleManager), nameof(VehicleManager.GetRandomVehicleInfo), new Type[] { typeof(Randomizer).MakeByRefType(), typeof(ItemClass.Service), typeof(ItemClass.SubService), typeof(ItemClass.Level)});
+        public static IEnumerable<CodeInstruction> StartTransfer_Transpiler(MethodBase original, ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        {
+            foreach (var instruction in instructions)
+            {
+                if (instruction.opcode == OpCodes.Callvirt && instruction.operand == ReplaceMethod)
+                {
+                    yield return new CodeInstruction(OpCodes.Ldarg_S, original.IsStatic ? 0 : 1);
+                    yield return new CodeInstruction(OpCodes.Ldarga_S, original.IsStatic ? 3 : 4);
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(TransferManager.TransferOffer), nameof(TransferManager.TransferOffer.Building)));
+                    yield return new CodeInstruction(OpCodes.Ldarg_S, original.IsStatic ? 2 : 3);
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Manager), nameof(Manager.GetRandomVehicleInfo)));
+                }
+                else
+                    yield return instruction;
+            }
+        }
+        public static IEnumerable<CodeInstruction> WarehouseAI_StartTransfer_Transpiler(MethodBase original, ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        {
+            var method = AccessTools.Method(typeof(WarehouseAI), nameof(WarehouseAI.GetTransferVehicleService));
+            foreach (var instruction in instructions)
+            {
+                if (instruction.opcode == OpCodes.Call && instruction.operand == method)
+                {
+                    yield return new CodeInstruction(OpCodes.Ldarg_S, 1);
+                    yield return new CodeInstruction(OpCodes.Ldarga_S, 4);
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.PropertyGetter(typeof(TransferManager.TransferOffer), nameof(TransferManager.TransferOffer.Building)));
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Manager), nameof(Manager.GetTransferVehicleService)));
+                }
+                else
+                    yield return instruction;
+            }
+        }
+        public static IEnumerable<CodeInstruction> CargoTruckAI_ChangeVehicleType_Transpiler(MethodBase original, ILGenerator generator, IEnumerable<CodeInstruction> instructions)
+        {
+            foreach (var instruction in instructions)
+            {
+                if (instruction.opcode == OpCodes.Callvirt && instruction.operand == ReplaceMethod)
+                {
+                    yield return new CodeInstruction(OpCodes.Ldloc_S, 6);
+                    yield return new CodeInstruction(OpCodes.Ldloc_S, 7);
+                    yield return new CodeInstruction(OpCodes.Ldarg_2);
+                    yield return new CodeInstruction(OpCodes.Ldfld, AccessTools.Field(typeof(Vehicle), nameof(Vehicle.m_transferType)));
+                    yield return new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(Manager), nameof(Manager.GetRandomVehicleInfo)));
+                }
+                else
+                    yield return instruction;
+            }
+        }
     }
 }
