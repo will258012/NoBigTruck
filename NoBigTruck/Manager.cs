@@ -13,8 +13,11 @@ namespace NoBigTruck
 {
     public static class Manager
     {
-        private static MethodInfo GetTransferIndexDelegate { get; } = AccessTools.Method(typeof(VehicleManager), "GetTransferIndex");
-        private static FieldInfo TransferVehiclesDelegate { get; } = AccessTools.Field(typeof(VehicleManager), "m_transferVehicles");
+        private delegate int GetTransferIndexDelegate(ItemClass.Service service, ItemClass.SubService subService, ItemClass.Level level);
+
+        private static GetTransferIndexDelegate GetTransferIndex { get; } = AccessTools.MethodDelegate<GetTransferIndexDelegate>(AccessTools.Method(typeof(VehicleManager), "GetTransferIndex"));
+        private static AccessTools.FieldRef<VehicleManager, FastList<ushort>[]> GetTransferVehicles { get; } = AccessTools.FieldRefAccess<VehicleManager, FastList<ushort>[]>(AccessTools.Field(typeof(VehicleManager), "m_transferVehicles"));
+
         private static Dictionary<int, List<VehicleInfo>> NoBigTrucks { get; } = new Dictionary<int, List<VehicleInfo>>();
 
         public static void RefreshTransferVehicles()
@@ -37,7 +40,7 @@ namespace NoBigTruck
                 vehicles = new List<VehicleInfo>();
                 NoBigTrucks[transferIndex] = vehicles;
 
-                var fastList = (TransferVehiclesDelegate.GetValue(Singleton<VehicleManager>.instance) as FastList<ushort>[])[transferIndex];
+                var fastList = GetTransferVehicles(Singleton<VehicleManager>.instance)[transferIndex];
                 foreach (var index in fastList)
                 {
                     var vehicleInfo = PrefabCollection<VehicleInfo>.GetPrefab(index);
@@ -51,46 +54,59 @@ namespace NoBigTruck
 
             return vehicles;
         }
-
-        public static VehicleInfo GetRandomVehicleInfo(VehicleManager manager, ref Randomizer r, ItemClass.Service service, ItemClass.SubService subService, ItemClass.Level level, ushort buildingID, TransferManager.TransferReason material, TransferManager.TransferOffer offer)
+        public static VehicleInfo GetRandomVehicleInfo(VehicleManager manager, ref Randomizer r, ItemClass.Service service, ItemClass.SubService subService, ItemClass.Level level, ushort sourceBuildingId, ushort targetBuildingId, TransferManager.TransferReason material)
         {
-#if DEBUG
-            SingletonMod<Mod>.Logger.Debug($"{nameof(GetRandomVehicleInfo)}: \nsource: {buildingID}; target: {offer.Building}; {nameof(material)}: {material};");
-#endif
-            if (material == TransferManager.TransferReason.Goods && CheckRules(buildingID, offer.Building))
+            if (material == TransferManager.TransferReason.Goods)
             {
-                var transferIndex = (int)GetTransferIndexDelegate.Invoke(null, new object[] { service, subService, level });
-                var noBigTrucks = GetVehicle(transferIndex);
 
-                if (noBigTrucks.Any())
+                var selectVehicle = default(VehicleInfo);
+#if DEBUG
+                var log = $"\n\tGet vehicle: source={sourceBuildingId}; target={targetBuildingId};";
+                if (CheckRules(sourceBuildingId, targetBuildingId, ref log))
+#else
+                if (CheckRules(sourceBuildingId, targetBuildingId))
+#endif
                 {
-                    var selectIndex = r.Int32((uint)noBigTrucks.Count);
-                    var selectVehicle = noBigTrucks[selectIndex];
-#if DEBUG
-                    SingletonMod<Mod>.Logger.Debug($"VehicleSelected: {selectVehicle}");
-#endif
-                    return selectVehicle;
-                }
-#if DEBUG
-                else
-                    SingletonMod<Mod>.Logger.Debug($"No one not large vehicle");
-#endif
-            }
+                    var transferIndex = GetTransferIndex(service, subService, level);
+                    var noBigTrucks = GetVehicle(transferIndex);
 
-            return manager.GetRandomVehicleInfo(ref r, service, subService, level);
+                    if (noBigTrucks.Any())
+                    {
+                        var selectIndex = r.Int32((uint)noBigTrucks.Count);
+                        selectVehicle = noBigTrucks[selectIndex];
+                    }
+#if DEBUG
+                    else
+                        log += "No one no big truck";
+#endif
+                }
+
+                selectVehicle ??= manager.GetRandomVehicleInfo(ref r, service, subService, level);
+#if DEBUG
+                log += $"\n\t{(selectVehicle != null ? $"Selected vehicle: { selectVehicle.name}" : "Vehicle not found")}";
+                SingletonMod<Mod>.Logger.Debug(log);
+#endif
+                return selectVehicle;
+            }
+            else
+                return manager.GetRandomVehicleInfo(ref r, service, subService, level);
         }
 
-        public static VehicleInfo GetTransferVehicleService(TransferManager.TransferReason material, ItemClass.Level level, ref Randomizer randomizer, ushort buildingID, TransferManager.TransferOffer offer)
+        public static VehicleInfo GetTransferVehicleService(TransferManager.TransferReason material, ItemClass.Level level, ref Randomizer randomizer, ushort targetBuildingId, ushort sourceBuildingId)
         {
             var vehicleInfo = WarehouseAI.GetTransferVehicleService(material, level, ref randomizer);
 
             if (vehicleInfo == null)
                 return null;
             else
-                return GetRandomVehicleInfo(Singleton<VehicleManager>.instance, ref randomizer, vehicleInfo.GetService(), vehicleInfo.GetSubService(), level, buildingID, material, offer);
+                return GetRandomVehicleInfo(Singleton<VehicleManager>.instance, ref randomizer, vehicleInfo.GetService(), vehicleInfo.GetSubService(), level, targetBuildingId, sourceBuildingId, material);
         }
 
+#if DEBUG
+        public static bool CheckRules(ushort sourceBuildingId, ushort targetBuildingId, ref string log)
+#else
         public static bool CheckRules(ushort sourceBuildingId, ushort targetBuildingId)
+#endif
         {
             var sourceType = GetSourceBuildings(sourceBuildingId, out var _);
             var targetType = GetTargetBuildings(targetBuildingId, out var targetBuildingInfo);
@@ -98,9 +114,9 @@ namespace NoBigTruck
             var buildingLength = targetBuildingInfo.m_cellLength;
             var buildingWidth = targetBuildingInfo.m_cellWidth;
 
-            var result = sourceType != 0 && targetType != 0 && Settings.Rules.Any(CheckRule);
+            var result = SourceBuildingTypes.All.IsFlagSet(sourceType) && TargetBuildingTypes.All.IsFlagSet(targetType) && Settings.Rules.Any(CheckRule);
 #if DEBUG
-            SingletonMod<Mod>.Logger.Debug($"{nameof(CheckRules)}: {nameof(sourceType)}={sourceType}; {nameof(targetType)}={targetType}; {nameof(buildingLength)}={buildingLength}; {nameof(buildingWidth)}={buildingWidth}; {nameof(result)}={result};");
+            log += $"\n\tCheck rules: result={result}; source={sourceType}; target={targetType}; length={buildingLength}; width={buildingWidth}; ";
 #endif
             return result;
 
@@ -121,27 +137,28 @@ namespace NoBigTruck
 
             return buildingInfo.m_class.m_service switch
             {
-                ItemClass.Service.Road => SourceBuildingTypes.Outside,
+                ItemClass.Service.Road or ItemClass.Service.PublicTransport => SourceBuildingTypes.Outside,
                 ItemClass.Service.PlayerIndustry => SourceBuildingTypes.Warehouse,
                 ItemClass.Service.Industrial => SourceBuildingTypes.Industry,
-                _ => 0,
+                _ => SourceBuildingTypes.None,
             };
         }
         static TargetBuildingTypes GetTargetBuildings(ushort id, out BuildingInfo buildingInfo)
         {
             buildingInfo = GetBuildingInfo(id);
 
-            if (buildingInfo.m_class.m_service != ItemClass.Service.Commercial)
-                return 0;
-
-            return buildingInfo.m_class.m_subService switch
+            return buildingInfo.m_class switch
             {
-                ItemClass.SubService.CommercialLow => TargetBuildingTypes.Low,
-                ItemClass.SubService.CommercialHigh => TargetBuildingTypes.High,
-                ItemClass.SubService.CommercialEco => TargetBuildingTypes.Eco,
-                ItemClass.SubService.CommercialLeisure => TargetBuildingTypes.Leisure,
-                ItemClass.SubService.CommercialTourist => TargetBuildingTypes.Tourist,
-                _ => 0,
+                { m_subService: ItemClass.SubService.CommercialLow } => TargetBuildingTypes.Low,
+                { m_subService: ItemClass.SubService.CommercialHigh } => TargetBuildingTypes.High,
+                { m_subService: ItemClass.SubService.CommercialEco } => TargetBuildingTypes.Eco,
+                { m_subService: ItemClass.SubService.CommercialLeisure } => TargetBuildingTypes.Leisure,
+                { m_subService: ItemClass.SubService.CommercialTourist } => TargetBuildingTypes.Tourist,
+                { m_service: ItemClass.Service.Road } or { m_service: ItemClass.Service.PublicTransport} => TargetBuildingTypes.Outside,
+                { m_service: ItemClass.Service.PlayerIndustry } => TargetBuildingTypes.Warehouse,
+                { m_service: ItemClass.Service.Industrial } => TargetBuildingTypes.Industry,
+                { m_service: ItemClass.Service.Disaster } => TargetBuildingTypes.Disaster,
+                _ => TargetBuildingTypes.None,
             };
         }
     }
