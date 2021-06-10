@@ -29,7 +29,7 @@ namespace NoBigTruck
         public override string Description => !IsBeta ? Localize.Mod_Description : CommonLocalize.Mod_DescriptionBeta;
 
         protected override ulong StableWorkshopId => 2069057130ul;
-        protected override ulong BetaWorkshopId => 0ul;
+        protected override ulong BetaWorkshopId => 2513186434ul;
 
         public override List<Version> Versions { get; } = new List<Version>
         {
