@@ -61,6 +61,8 @@ namespace NoBigTruck
         private static ulong AVOId => 1548831935ul;
         private static PluginSearcher AVOSearcher { get; } = PluginUtilities.GetSearcher(AVOName, AVOId);
         public static PluginInfo AVO => PluginUtilities.GetPlugin(AVOSearcher);
+        private static PluginSearcher NBTSearcher { get; } = PluginUtilities.GetSearcher("No Big Truck", 2069057130ul, 2513186434ul);
+        public static PluginInfo NBT => PluginUtilities.GetPlugin(NBTSearcher);
 
         public override string GetLocalizeString(string str, CultureInfo culture = null) => Localize.ResourceManager.GetString(str, culture ?? Culture);
         protected override void GetSettings(UIHelperBase helper)
@@ -86,7 +88,7 @@ namespace NoBigTruck
             if (AVO is null)
                 Logger.Debug("Advanced Vehicle Options not exist, skip patches");
             else
-                success &= AVOPatch();
+                AVOPatch(ref success);
 
             return success;
         }
@@ -115,9 +117,10 @@ namespace NoBigTruck
         {
             return AddPostfix(typeof(Manager), nameof(Manager.RefreshTransferVehicles), typeof(VehicleManager), nameof(VehicleManager.RefreshTransferVehicles));
         }
-        private bool AVOPatch()
+        private void AVOPatch(ref bool success)
         {
-            return AddPostfix(typeof(Manager), nameof(Manager.AVOCheckChanged), Type.GetType("AdvancedVehicleOptionsUID.GUI.UIOptionPanel"), "OnCheckChanged");
+            success &= AddPostfix(typeof(Manager), nameof(Manager.AVOCheckChanged), Type.GetType("AdvancedVehicleOptionsUID.GUI.UIOptionPanel"), "OnCheckChanged");
+            success &= AddPrefix(typeof(Patcher), nameof(Patcher.NBTCheckPrefix), Type.GetType("AdvancedVehicleOptionsUID.Compatibility.NoBigTruckCompatibilityPatch"), "IsNBTActive");
         }
 
         #endregion
@@ -173,6 +176,12 @@ namespace NoBigTruck
                 else
                     yield return instruction;
             }
+        }
+
+        public static bool NBTCheckPrefix(ref bool __result)
+        {
+            __result = Mod.NBT is PluginInfo ntb && ntb.isEnabled;
+            return false;
         }
     }
 }
