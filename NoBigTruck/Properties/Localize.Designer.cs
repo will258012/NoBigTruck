@@ -116,6 +116,17 @@ namespace NoBigTruck {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Fixed errors that caused the mod to not work.
+        ///- Fixed the missing &quot;Big Truck&quot; option in AVO mod.
+        ///- Added Chinese, Dutch and Italian translations.
+        /// </summary>
+        internal static string Mod_WhatsNewMessage1_2 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Rules.
         /// </summary>
         internal static string RulesTab {
