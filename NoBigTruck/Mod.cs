@@ -61,8 +61,6 @@ namespace NoBigTruck
         private static ulong AVOId => 1548831935ul;
         private static PluginSearcher AVOSearcher { get; } = PluginUtilities.GetSearcher(AVOName, AVOId);
         public static PluginInfo AVO => PluginUtilities.GetPlugin(AVOSearcher);
-        private static PluginSearcher NBTSearcher { get; } = PluginUtilities.GetSearcher("No Big Truck", 2069057130ul, 2513186434ul);
-        public static PluginInfo NBT => PluginUtilities.GetPlugin(NBTSearcher);
 
         public override string GetLocalizeString(string str, CultureInfo culture = null) => Localize.ResourceManager.GetString(str, culture ?? Culture);
         protected override void GetSettings(UIHelperBase helper)
@@ -180,7 +178,7 @@ namespace NoBigTruck
 
         public static bool NBTCheckPrefix(ref bool __result)
         {
-            __result = Mod.NBT is PluginInfo ntb && ntb.isEnabled;
+            __result = true;
             return false;
         }
     }
