@@ -23,19 +23,21 @@ namespace NoBigTruck
         public static List<Rule> Rules { get; } = new List<Rule>();
         private AddRuleButton AddButton { get; set; }
 
-        private UIAdvancedHelper RulesTab { get; set; }
+        private UIAdvancedHelper RulesTab => GetTab(nameof(RulesTab));
 
-        protected override void OnSettingsUI()
+        protected override IEnumerable<KeyValuePair<string, string>> AdditionalTabs
         {
-            base.OnSettingsUI();
+            get
+            {
+                yield return new KeyValuePair<string, string>(nameof(RulesTab), Localize.RulesTab);
+            }
+        }
+        protected override void FillSettings()
+        {
+            base.FillSettings();
 
             AddLanguage(GeneralTab);
             AddNotifications(GeneralTab);
-#if BETA
-            var reportGroup = GeneralTab.AddGroup("Report");
-            AddHarmonyReport(reportGroup);
-#endif
-            RulesTab = CreateTab(Localize.RulesTab);
             RulesTab.Content.autoLayoutPadding = new RectOffset(50, 50, 0, 25);
 
             Load();
