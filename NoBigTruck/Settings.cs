@@ -333,5 +333,5 @@ namespace NoBigTruck
         }
         protected override void SetSize() => Button.size = size;
     }
-    public class RuleHeaderPanel : BaseDeletableHeaderPanel<BaseHeaderContent> { }
+    public class RuleHeaderPanel : BaseDeletableHeaderPanel<HeaderContent> { }
 }
