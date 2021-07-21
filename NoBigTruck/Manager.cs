@@ -26,7 +26,7 @@ namespace NoBigTruck
         {
             GetTransferIndex = AccessTools.MethodDelegate<GetTransferIndexDelegate>(AccessTools.Method(typeof(VehicleManager), "GetTransferIndex"));
 
-            var definition = new DynamicMethod("GetTransferVehicles", typeof(VehicleManager), new Type[1] { typeof(FastList<ushort>[]) }, true);
+            var definition = new DynamicMethod("GetTransferVehicles", typeof(FastList<ushort>[]), new Type[1] { typeof(VehicleManager) }, true);
             var generator = definition.GetILGenerator();
 
             generator.Emit(OpCodes.Ldarg_0);
