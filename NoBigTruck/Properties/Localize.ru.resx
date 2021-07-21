@@ -141,6 +141,9 @@
 - Исправлена отсутствующая опция "Большой грузовик" и интерфейсе мода AVO.
 - Добавлен китайский, голландский и итальянский переводы.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
+    <value>- Добавлен перевод на испанский.</value>
+  </data>
   <data name="RulesTab" xml:space="preserve">
     <value>Правила</value>
   </data>

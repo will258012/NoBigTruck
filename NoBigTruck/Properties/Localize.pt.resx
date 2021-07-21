@@ -141,6 +141,9 @@
 - Fixed the missing "Big Truck" option in AVO mod.
 - Added Chinese, Dutch and Italian translations.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
+    <value>- Added Spanish translations.</value>
+  </data>
   <data name="RulesTab" xml:space="preserve">
     <value>Regras</value>
   </data>
