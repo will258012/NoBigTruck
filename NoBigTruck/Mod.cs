@@ -1,24 +1,14 @@
-﻿using CitiesHarmony.API;
-using ColossalFramework;
-using ColossalFramework.Math;
-using ColossalFramework.PlatformServices;
-using ColossalFramework.UI;
+﻿using ColossalFramework.Math;
 using HarmonyLib;
 using ICities;
 using ModsCommon;
-using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Resources;
-using System.Runtime.InteropServices;
-using System.Text;
-using UnityEngine;
 using static ColossalFramework.Plugins.PluginManager;
 
 namespace NoBigTruck
@@ -127,7 +117,12 @@ namespace NoBigTruck
     public class LoadingExtension : BaseLoadingExtension<Mod> { }
     public static class Patcher
     {
-        private static MethodInfo ReplaceMethod { get; } = AccessTools.Method(typeof(VehicleManager), nameof(VehicleManager.GetRandomVehicleInfo), new Type[] { typeof(Randomizer).MakeByRefType(), typeof(ItemClass.Service), typeof(ItemClass.SubService), typeof(ItemClass.Level)});
+        private static MethodInfo ReplaceMethod { get; } 
+        static Patcher()
+        {
+            ReplaceMethod = AccessTools.Method(typeof(VehicleManager), nameof(VehicleManager.GetRandomVehicleInfo), new Type[] { typeof(Randomizer).MakeByRefType(), typeof(ItemClass.Service), typeof(ItemClass.SubService), typeof(ItemClass.Level) });
+        }
+
         public static IEnumerable<CodeInstruction> StartTransfer_Transpiler(MethodBase original, ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
             foreach (var instruction in instructions)
