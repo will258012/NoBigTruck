@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Text;
 
 namespace NoBigTruck
@@ -14,11 +15,26 @@ namespace NoBigTruck
     public static class Manager
     {
         private delegate int GetTransferIndexDelegate(ItemClass.Service service, ItemClass.SubService subService, ItemClass.Level level);
+        private delegate FastList<ushort>[] GetTransferVehiclesDelegate(VehicleManager manager);
 
-        private static GetTransferIndexDelegate GetTransferIndex { get; } = AccessTools.MethodDelegate<GetTransferIndexDelegate>(AccessTools.Method(typeof(VehicleManager), "GetTransferIndex"));
-        private static AccessTools.FieldRef<VehicleManager, FastList<ushort>[]> GetTransferVehicles { get; } = AccessTools.FieldRefAccess<VehicleManager, FastList<ushort>[]>(AccessTools.Field(typeof(VehicleManager), "m_transferVehicles"));
+        private static GetTransferIndexDelegate GetTransferIndex { get; } 
+        private static GetTransferVehiclesDelegate GetTransferVehicles { get; }
 
         private static Dictionary<int, List<VehicleInfo>> NoBigTrucks { get; } = new Dictionary<int, List<VehicleInfo>>();
+
+        static Manager()
+        {
+            GetTransferIndex = AccessTools.MethodDelegate<GetTransferIndexDelegate>(AccessTools.Method(typeof(VehicleManager), "GetTransferIndex"));
+
+            var definition = new DynamicMethod("GetTransferVehicles", typeof(VehicleManager), new Type[1] { typeof(FastList<ushort>[]) }, true);
+            var generator = definition.GetILGenerator();
+
+            generator.Emit(OpCodes.Ldarg_0);
+            generator.Emit(OpCodes.Ldfld, AccessTools.Field(typeof(VehicleManager), "m_transferVehicles"));
+            generator.Emit(OpCodes.Ret);
+
+            GetTransferVehicles = (GetTransferVehiclesDelegate)definition.CreateDelegate(typeof(GetTransferVehiclesDelegate));
+        }
 
         public static void RefreshTransferVehicles()
         {
