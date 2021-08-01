@@ -70,7 +70,7 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Check target buildings size.
+        ///   Ищет локализованную строку, похожую на Check target building&apos;s size.
         /// </summary>
         internal static string CheckTargetSize {
             get {
@@ -79,7 +79,7 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Max buildings length.
+        ///   Ищет локализованную строку, похожую на Max building&apos;s length.
         /// </summary>
         internal static string MaxLength {
             get {
@@ -88,7 +88,7 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Max buildings width.
+        ///   Ищет локализованную строку, похожую на Max building&apos;s width.
         /// </summary>
         internal static string MaxWidth {
             get {
@@ -136,6 +136,15 @@ namespace NoBigTruck {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added Korean translation..
+        /// </summary>
+        internal static string Mod_WhatsNewMessage1_2_2 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_2_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Rules.
         /// </summary>
         internal static string RulesTab {
@@ -145,7 +154,7 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Source buildings type.
+        ///   Ищет локализованную строку, похожую на Source building&apos;s type.
         /// </summary>
         internal static string Source {
             get {
@@ -181,7 +190,7 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Target buildings type.
+        ///   Ищет локализованную строку, похожую на Target building&apos;s type.
         /// </summary>
         internal static string Target {
             get {
