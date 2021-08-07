@@ -136,17 +136,10 @@
     <value>- Missende afhankelijkheden checker toegevoegd.
 - Finse, Duitse, Japanse, Russische vertalingen toegevoegd.</value>
   </data>
-  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
-    <value>- Fixed errors that caused the mod to not work.
-- Fixed the missing "Big Truck" option in AVO mod.
-- Added Chinese, Dutch and Italian translations.</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
-    <value>- Added Spanish translations.</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_2_2" xml:space="preserve">
-    <value>- Added Korean translation.</value>
-  </data>
+  
+  
+  
+  
   <data name="RulesTab" xml:space="preserve">
     <value>Regels</value>
   </data>
