@@ -145,6 +145,15 @@ namespace NoBigTruck {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added Hungarian translation..
+        /// </summary>
+        internal static string Mod_WhatsNewMessage1_2_3 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_2_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Rules.
         /// </summary>
         internal static string RulesTab {
