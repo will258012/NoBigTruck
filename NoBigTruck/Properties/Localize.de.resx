@@ -137,6 +137,9 @@
   
   
   
+  <data name="Mod_WhatsNewMessage1_2_4" xml:space="preserve">
+    <value>[TRANSLATION] Dänische, portugiesische und türkische Übersetzungen hinzugefügt</value>
+  </data>
   <data name="RulesTab" xml:space="preserve">
     <value>Regeln</value>
   </data>

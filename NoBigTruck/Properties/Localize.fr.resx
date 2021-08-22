@@ -133,23 +133,24 @@
     <value>Les gros camions ne livrent pas de marchandises aux magasins</value>
   </data>
   <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
-    <value>- Ajout du vérificateur des dépendances manquantes.
-- Ajout des traductions finlandaises, allemandes, japonaises et russes.</value>
+    <value>[NEW] Ajout du vérificateur des dépendances manquantes.
+[TRANSLATION] Ajout des traductions finlandaises, allemandes, japonaises et russes.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
-    <value>- Correction d'erreurs qui empêchaient le mod de fonctionner.
-- Correction de l'option manquante "Big Truck" dans le mod AVO.
-- Ajout des traductions chinoises, néerlandaises et italiennes.</value>
+    <value>[FIXED] Correction d'erreurs qui empêchaient le mod de fonctionner.
+[FIXED] Correction de l'option manquante "Big Truck" dans le mod AVO.
+[TRANSLATION] Ajout des traductions chinoises, néerlandaises et italiennes.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
-    <value>- Ajout de la traduction espagnole.</value>
+    <value>[TRANSLATION] Ajout de la traduction espagnole.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2_2" xml:space="preserve">
-    <value>- Ajout de la traduction coréenne.</value>
+    <value>[TRANSLATION] Ajout de la traduction coréenne.</value>
   </data>
   <data name="Mod_WhatsNewMessage1_2_3" xml:space="preserve">
-    <value>- Ajout de la traduction hongroise.</value>
+    <value>[TRANSLATION] Ajout de la traduction hongroise.</value>
   </data>
+  
   <data name="RulesTab" xml:space="preserve">
     <value>Règles</value>
   </data>

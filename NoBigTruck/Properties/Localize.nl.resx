@@ -133,9 +133,10 @@
     <value>Grote vrachtwagens leveren geen goederen aan winkels</value>
   </data>
   <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
-    <value>- Missende afhankelijkheden checker toegevoegd.
-- Finse, Duitse, Japanse, Russische vertalingen toegevoegd.</value>
+    <value>[NEW] Missende afhankelijkheden checker toegevoegd.
+[TRANSLATION] Finse, Duitse, Japanse, Russische vertalingen toegevoegd.</value>
   </data>
+  
   
   
   

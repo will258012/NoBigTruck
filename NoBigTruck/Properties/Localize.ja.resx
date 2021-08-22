@@ -130,18 +130,19 @@
     <value>建物の最大幅（道路側）</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>大型トラック（トレーラー）で、商業区画への商品配送・輸送をしません</value>
+    <value>大型トラック（トレーラー）で、商業区画への商品輸送をしません</value>
   </data>
+  
   
   
   
   
   
   <data name="RulesTab" xml:space="preserve">
-    <value>配送・輸送ルール</value>
+    <value>配送ルール</value>
   </data>
   <data name="Source" xml:space="preserve">
-    <value>配達・輸送元になる建物タイプ</value>
+    <value>配送・輸入元になる建物タイプ</value>
   </data>
   <data name="SourceIndustry" xml:space="preserve">
     <value>産業区画</value>

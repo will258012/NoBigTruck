@@ -137,6 +137,9 @@
   
   
   
+  <data name="Mod_WhatsNewMessage1_2_4" xml:space="preserve">
+    <value>[TRANSLATION] 添加丹麦语、葡萄牙语和土耳其语翻译</value>
+  </data>
   <data name="RulesTab" xml:space="preserve">
     <value>规则</value>
   </data>

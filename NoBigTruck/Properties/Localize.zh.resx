@@ -117,48 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddNewRule" xml:space="preserve">
-    <value>Přidat nové pravidlo</value>
-  </data>
-  <data name="CheckTargetSize" xml:space="preserve">
-    <value>Kontrolovat velikost cílovích budov</value>
-  </data>
-  <data name="MaxLength" xml:space="preserve">
-    <value>Maximální délka budovy</value>
-  </data>
-  <data name="MaxWidth" xml:space="preserve">
-    <value>Maximální šířka budovy</value>
-  </data>
-  <data name="Mod_Description" xml:space="preserve">
-    <value>Velké nákladní vozy nedodávají zboží do obchodů</value>
-  </data>
   
   
   
   
   
   
-  <data name="RulesTab" xml:space="preserve">
-    <value>Pravidla</value>
-  </data>
-  
-  <data name="SourceIndustry" xml:space="preserve">
-    <value>Průmysl</value>
-  </data>
-  <data name="SourceOutside" xml:space="preserve">
-    <value>Mimo území</value>
-  </data>
-  <data name="SourceWarehouse" xml:space="preserve">
-    <value>Sklad</value>
-  </data>
-  
-  <data name="TargetEco" xml:space="preserve">
-    <value>Eko</value>
-  </data>
   
   
   
-  <data name="TargetTourist" xml:space="preserve">
-    <value>Turista</value>
-  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>
