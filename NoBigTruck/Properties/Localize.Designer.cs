@@ -154,6 +154,15 @@ namespace NoBigTruck {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на - Added Danish, Portuguese and Turkish translations.
+        /// </summary>
+        internal static string Mod_WhatsNewMessage1_2_4 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_2_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Rules.
         /// </summary>
         internal static string RulesTab {
