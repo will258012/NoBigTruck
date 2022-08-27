@@ -21,16 +21,19 @@ namespace NoBigTruck
         protected override ulong StableWorkshopId => 2069057130ul;
         protected override ulong BetaWorkshopId => 2513186434ul;
 
-        public override List<Version> Versions { get; } = new List<Version>
+        public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
-            new Version("1.2.4"),
-            new Version("1.2.3"),
-            new Version("1.2.2"),
-            new Version("1.2.1"),
-            new Version("1.2"),
-            new Version("1.1"),
-            new Version("1.0"),
+            new ModVersion(new Version("1.3"), new DateTime(2022, 8, 27)),
+            new ModVersion(new Version("1.2.4"), new DateTime(2021, 8, 22)),
+            new ModVersion(new Version("1.2.3"), new DateTime(2021, 8, 7)),
+            new ModVersion(new Version("1.2.2"), new DateTime(2021, 8, 1)),
+            new ModVersion(new Version("1.2.1"), new DateTime(2021, 7, 21)),
+            new ModVersion(new Version("1.2"), new DateTime(2021, 6, 12)),
+            new ModVersion(new Version("1.1"), new DateTime(2021, 5, 24)),
+            new ModVersion(new Version("1.0"), new DateTime(2020, 6,19)),
         };
+
+        protected override Version RequiredGameVersion => new Version(1, 15, 0, 4);
 
 #if BETA
         public override bool IsBeta => true;
@@ -57,7 +60,6 @@ namespace NoBigTruck
         private static PluginSearcher AVOSearcher { get; } = PluginUtilities.GetSearcher(AVOName, AVOId);
         public static PluginInfo AVO => PluginUtilities.GetPlugin(AVOSearcher);
 
-        public override string GetLocalizeString(string str, CultureInfo culture = null) => Localize.ResourceManager.GetString(str, culture ?? Culture);
         protected override void GetSettings(UIHelperBase helper)
         {
             var settings = new Settings();
@@ -104,7 +106,7 @@ namespace NoBigTruck
         }
         private bool CargoTruckAI_ChangeVehicleType_Patch()
         {
-            return AddTranspiler(typeof(Patcher), nameof(Patcher.CargoTruckAI_ChangeVehicleType_Transpiler), typeof(CargoTruckAI), nameof(CargoTruckAI.ChangeVehicleType), new Type[] { typeof(VehicleInfo), typeof(ushort), typeof(Vehicle).MakeByRefType(), typeof(PathUnit.Position), typeof(uint)});
+            return AddTranspiler(typeof(Patcher), nameof(Patcher.CargoTruckAI_ChangeVehicleType_Transpiler), typeof(CargoTruckAI), nameof(CargoTruckAI.ChangeVehicleType), new Type[] { typeof(VehicleInfo), typeof(ushort), typeof(Vehicle).MakeByRefType(), typeof(PathUnit.Position), typeof(uint) });
         }
         private bool VehicleManager_RefreshTransferVehicles_Patch()
         {
@@ -121,7 +123,7 @@ namespace NoBigTruck
     public class LoadingExtension : BaseLoadingExtension<Mod> { }
     public static class Patcher
     {
-        private static MethodInfo ReplaceMethod { get; } 
+        private static MethodInfo ReplaceMethod { get; }
         static Patcher()
         {
             ReplaceMethod = AccessTools.Method(typeof(VehicleManager), nameof(VehicleManager.GetRandomVehicleInfo), new Type[] { typeof(Randomizer).MakeByRefType(), typeof(ItemClass.Service), typeof(ItemClass.SubService), typeof(ItemClass.Level) });
