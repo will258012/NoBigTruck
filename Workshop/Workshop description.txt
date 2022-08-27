@@ -38,11 +38,6 @@ In the settings, you can set one or more rules by which the mod will work, choos
 [h1]Join to discord for discussion and support[/h1]
 [url=https://discord.gg/NnwhuBKMqj][img]https://i.imgur.com/bnDNN2x.png[/img][/url]
 
-[HR][/HR] 
-[h1]If you like No Big Truck, you can support me[/h1]
-
-[url=https://www.paypal.me/macsergey][img]https://i.imgur.com/vtwKnVr.png[/img][/url][url=https://www.patreon.com/MacSergey][img]https://i.imgur.com/aMLNy32.png[/img][/url]
-
 [HR][/HR]
 [h1]Source code[/h1]
 [url=https://github.com/MacSergey/NoBigTruck][img]https://i.imgur.com/DczUXYq.png[/img][/url]
@@ -51,3 +46,5 @@ In the settings, you can set one or more rules by which the mod will work, choos
 [h1]Translations[/h1]
 If you want to help improve existing translations or you want to translate into your own language (ask to add it to the translation project).
 [url=https://crowdin.com/project/macsergey-other-mods][img]https://i.imgur.com/uG2NKvG.png[/img][/url]
+
+[HR][/HR][i]For full transparency: I am an employee at Colossal Order, however this is my personal account and as such all opinions, content and contributions to the community reflect my own views and interests, and are not created nor maintained as part of my job. Like all user generated content, this is not officially supported content and should be used at your own risk.[/i]
