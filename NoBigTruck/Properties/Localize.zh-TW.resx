@@ -117,73 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddNewRule" xml:space="preserve">
-    <value>Ajouter une nouvelle règle</value>
-  </data>
-  <data name="CheckTargetSize" xml:space="preserve">
-    <value>Vérifier la taille du bâtiment ciblé</value>
-  </data>
-  <data name="MaxLength" xml:space="preserve">
-    <value>Longueur max des bâtiments</value>
-  </data>
-  <data name="MaxWidth" xml:space="preserve">
-    <value>Largeur max des bâtiments</value>
-  </data>
-  <data name="Mod_Description" xml:space="preserve">
-    <value>Les gros camions ne livrent pas de marchandises aux magasins</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
-    <value>[NEW] Ajout du vérificateur des dépendances manquantes.
-[TRANSLATION] Ajout des traductions finlandaises, allemandes, japonaises et russes.</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_2" xml:space="preserve">
-    <value>[FIXED] Correction d'erreurs qui empêchaient le mod de fonctionner.
-[FIXED] Correction de l'option manquante "Big Truck" dans le mod AVO.
-[TRANSLATION] Ajout des traductions chinoises, néerlandaises et italiennes.</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_2_1" xml:space="preserve">
-    <value>[TRANSLATION] Ajout de la traduction espagnole.</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_2_2" xml:space="preserve">
-    <value>[TRANSLATION] Ajout de la traduction coréenne.</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_2_3" xml:space="preserve">
-    <value>[TRANSLATION] Ajout de la traduction hongroise.</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_2_4" xml:space="preserve">
-    <value>[TRANSLATION] Ajout des traductions danoise, portugaise et turque</value>
-  </data>
-  <data name="RulesTab" xml:space="preserve">
-    <value>Règles</value>
-  </data>
-  <data name="Source" xml:space="preserve">
-    <value>Type des bâtiments source</value>
-  </data>
-  <data name="SourceIndustry" xml:space="preserve">
-    <value>Industriel</value>
-  </data>
-  <data name="SourceOutside" xml:space="preserve">
-    <value>Extérieur</value>
-  </data>
-  <data name="SourceWarehouse" xml:space="preserve">
-    <value>Entrepôt</value>
-  </data>
-  <data name="Target" xml:space="preserve">
-    <value>Type des bâtiments cible</value>
-  </data>
-  <data name="TargetEco" xml:space="preserve">
-    <value>Biologique</value>
-  </data>
-  <data name="TargetHigh" xml:space="preserve">
-    <value>Densité élevée</value>
-  </data>
-  <data name="TargetLeisure" xml:space="preserve">
-    <value>Divertissement</value>
-  </data>
-  <data name="TargetLow" xml:space="preserve">
-    <value>Faible densité</value>
-  </data>
-  <data name="TargetTourist" xml:space="preserve">
-    <value>Tourisme</value>
-  </data>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
 </root>

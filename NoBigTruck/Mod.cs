@@ -23,7 +23,7 @@ namespace NoBigTruck
 
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
-            new ModVersion(new Version("1.3"), new DateTime(2022, 8, 27)),
+            new ModVersion(new Version("1.3"), new DateTime(2022, 9, 14)),
             new ModVersion(new Version("1.2.4"), new DateTime(2021, 8, 22)),
             new ModVersion(new Version("1.2.3"), new DateTime(2021, 8, 7)),
             new ModVersion(new Version("1.2.2"), new DateTime(2021, 8, 1)),
@@ -33,7 +33,7 @@ namespace NoBigTruck
             new ModVersion(new Version("1.0"), new DateTime(2020, 6,19)),
         };
 
-        protected override Version RequiredGameVersion => new Version(1, 15, 0, 4);
+        protected override Version RequiredGameVersion => new Version(1, 15, 0, 5);
 
 #if BETA
         public override bool IsBeta => true;
