@@ -106,8 +106,8 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added missing dependencies checker.
-        ///- Added Finnish, German, Japanese, Russian translations..
+        ///   Ищет локализованную строку, похожую на [NEW] Added missing dependencies checker.
+        ///[TRANSLATION] Added Finnish, German, Japanese, Russian translations..
         /// </summary>
         internal static string Mod_WhatsNewMessage1_1 {
             get {
@@ -116,9 +116,9 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Fixed errors that caused the mod to not work.
-        ///- Fixed the missing &quot;Big Truck&quot; option in AVO mod.
-        ///- Added Chinese, Dutch and Italian translations..
+        ///   Ищет локализованную строку, похожую на [FIXED] Fixed errors that caused the mod to not work.
+        ///[FIXED] Fixed the missing &quot;Big Truck&quot; option in AVO mod.
+        ///[TRANSLATION] Added Chinese, Dutch and Italian translations..
         /// </summary>
         internal static string Mod_WhatsNewMessage1_2 {
             get {
@@ -127,7 +127,7 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added Spanish translations..
+        ///   Ищет локализованную строку, похожую на [TRANSLATION] Added Spanish translations..
         /// </summary>
         internal static string Mod_WhatsNewMessage1_2_1 {
             get {
@@ -136,7 +136,7 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added Korean translation..
+        ///   Ищет локализованную строку, похожую на [TRANSLATION] Added Korean translation..
         /// </summary>
         internal static string Mod_WhatsNewMessage1_2_2 {
             get {
@@ -145,7 +145,7 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added Hungarian translation..
+        ///   Ищет локализованную строку, похожую на [TRANSLATION] Added Hungarian translation..
         /// </summary>
         internal static string Mod_WhatsNewMessage1_2_3 {
             get {
@@ -154,11 +154,20 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на - Added Danish, Portuguese and Turkish translations.
+        ///   Ищет локализованную строку, похожую на [TRANSLATION] Added Danish, Portuguese and Turkish translations.
         /// </summary>
         internal static string Mod_WhatsNewMessage1_2_4 {
             get {
                 return ResourceManager.GetString("Mod_WhatsNewMessage1_2_4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на [UPDATED] Added Plazas &amp; Promenades DLC support..
+        /// </summary>
+        internal static string Mod_WhatsNewMessage1_3 {
+            get {
+                return ResourceManager.GetString("Mod_WhatsNewMessage1_3", resourceCulture);
             }
         }
         

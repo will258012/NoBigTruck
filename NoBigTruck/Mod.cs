@@ -30,7 +30,7 @@ namespace NoBigTruck
             new ModVersion(new Version("1.2.1"), new DateTime(2021, 7, 21)),
             new ModVersion(new Version("1.2"), new DateTime(2021, 6, 12)),
             new ModVersion(new Version("1.1"), new DateTime(2021, 5, 24)),
-            new ModVersion(new Version("1.0"), new DateTime(2020, 6,19)),
+            new ModVersion(new Version("1.0"), new DateTime(2020, 6, 19)),
         };
 
         protected override Version RequiredGameVersion => new Version(1, 15, 0, 5);
