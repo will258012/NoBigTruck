@@ -22,7 +22,7 @@ namespace NoBigTruck {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Localize {
+    public class Localize {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace NoBigTruck {
         ///   Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("NoBigTruck.Properties.Localize", typeof(Localize).Assembly);
@@ -51,7 +51,7 @@ namespace NoBigTruck {
         ///   обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Add new rule.
         /// </summary>
-        internal static string AddNewRule {
+        public static string AddNewRule {
             get {
                 return ResourceManager.GetString("AddNewRule", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Check target building&apos;s size.
         /// </summary>
-        internal static string CheckTargetSize {
+        public static string CheckTargetSize {
             get {
                 return ResourceManager.GetString("CheckTargetSize", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Max building&apos;s length.
         /// </summary>
-        internal static string MaxLength {
+        public static string MaxLength {
             get {
                 return ResourceManager.GetString("MaxLength", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Max building&apos;s width.
         /// </summary>
-        internal static string MaxWidth {
+        public static string MaxWidth {
             get {
                 return ResourceManager.GetString("MaxWidth", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Big trucks dont deliver goods to stores.
         /// </summary>
-        internal static string Mod_Description {
+        public static string Mod_Description {
             get {
                 return ResourceManager.GetString("Mod_Description", resourceCulture);
             }
@@ -109,7 +109,7 @@ namespace NoBigTruck {
         ///   Ищет локализованную строку, похожую на [NEW] Added missing dependencies checker.
         ///[TRANSLATION] Added Finnish, German, Japanese, Russian translations..
         /// </summary>
-        internal static string Mod_WhatsNewMessage1_1 {
+        public static string Mod_WhatsNewMessage1_1 {
             get {
                 return ResourceManager.GetString("Mod_WhatsNewMessage1_1", resourceCulture);
             }
@@ -120,7 +120,7 @@ namespace NoBigTruck {
         ///[FIXED] Fixed the missing &quot;Big Truck&quot; option in AVO mod.
         ///[TRANSLATION] Added Chinese, Dutch and Italian translations..
         /// </summary>
-        internal static string Mod_WhatsNewMessage1_2 {
+        public static string Mod_WhatsNewMessage1_2 {
             get {
                 return ResourceManager.GetString("Mod_WhatsNewMessage1_2", resourceCulture);
             }
@@ -129,7 +129,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на [TRANSLATION] Added Spanish translations..
         /// </summary>
-        internal static string Mod_WhatsNewMessage1_2_1 {
+        public static string Mod_WhatsNewMessage1_2_1 {
             get {
                 return ResourceManager.GetString("Mod_WhatsNewMessage1_2_1", resourceCulture);
             }
@@ -138,7 +138,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на [TRANSLATION] Added Korean translation..
         /// </summary>
-        internal static string Mod_WhatsNewMessage1_2_2 {
+        public static string Mod_WhatsNewMessage1_2_2 {
             get {
                 return ResourceManager.GetString("Mod_WhatsNewMessage1_2_2", resourceCulture);
             }
@@ -147,7 +147,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на [TRANSLATION] Added Hungarian translation..
         /// </summary>
-        internal static string Mod_WhatsNewMessage1_2_3 {
+        public static string Mod_WhatsNewMessage1_2_3 {
             get {
                 return ResourceManager.GetString("Mod_WhatsNewMessage1_2_3", resourceCulture);
             }
@@ -156,7 +156,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на [TRANSLATION] Added Danish, Portuguese and Turkish translations.
         /// </summary>
-        internal static string Mod_WhatsNewMessage1_2_4 {
+        public static string Mod_WhatsNewMessage1_2_4 {
             get {
                 return ResourceManager.GetString("Mod_WhatsNewMessage1_2_4", resourceCulture);
             }
@@ -174,7 +174,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Rules.
         /// </summary>
-        internal static string RulesTab {
+        public static string RulesTab {
             get {
                 return ResourceManager.GetString("RulesTab", resourceCulture);
             }
@@ -183,7 +183,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Source building&apos;s type.
         /// </summary>
-        internal static string Source {
+        public static string Source {
             get {
                 return ResourceManager.GetString("Source", resourceCulture);
             }
@@ -192,7 +192,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Industry.
         /// </summary>
-        internal static string SourceIndustry {
+        public static string SourceIndustry {
             get {
                 return ResourceManager.GetString("SourceIndustry", resourceCulture);
             }
@@ -201,7 +201,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Outside.
         /// </summary>
-        internal static string SourceOutside {
+        public static string SourceOutside {
             get {
                 return ResourceManager.GetString("SourceOutside", resourceCulture);
             }
@@ -210,7 +210,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Warehouse.
         /// </summary>
-        internal static string SourceWarehouse {
+        public static string SourceWarehouse {
             get {
                 return ResourceManager.GetString("SourceWarehouse", resourceCulture);
             }
@@ -219,7 +219,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Target building&apos;s type.
         /// </summary>
-        internal static string Target {
+        public static string Target {
             get {
                 return ResourceManager.GetString("Target", resourceCulture);
             }
@@ -228,7 +228,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Eco.
         /// </summary>
-        internal static string TargetEco {
+        public static string TargetEco {
             get {
                 return ResourceManager.GetString("TargetEco", resourceCulture);
             }
@@ -237,7 +237,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на High.
         /// </summary>
-        internal static string TargetHigh {
+        public static string TargetHigh {
             get {
                 return ResourceManager.GetString("TargetHigh", resourceCulture);
             }
@@ -246,7 +246,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Leisure.
         /// </summary>
-        internal static string TargetLeisure {
+        public static string TargetLeisure {
             get {
                 return ResourceManager.GetString("TargetLeisure", resourceCulture);
             }
@@ -255,7 +255,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Low.
         /// </summary>
-        internal static string TargetLow {
+        public static string TargetLow {
             get {
                 return ResourceManager.GetString("TargetLow", resourceCulture);
             }
@@ -264,7 +264,7 @@ namespace NoBigTruck {
         /// <summary>
         ///   Ищет локализованную строку, похожую на Tourist.
         /// </summary>
-        internal static string TargetTourist {
+        public static string TargetTourist {
             get {
                 return ResourceManager.GetString("TargetTourist", resourceCulture);
             }
