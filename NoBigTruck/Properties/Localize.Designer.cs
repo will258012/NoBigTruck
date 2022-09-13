@@ -163,7 +163,8 @@ namespace NoBigTruck {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на [UPDATED] Added Plazas &amp; Promenades DLC support..
+        ///   Ищет локализованную строку, похожую на [UPDATED] Added Plazas &amp; Promenades DLC support.
+        ///[TRANSLATION] Added Polish and Romanian translations..
         /// </summary>
         public static string Mod_WhatsNewMessage1_3 {
             get {
