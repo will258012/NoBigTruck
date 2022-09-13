@@ -73,12 +73,19 @@
     </Reference>
     <EmbeddedResource Remove="Properties\Localize.cs.resx" />
     <EmbeddedResource Remove="Properties\Localize.en-GB.resx" />
-    <EmbeddedResource Remove="Properties\Localize.pl.resx" />
-    <EmbeddedResource Remove="Properties\Localize.ro.resx" />
     <EmbeddedResource Remove="Properties\Localize.zh-TW.resx" />
   </ItemGroup>
 
 
+  <ItemGroup>
+    <Compile Update="Properties\Localize.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Localize.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  
   <ItemGroup>
     <EmbeddedResource Update="Properties\Localize.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -119,8 +126,10 @@
   <Import Project="..\ModsCommon\LocalizeShared\pt\LocalizeShared.pt.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\tr\LocalizeShared.tr.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\fr\LocalizeShared.fr.projitems" Label="Shared" />
-
-
+  <Import Project="..\ModsCommon\LocalizeShared\pl\LocalizeShared.pl.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\ro\LocalizeShared.ro.projitems" Label="Shared" />
+  
+  
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
     <WorkshopId>2069057130</WorkshopId>
     <Type>Stable</Type>
