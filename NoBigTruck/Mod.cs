@@ -20,6 +20,7 @@ namespace NoBigTruck
 
         protected override ulong StableWorkshopId => 2069057130ul;
         protected override ulong BetaWorkshopId => 2513186434ul;
+        public override string CrowdinUrl => "https://crowdin.com/translate/macsergey-other-mods/74";
 
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
