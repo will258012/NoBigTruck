@@ -20,19 +20,21 @@ namespace NoBigTruck
 
         protected override ulong StableWorkshopId => 2069057130ul;
         protected override ulong BetaWorkshopId => 2513186434ul;
+        public override string CrowdinUrl => "https://crowdin.com/translate/macsergey-other-mods/74";
 
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
+            new ModVersion(new Version("1.3"), new DateTime(2022, 9, 14)),
             new ModVersion(new Version("1.2.4"), new DateTime(2021, 8, 22)),
             new ModVersion(new Version("1.2.3"), new DateTime(2021, 8, 7)),
             new ModVersion(new Version("1.2.2"), new DateTime(2021, 8, 1)),
             new ModVersion(new Version("1.2.1"), new DateTime(2021, 7, 21)),
             new ModVersion(new Version("1.2"), new DateTime(2021, 6, 12)),
             new ModVersion(new Version("1.1"), new DateTime(2021, 5, 24)),
-            new ModVersion(new Version("1.0"), new DateTime(2020, 6,19)),
+            new ModVersion(new Version("1.0"), new DateTime(2020, 6, 19)),
         };
 
-        protected override Version RequiredGameVersion => new Version(1, 14, 1, 2);
+        protected override Version RequiredGameVersion => new Version(1, 15, 0, 5);
 
 #if BETA
         public override bool IsBeta => true;
