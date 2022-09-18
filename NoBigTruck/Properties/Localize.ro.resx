@@ -138,7 +138,10 @@
   
   
   
-  
+  <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
+    <value>[UPDATED] Adăugat suportul pentru Plazas &amp; Promenades DLC.
+[TRANSLATION] Adăugate traducerile în limba Poloneză și Română.</value>
+  </data>
   <data name="RulesTab" xml:space="preserve">
     <value>Reguli</value>
   </data>
