@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNewRule" xml:space="preserve">
     <value>Přidat nové pravidlo</value>
@@ -138,10 +138,16 @@
   
   
   
+  <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
+    <value>[UPDATED] Přidána podpora DLC Plazas &amp; Promenades.
+[TRANSLATION] Přidány Polské a Rumunské překlady.</value>
+  </data>
   <data name="RulesTab" xml:space="preserve">
     <value>Pravidla</value>
   </data>
-  
+  <data name="Source" xml:space="preserve">
+    <value>Typ zdrojových budov</value>
+  </data>
   <data name="SourceIndustry" xml:space="preserve">
     <value>Průmysl</value>
   </data>
@@ -151,13 +157,21 @@
   <data name="SourceWarehouse" xml:space="preserve">
     <value>Sklad</value>
   </data>
-  
+  <data name="Target" xml:space="preserve">
+    <value>Typ cílových budov</value>
+  </data>
   <data name="TargetEco" xml:space="preserve">
     <value>Eko</value>
   </data>
-  
-  
-  
+  <data name="TargetHigh" xml:space="preserve">
+    <value>Vysoký</value>
+  </data>
+  <data name="TargetLeisure" xml:space="preserve">
+    <value>Volný čas</value>
+  </data>
+  <data name="TargetLow" xml:space="preserve">
+    <value>Nižší</value>
+  </data>
   <data name="TargetTourist" xml:space="preserve">
     <value>Turista</value>
   </data>
