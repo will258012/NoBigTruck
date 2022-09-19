@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Beta Release' OR '$(Configuration)' == 'Beta Debug'">
-    <Version>1.2.0.29</Version>
+    <Version>1.2.0.30</Version>
   </PropertyGroup>
 
 
@@ -71,7 +71,6 @@
     <Reference Include="System.Xml.Linq">
       <Private>true</Private>
     </Reference>
-    <EmbeddedResource Remove="Properties\Localize.cs.resx" />
     <EmbeddedResource Remove="Properties\Localize.en-GB.resx" />
     <EmbeddedResource Remove="Properties\Localize.zh-TW.resx" />
   </ItemGroup>
@@ -128,6 +127,7 @@
   <Import Project="..\ModsCommon\LocalizeShared\fr\LocalizeShared.fr.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\pl\LocalizeShared.pl.projitems" Label="Shared" />
   <Import Project="..\ModsCommon\LocalizeShared\ro\LocalizeShared.ro.projitems" Label="Shared" />
+  <Import Project="..\ModsCommon\LocalizeShared\cs\LocalizeShared.cs.projitems" Label="Shared" />
   
   
   <PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
