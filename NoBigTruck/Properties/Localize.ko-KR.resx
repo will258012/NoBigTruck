@@ -118,63 +118,61 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNewRule" xml:space="preserve">
-    <value>添加新规则</value>
+    <value>새 규칙 추가</value>
   </data>
   <data name="CheckTargetSize" xml:space="preserve">
-    <value>检查目标建筑大小</value>
+    <value>목표 건물의 크기 확인</value>
   </data>
   <data name="MaxLength" xml:space="preserve">
-    <value>最大建筑长度</value>
+    <value>건물 최대 길이</value>
   </data>
   <data name="MaxWidth" xml:space="preserve">
-    <value>最大建筑宽度</value>
+    <value>건물 최대 폭</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>禁止大型卡车向商店运送货物</value>
+    <value>큰 트럭이 상점으로 물건을 배송하지 않음</value>
   </data>
   
   
   
   
   
-  <data name="Mod_WhatsNewMessage1_2_4" xml:space="preserve">
-    <value>[TRANSLATION] 添加丹麦语、葡萄牙语和土耳其语翻译</value>
-  </data>
+  
   <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
-    <value>[UPDATED] 添加了Plazas &amp; Promenades DLC 支持。
-[TRANSLATION] 添加了波兰语和罗马尼亚语翻译。</value>
+    <value>[UPDATED] Plazas &amp; Promenades DLC를 지원합니다.
+[TRANSLATION] 폴란드어와 루마니아어 번역을 추가했습니다.</value>
   </data>
   <data name="RulesTab" xml:space="preserve">
-    <value>规则</value>
+    <value>규칙</value>
   </data>
   <data name="Source" xml:space="preserve">
-    <value>货源建筑物类型</value>
+    <value>소스 건물의 유형</value>
   </data>
   <data name="SourceIndustry" xml:space="preserve">
-    <value>工业</value>
+    <value>산업</value>
   </data>
   <data name="SourceOutside" xml:space="preserve">
-    <value>外部</value>
+    <value>외부</value>
   </data>
   <data name="SourceWarehouse" xml:space="preserve">
-    <value>仓库</value>
+    <value>창고</value>
   </data>
   <data name="Target" xml:space="preserve">
-    <value>目标建筑类型</value>
+    <value>목표 건물의 유형</value>
   </data>
   <data name="TargetEco" xml:space="preserve">
-    <value>生态</value>
+    <value>에코</value>
   </data>
   <data name="TargetHigh" xml:space="preserve">
-    <value>高密度</value>
+    <value>고밀도</value>
   </data>
   <data name="TargetLeisure" xml:space="preserve">
-    <value>休闲</value>
+    <value>여가</value>
   </data>
   <data name="TargetLow" xml:space="preserve">
-    <value>低密度</value>
+    <value>저밀도</value>
   </data>
   <data name="TargetTourist" xml:space="preserve">
-    <value>旅游</value>
+    <value>관광</value>
   </data>
 </root>

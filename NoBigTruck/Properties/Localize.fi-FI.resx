@@ -118,63 +118,58 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNewRule" xml:space="preserve">
-    <value>添加新规则</value>
+    <value>Lisää uusi sääntö</value>
   </data>
   <data name="CheckTargetSize" xml:space="preserve">
-    <value>检查目标建筑大小</value>
+    <value>Tarkista kohderakennuksen koko</value>
   </data>
   <data name="MaxLength" xml:space="preserve">
-    <value>最大建筑长度</value>
+    <value>Rakennuksen enimmäispituus</value>
   </data>
   <data name="MaxWidth" xml:space="preserve">
-    <value>最大建筑宽度</value>
+    <value>Rakennuksen enimmäisleveys</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>禁止大型卡车向商店运送货物</value>
+    <value>Suuret kuorma-autot eivät toimita tavaroita kauppoihin</value>
   </data>
   
   
   
   
   
-  <data name="Mod_WhatsNewMessage1_2_4" xml:space="preserve">
-    <value>[TRANSLATION] 添加丹麦语、葡萄牙语和土耳其语翻译</value>
-  </data>
-  <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
-    <value>[UPDATED] 添加了Plazas &amp; Promenades DLC 支持。
-[TRANSLATION] 添加了波兰语和罗马尼亚语翻译。</value>
-  </data>
+  
+  
   <data name="RulesTab" xml:space="preserve">
-    <value>规则</value>
+    <value>Säännöt</value>
   </data>
   <data name="Source" xml:space="preserve">
-    <value>货源建筑物类型</value>
+    <value>Lähteen tyyppi</value>
   </data>
   <data name="SourceIndustry" xml:space="preserve">
-    <value>工业</value>
+    <value>Teollisuus</value>
   </data>
   <data name="SourceOutside" xml:space="preserve">
-    <value>外部</value>
+    <value>Tuonti</value>
   </data>
   <data name="SourceWarehouse" xml:space="preserve">
-    <value>仓库</value>
+    <value>Varastorakennus</value>
   </data>
   <data name="Target" xml:space="preserve">
-    <value>目标建筑类型</value>
+    <value>Kohdeliikkeen tyyppi</value>
   </data>
   <data name="TargetEco" xml:space="preserve">
-    <value>生态</value>
+    <value>Ympäristöystävällinen</value>
   </data>
   <data name="TargetHigh" xml:space="preserve">
-    <value>高密度</value>
+    <value>Korkea</value>
   </data>
   <data name="TargetLeisure" xml:space="preserve">
-    <value>休闲</value>
+    <value>Ajanviete</value>
   </data>
   <data name="TargetLow" xml:space="preserve">
-    <value>低密度</value>
+    <value>Matala</value>
   </data>
   <data name="TargetTourist" xml:space="preserve">
-    <value>旅游</value>
+    <value>Turismi</value>
   </data>
 </root>

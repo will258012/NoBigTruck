@@ -118,63 +118,64 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNewRule" xml:space="preserve">
-    <value>添加新规则</value>
+    <value>Voeg nieuwe regel toe</value>
   </data>
   <data name="CheckTargetSize" xml:space="preserve">
-    <value>检查目标建筑大小</value>
+    <value>Controleer grootte geselecteerd gebouw</value>
   </data>
   <data name="MaxLength" xml:space="preserve">
-    <value>最大建筑长度</value>
+    <value>Maximale lengte gebouwen</value>
   </data>
   <data name="MaxWidth" xml:space="preserve">
-    <value>最大建筑宽度</value>
+    <value>Maximale breedte gebouwen</value>
   </data>
   <data name="Mod_Description" xml:space="preserve">
-    <value>禁止大型卡车向商店运送货物</value>
+    <value>Grote vrachtwagens leveren geen goederen aan winkels</value>
+  </data>
+  <data name="Mod_WhatsNewMessage1_1" xml:space="preserve">
+    <value>[NEW] Missende afhankelijkheden checker toegevoegd.
+[TRANSLATION] Finse, Duitse, Japanse, Russische vertalingen toegevoegd.</value>
   </data>
   
   
   
   
   
-  <data name="Mod_WhatsNewMessage1_2_4" xml:space="preserve">
-    <value>[TRANSLATION] 添加丹麦语、葡萄牙语和土耳其语翻译</value>
-  </data>
   <data name="Mod_WhatsNewMessage1_3" xml:space="preserve">
-    <value>[UPDATED] 添加了Plazas &amp; Promenades DLC 支持。
-[TRANSLATION] 添加了波兰语和罗马尼亚语翻译。</value>
+    <value>[UPDATED] Ondersteuning toegevoegd voor Plazas &amp; Promenades DLC.
+[TRANSLATION] Poolse en Roemeense vertalingen toegevoegd.</value>
   </data>
   <data name="RulesTab" xml:space="preserve">
-    <value>规则</value>
+    <value>Regels</value>
   </data>
   <data name="Source" xml:space="preserve">
-    <value>货源建筑物类型</value>
+    <value>Bron gebouwtype</value>
   </data>
   <data name="SourceIndustry" xml:space="preserve">
-    <value>工业</value>
+    <value>Industrie</value>
   </data>
   <data name="SourceOutside" xml:space="preserve">
-    <value>外部</value>
+    <value>Buitenkant</value>
   </data>
   <data name="SourceWarehouse" xml:space="preserve">
-    <value>仓库</value>
+    <value>Magazijn</value>
   </data>
   <data name="Target" xml:space="preserve">
-    <value>目标建筑类型</value>
+    <value>Doel gebouwtype</value>
   </data>
   <data name="TargetEco" xml:space="preserve">
-    <value>生态</value>
+    <value>Eco</value>
   </data>
   <data name="TargetHigh" xml:space="preserve">
-    <value>高密度</value>
+    <value>Hoog</value>
   </data>
   <data name="TargetLeisure" xml:space="preserve">
-    <value>休闲</value>
+    <value>Vrije tijd</value>
   </data>
   <data name="TargetLow" xml:space="preserve">
-    <value>低密度</value>
+    <value>Laag</value>
   </data>
   <data name="TargetTourist" xml:space="preserve">
-    <value>旅游</value>
+    <value>Toerist</value>
   </data>
 </root>
