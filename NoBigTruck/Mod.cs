@@ -43,7 +43,7 @@ namespace NoBigTruck
 #endif
         protected override string IdRaw => nameof(NoBigTruck);
 
-        protected override ResourceManager LocalizeManager => Localize.ResourceManager;
+        protected override LocalizeManager LocalizeManager => Localize.LocaleManager;
         protected override List<BaseDependencyInfo> DependencyInfos
         {
             get
