@@ -1,8 +1,4 @@
 files:
   - source: /NoBigTruck/Properties/Localize.resx
-    translation: /NoBigTruck/Properties/Localize.%two_letters_code%.resx
+    translation: /NoBigTruck/Properties/Localize.%locale%.resx
     update_option: update_as_unapproved
-    languages_mapping:
-      two_letters_code:
-        "zh-CN": "zh-CN"
-        "en-GB": "en-GB"
