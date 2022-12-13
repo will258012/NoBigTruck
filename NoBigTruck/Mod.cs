@@ -34,7 +34,7 @@ namespace NoBigTruck
             new ModVersion(new Version("1.0"), new DateTime(2020, 6, 19)),
         };
 
-        protected override Version RequiredGameVersion => new Version(1, 15, 1, 4);
+        protected override Version RequiredGameVersion => new Version(1, 16, 0, 3);
 
 #if BETA
         public override bool IsBeta => true;
