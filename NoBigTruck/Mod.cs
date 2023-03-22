@@ -34,7 +34,7 @@ namespace NoBigTruck
             new ModVersion(new Version("1.0"), new DateTime(2020, 6, 19)),
         };
 
-        protected override Version RequiredGameVersion => new Version(1, 16, 0, 3);
+        protected override Version RequiredGameVersion => new Version(1, 16, 1, 2);
 
 #if BETA
         public override bool IsBeta => true;
@@ -107,7 +107,7 @@ namespace NoBigTruck
         }
         private bool CargoTruckAI_ChangeVehicleType_Patch()
         {
-            return AddTranspiler(typeof(Patcher), nameof(Patcher.CargoTruckAI_ChangeVehicleType_Transpiler), typeof(CargoTruckAI), nameof(CargoTruckAI.ChangeVehicleType), new Type[] { typeof(VehicleInfo), typeof(ushort), typeof(Vehicle).MakeByRefType(), typeof(PathUnit.Position), typeof(uint) });
+            return AddTranspiler(typeof(Patcher), nameof(Patcher.CargoTruckAI_ChangeVehicleType_Transpiler), typeof(CargoTruckAI), nameof(CargoTruckAI.ChangeVehicleType), new Type[] { typeof(VehicleInfo), typeof(ushort), typeof(Vehicle).MakeByRefType(), typeof(PathUnit.Position), typeof(uint), typeof(bool) });
         }
         private bool VehicleManager_RefreshTransferVehicles_Patch()
         {
@@ -115,8 +115,8 @@ namespace NoBigTruck
         }
         private void AVOPatch(ref bool success)
         {
-            success &= AddPostfix(typeof(Manager), nameof(Manager.AVOCheckChanged), Type.GetType("AdvancedVehicleOptionsUID.GUI.UIOptionPanel"), "OnCheckChanged");
-            success &= AddPrefix(typeof(Patcher), nameof(Patcher.NBTCheckPrefix), Type.GetType("AdvancedVehicleOptionsUID.Compatibility.NoBigTruckCompatibilityPatch"), "IsNBTActive");
+            success &= AddPostfix(typeof(Manager), nameof(Manager.AVOCheckChanged), AccessTools.TypeByName("AdvancedVehicleOptionsUID.GUI.UIOptionPanel"), "OnCheckChanged");
+            success &= AddPrefix(typeof(Patcher), nameof(Patcher.NBTCheckPrefix), AccessTools.TypeByName("AdvancedVehicleOptionsUID.Compatibility.NoBigTruckCompatibilityPatch"), "IsNBTActive");
         }
 
         #endregion
