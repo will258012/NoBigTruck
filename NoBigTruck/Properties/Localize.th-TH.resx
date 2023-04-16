@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNewRule" xml:space="preserve">
+    <value>เพิ่มกฏใหม่</value>
+  </data>
   
   
   
@@ -132,8 +135,9 @@
   
   
   
-  
-  
+  <data name="SourceWarehouse" xml:space="preserve">
+    <value>โกดัง</value>
+  </data>
   
   
   
