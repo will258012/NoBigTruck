@@ -158,8 +158,8 @@ Global
 		{B21AB183-BAEF-4EAF-ACCB-83D6AE5F2CCB} = {1DD9E545-FBCD-42C6-8E37-A56E341CC115}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {9AE01CF9-7549-4236-B657-F88D6CEA4F88}
 		BuildVersion_StartDate = 2000/1/1
+		SolutionGuid = {9AE01CF9-7549-4236-B657-F88D6CEA4F88}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		ModsCommon\HeaderShared\HeaderShared.projitems*{0bf47c3f-c968-4759-8d99-d088b0d58fba}*SharedItemsImports = 13
