@@ -61,6 +61,11 @@ namespace NoBigTruck
         private static PluginSearcher AVOSearcher { get; } = PluginUtilities.GetSearcher(AVOName, AVOId);
         public static PluginInfo AVO => PluginUtilities.GetPlugin(AVOSearcher);
 
+        private static string VehicleSelectorName => "Vehicle Selector";
+        private static ulong VehicleSelectorId => 2882769913ul;
+        private static PluginSearcher VehicleSelectorSearcher { get; } = PluginUtilities.GetSearcher(VehicleSelectorName, VehicleSelectorId);
+        public static PluginInfo VehicleSelector => PluginUtilities.GetPlugin(VehicleSelectorSearcher);
+
         protected override void GetSettings(UIHelperBase helper)
         {
             var settings = new Settings();
@@ -74,12 +79,22 @@ namespace NoBigTruck
         {
             var success = true;
 
-            success &= IndustrialBuildingAI_StartTransfer_Patch();
-            success &= IndustrialExtractorAI_StartTransfer_Patch();
             success &= OutsideConnectionAI_StartConnectionTransferImpl_Patch();
-            success &= WarehouseAI_StartTransfer_Patch();
-            success &= CargoTruckAI_ChangeVehicleType_Patch();
             success &= VehicleManager_RefreshTransferVehicles_Patch();
+
+            if (VehicleSelector is null)
+            {
+                success &= IndustrialBuildingAI_StartTransfer_Patch();
+                success &= IndustrialExtractorAI_StartTransfer_Patch();
+                success &= CargoTruckAI_ChangeVehicleType_Patch();
+                success &= WarehouseAI_StartTransfer_Patch();
+            }
+            else
+                Logger.Debug(@"Vehicle Selector exists, skipping patches for
+- IndustrialBuildingAI.StartTransfer
+- IndustrialExtractorAI.StartTransfer
+- CargoTruckAI.ChangeVehicleType
+- WarehouseAI.StartTransfer");
 
             if (AVO is null)
                 Logger.Debug("Advanced Vehicle Options not exist, skip patches");
@@ -107,7 +122,6 @@ namespace NoBigTruck
         }
         private bool CargoTruckAI_ChangeVehicleType_Patch()
         {
-            return AddTranspiler(typeof(Patcher), nameof(Patcher.CargoTruckAI_ChangeVehicleType_Transpiler), typeof(CargoTruckAI), nameof(CargoTruckAI.ChangeVehicleType), new Type[] { typeof(VehicleInfo), typeof(ushort), typeof(Vehicle).MakeByRefType(), typeof(PathUnit.Position), typeof(uint), typeof(bool) });
             return AddTranspiler(typeof(Patcher), nameof(Patcher.CargoTruckAI_ChangeVehicleType_Transpiler), typeof(CargoTruckAI), nameof(CargoTruckAI.ChangeVehicleType), new Type[] { typeof(VehicleInfo), typeof(ushort), typeof(Vehicle).MakeByRefType(), typeof(PathUnit.Position), typeof(uint) });
         }
         private bool VehicleManager_RefreshTransferVehicles_Patch()
