@@ -34,7 +34,7 @@ namespace NoBigTruck
             new ModVersion(new Version("1.0"), new DateTime(2020, 6, 19)),
         };
 
-        protected override Version RequiredGameVersion => new Version(1, 17, 1, 2);
+        protected override Version RequiredGameVersion => new Version(1, 20, 1, 1);
 
 #if BETA
         public override bool IsBeta => true;
@@ -108,6 +108,7 @@ namespace NoBigTruck
         private bool CargoTruckAI_ChangeVehicleType_Patch()
         {
             return AddTranspiler(typeof(Patcher), nameof(Patcher.CargoTruckAI_ChangeVehicleType_Transpiler), typeof(CargoTruckAI), nameof(CargoTruckAI.ChangeVehicleType), new Type[] { typeof(VehicleInfo), typeof(ushort), typeof(Vehicle).MakeByRefType(), typeof(PathUnit.Position), typeof(uint), typeof(bool) });
+            return AddTranspiler(typeof(Patcher), nameof(Patcher.CargoTruckAI_ChangeVehicleType_Transpiler), typeof(CargoTruckAI), nameof(CargoTruckAI.ChangeVehicleType), new Type[] { typeof(VehicleInfo), typeof(ushort), typeof(Vehicle).MakeByRefType(), typeof(PathUnit.Position), typeof(uint) });
         }
         private bool VehicleManager_RefreshTransferVehicles_Patch()
         {
