@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Resources;
 using static ColossalFramework.Plugins.PluginManager;
 
 namespace NoBigTruck
@@ -79,22 +78,12 @@ namespace NoBigTruck
         {
             var success = true;
 
+            success &= IndustrialBuildingAI_StartTransfer_Patch();
+            success &= IndustrialExtractorAI_StartTransfer_Patch();
             success &= OutsideConnectionAI_StartConnectionTransferImpl_Patch();
+            success &= WarehouseAI_StartTransfer_Patch();
+            success &= CargoTruckAI_ChangeVehicleType_Patch();
             success &= VehicleManager_RefreshTransferVehicles_Patch();
-
-            if (VehicleSelector is null)
-            {
-                success &= IndustrialBuildingAI_StartTransfer_Patch();
-                success &= IndustrialExtractorAI_StartTransfer_Patch();
-                success &= CargoTruckAI_ChangeVehicleType_Patch();
-                success &= WarehouseAI_StartTransfer_Patch();
-            }
-            else
-                Logger.Debug(@"Vehicle Selector exists, skipping patches for
-- IndustrialBuildingAI.StartTransfer
-- IndustrialExtractorAI.StartTransfer
-- CargoTruckAI.ChangeVehicleType
-- WarehouseAI.StartTransfer");
 
             if (AVO is null)
                 Logger.Debug("Advanced Vehicle Options not exist, skip patches");
@@ -147,6 +136,13 @@ namespace NoBigTruck
 
         public static IEnumerable<CodeInstruction> StartTransfer_Transpiler(MethodBase original, ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
+            if (Mod.VehicleSelector?.isEnabled ?? false)
+            {
+                foreach (var instruction in instructions)
+                    yield return instruction;
+                yield break;
+            }
+ 
             foreach (var instruction in instructions)
             {
                 if (instruction.opcode == OpCodes.Callvirt && instruction.operand == ReplaceMethod)
@@ -163,6 +159,13 @@ namespace NoBigTruck
         }
         public static IEnumerable<CodeInstruction> WarehouseAI_StartTransfer_Transpiler(MethodBase original, ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
+            if (Mod.VehicleSelector?.isEnabled ?? false)
+            {
+                foreach (var instruction in instructions)
+                    yield return instruction;
+                yield break;
+            }
+
             var method = AccessTools.Method(typeof(WarehouseAI), nameof(WarehouseAI.GetTransferVehicleService));
             foreach (var instruction in instructions)
             {
@@ -179,6 +182,13 @@ namespace NoBigTruck
         }
         public static IEnumerable<CodeInstruction> CargoTruckAI_ChangeVehicleType_Transpiler(MethodBase original, ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
+            if (Mod.VehicleSelector?.isEnabled ?? false)
+            {
+                foreach (var instruction in instructions)
+                    yield return instruction;
+                yield break;
+            }
+
             foreach (var instruction in instructions)
             {
                 if (instruction.opcode == OpCodes.Callvirt && instruction.operand == ReplaceMethod)
