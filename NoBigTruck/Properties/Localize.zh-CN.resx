@@ -140,7 +140,9 @@
 [TRANSLATION] 添加了波兰语和罗马尼亚语翻译。</value>
   </data>
   <data name="Mod_WhatsNewMessage1_3_1" xml:space="preserve">
-    <value>[UPDATED] 添加了Race Day DLC 支持。</value>
+    <value>[UPDATED] 添加了Race Day DLC 支持。
+[UPDATED] 更新了ModsCommon。
+[TRANSLATION] 添加了泰语和乌克兰语翻译。</value>
   </data>
   <data name="RulesTab" xml:space="preserve">
     <value>规则</value>
