@@ -200,12 +200,12 @@
 
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Stable Release' OR '$(Configuration)' == 'Stable Debug'">
-		<WorkshopId>2069057130</WorkshopId>
+		<WorkshopId>3699936530</WorkshopId>
 		<Type>Stable</Type>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)' == 'Beta Release' OR '$(Configuration)' == 'Beta Debug'">
-		<WorkshopId>2513186434</WorkshopId>
+		<WorkshopId>3699936530</WorkshopId>
 		<Type>Beta</Type>
 	</PropertyGroup>
 

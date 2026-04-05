@@ -17,8 +17,8 @@ namespace NoBigTruck
         public override string NameRaw => "No Big Truck";
         public override string Description => !IsBeta ? Localize.Mod_Description : CommonLocalize.Mod_DescriptionBeta;
 
-        protected override ulong StableWorkshopId => 2069057130ul;
-        protected override ulong BetaWorkshopId => 2513186434ul;
+        protected override ulong StableWorkshopId => 3699936530ul;
+        protected override ulong BetaWorkshopId => 3699936530ul;
         public override string CrowdinUrl => "https://crowdin.com/translate/macsergey-other-mods/74";
 
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
