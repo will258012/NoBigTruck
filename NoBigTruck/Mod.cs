@@ -50,7 +50,7 @@ namespace NoBigTruck
             {
                 var infos = base.DependencyInfos;
 
-                var info = new NeedDependencyInfo(DependencyState.Enable, AVOSearcher, AVOName, AVOId);
+                var info = new RequiredDependencyInfo(DependencyState.Enable, AVOSearcher, AVOName, AVOId);
                 infos.Add(info);
 
                 return infos;

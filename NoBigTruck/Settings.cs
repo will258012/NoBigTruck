@@ -1,16 +1,13 @@
-﻿using ColossalFramework;
-using ColossalFramework.IO;
+﻿using ColossalFramework.IO;
 using ColossalFramework.UI;
-using ICities;
 using ModsCommon;
+using ModsCommon.Settings;
 using ModsCommon.UI;
 using ModsCommon.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
 
@@ -23,7 +20,7 @@ namespace NoBigTruck
         public static List<Rule> Rules { get; } = new List<Rule>();
         private AddRuleButton AddButton { get; set; }
 
-        private UIAdvancedHelper RulesTab => GetTab(nameof(RulesTab));
+        private CustomUIScrollablePanel RulesTab => GetTabContent(nameof(RulesTab)) as CustomUIScrollablePanel;
 
         protected override IEnumerable<KeyValuePair<string, string>> AdditionalTabs
         {
@@ -38,7 +35,7 @@ namespace NoBigTruck
 
             AddLanguage(GeneralTab);
             AddNotifications(GeneralTab);
-            RulesTab.Content.autoLayoutPadding = new RectOffset(50, 50, 0, 25);
+            RulesTab.Padding = new RectOffset(50, 50, 0, 25);
 
             Load();
 
@@ -48,7 +45,7 @@ namespace NoBigTruck
 
         private void AddAddRuleButton()
         {
-            AddButton = RulesTab.Content.AddUIComponent<AddRuleButton>();
+            AddButton = RulesTab.AddUIComponent<AddRuleButton>();
             AddButton.Text = Localize.AddNewRule;
             AddButton.Init();
             AddButton.OnButtonClick += AddRule;
@@ -67,12 +64,14 @@ namespace NoBigTruck
         }
         private void AddRulePanel(Rule rule)
         {
-            var rulePanel = RulesTab.Content.AddUIComponent<PropertyGroupPanel>();
+            var rulePanel = RulesTab.AddUIComponent<PropertyGroupPanel>();
+            rulePanel.PanelStyle = ComponentStyle.Default.PropertyPanel;
             rulePanel.Init();
             AddButton.zOrder = rulePanel.zOrder + 1;
 
             rulePanel.StopLayout();
             var header = rulePanel.AddUIComponent<RuleHeaderPanel>();
+            header.AutoLayoutSpace = -30;
             header.Init(30f);
             header.OnDelete += OnDeleteRule;
 
@@ -81,7 +80,7 @@ namespace NoBigTruck
 
             void OnDeleteRule()
             {
-                RulesTab.Content.RemoveUIComponent(rulePanel);
+                RulesTab.RemoveUIComponent(rulePanel);
                 UnityEngine.Object.Destroy(rulePanel);
                 DeleteRule(rule);
             }
@@ -192,7 +191,7 @@ namespace NoBigTruck
         private SourceBuildingPropertyPanel AddSourceBuildingProperty(UIComponent parent)
         {
             var sourceBuildingProperty = parent.AddUIComponent<SourceBuildingPropertyPanel>();
-            sourceBuildingProperty.Text = Localize.Source;
+            sourceBuildingProperty.Label = Localize.Source;
             sourceBuildingProperty.Init();
             sourceBuildingProperty.SelectedObject = SourceBuildings;
             sourceBuildingProperty.OnSelectObjectChanged += (value) => SourceBuildings.Value = value;
@@ -202,7 +201,7 @@ namespace NoBigTruck
         private TargetBuildingPropertyPanel AddTargetBuildingProperty(UIComponent parent)
         {
             var targetBuildingProperty = parent.AddUIComponent<TargetBuildingPropertyPanel>();
-            targetBuildingProperty.Text = Localize.Target;
+            targetBuildingProperty.Label = Localize.Target;
             targetBuildingProperty.Init();
             targetBuildingProperty.SelectedObject = TargetBuildings;
             targetBuildingProperty.OnSelectObjectChanged += (value) => TargetBuildings.Value = value;
@@ -212,7 +211,7 @@ namespace NoBigTruck
         protected BoolListPropertyPanel AddUseSizeProperty(UIComponent parent)
         {
             var useSizeProperty = parent.AddUIComponent<BoolListPropertyPanel>();
-            useSizeProperty.Text = Localize.CheckTargetSize;
+            useSizeProperty.Label = Localize.CheckTargetSize;
             useSizeProperty.Init(CommonLocalize.MessageBox_No, CommonLocalize.MessageBox_Yes);
             useSizeProperty.SelectedObject = UseSize;
             useSizeProperty.OnSelectObjectChanged += (bool value) => UseSize.Value = value;
@@ -221,7 +220,7 @@ namespace NoBigTruck
         protected IntPropertyPanel AddSizeProperty(UIComponent parent, PropertyValue<int> property, string text)
         {
             var lineCountProperty = parent.AddUIComponent<IntPropertyPanel>();
-            lineCountProperty.Text = text;
+            lineCountProperty.Label = text;
             lineCountProperty.UseWheel = true;
             lineCountProperty.WheelStep = 1;
             lineCountProperty.CheckMin = true;
@@ -313,6 +312,7 @@ namespace NoBigTruck
 
     public class SourceBuildingPropertyPanel : EnumMultyPropertyPanel<SourceBuildingTypes, SourceBuildingPropertyPanel.SourceBuildingSegmented>
     {
+        public override void SetStyle(ControlStyle style) => Selector.SegmentedStyle = style.Segmented;
         protected override string GetDescription(SourceBuildingTypes value) => value.Description<SourceBuildingTypes, Mod>();
         protected override bool IsEqual(SourceBuildingTypes first, SourceBuildingTypes second) => first == second;
 
@@ -320,6 +320,7 @@ namespace NoBigTruck
     }
     public class TargetBuildingPropertyPanel : EnumMultyPropertyPanel<TargetBuildingTypes, TargetBuildingPropertyPanel.TargetBuildingSegmented>
     {
+        public override void SetStyle(ControlStyle style) => Selector.SegmentedStyle = style.Segmented;
         protected override string GetDescription(TargetBuildingTypes value) => value.Description<TargetBuildingTypes, Mod>();
         protected override bool IsEqual(TargetBuildingTypes first, TargetBuildingTypes second) => first == second;
 
@@ -327,11 +328,15 @@ namespace NoBigTruck
     }
     public class AddRuleButton : ButtonPanel
     {
-        public AddRuleButton()
+        public AddRuleButton() : base()
         {
             Button.textScale = 1f;
+            ButtonHeight = 30f;
         }
-        protected override void SetSize() => Button.size = size;
+
     }
-    public class RuleHeaderPanel : BaseDeletableHeaderPanel<HeaderContent> { }
+    public class RuleHeaderPanel : BaseDeletableHeaderPanel<BaseHeaderContent>
+    {
+        protected override void FillContent() { }
+    }
 }
