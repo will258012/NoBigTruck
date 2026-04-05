@@ -23,6 +23,7 @@ namespace NoBigTruck
 
         public override List<ModVersion> Versions { get; } = new List<ModVersion>
         {
+            new ModVersion(new Version("1.3.1"), new DateTime(2026, 4, 5)),
             new ModVersion(new Version("1.3"), new DateTime(2022, 9, 14)),
             new ModVersion(new Version("1.2.4"), new DateTime(2021, 8, 22)),
             new ModVersion(new Version("1.2.3"), new DateTime(2021, 8, 7)),

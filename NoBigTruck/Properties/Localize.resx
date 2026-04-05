@@ -157,6 +157,9 @@
     <value>[UPDATED] Added Plazas &amp; Promenades DLC support.
 [TRANSLATION] Added Polish and Romanian translations.</value>
   </data>
+  <data name="Mod_WhatsNewMessage1_3_1" xml:space="preserve">
+    <value>[UPDATED] Added Race Day DLC Support</value>
+  </data>
   <data name="RulesTab" xml:space="preserve">
     <value>Rules</value>
   </data>
