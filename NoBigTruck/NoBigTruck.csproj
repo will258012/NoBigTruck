@@ -95,6 +95,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Properties\PreviewImage.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Properties\PreviewImage.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Include="Properties\Localize.cs-CZ.resx">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
@@ -256,7 +264,6 @@
 		<Message Text="Deploy to workshop $(WorkshopDir)" Importance="high" />
 		<RemoveDir Directories="$(WorkshopDir)" />
 		<Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy->'$(WorkshopDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
-		<Copy SourceFiles="$(ProjectDir)..\Workshop\PreviewImage$(Type).png" DestinationFiles="$(WorkshopDir)\PreviewImage.png" />
 	</Target>
 
 </Project>
