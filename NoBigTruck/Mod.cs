@@ -34,7 +34,7 @@ namespace NoBigTruck
             new ModVersion(new Version("1.0"), new DateTime(2020, 6, 19)),
         };
 
-        protected override Version RequiredGameVersion => new Version(1, 21, 1, 7);
+        protected override Version RequiredGameVersion => new Version(1, 21, 1, 9);
 
 #if BETA
         public override bool IsBeta => true;
@@ -137,13 +137,13 @@ namespace NoBigTruck
 
         public static IEnumerable<CodeInstruction> StartTransfer_Transpiler(MethodBase original, ILGenerator generator, IEnumerable<CodeInstruction> instructions)
         {
-            if (Mod.VehicleSelector?.isEnabled ?? false)
+            if ((Mod.VehicleSelector?.isEnabled ?? false) && original.DeclaringType != typeof(OutsideConnectionAI))
             {
                 foreach (var instruction in instructions)
                     yield return instruction;
                 yield break;
             }
- 
+
             foreach (var instruction in instructions)
             {
                 if (instruction.opcode == OpCodes.Callvirt && instruction.operand == ReplaceMethod)
